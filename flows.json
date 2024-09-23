@@ -48,5 +48,46 @@
                 "2233c240989bf1e1"
             ]
         ]
+    },
+    {
+        "id": "5a3fc05e57b1b3f6",
+        "type": "inject",
+        "z": "d293a890379c9923",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "alemao",
+        "payloadType": "str",
+        "x": 370,
+        "y": 340,
+        "wires": [
+            [
+                "ef999dd4bfca47b3"
+            ]
+        ]
+    },
+    {
+        "id": "ef999dd4bfca47b3",
+        "type": "debug",
+        "z": "d293a890379c9923",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 320,
+        "wires": []
     }
 ]
