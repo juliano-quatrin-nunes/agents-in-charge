@@ -1,1 +1,27 @@
-[]
+[
+    {
+        "id": "d293a890379c9923",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2233c240989bf1e1",
+        "type": "debug",
+        "z": "d293a890379c9923",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "teste",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 220,
+        "y": 120,
+        "wires": []
+    }
+]
