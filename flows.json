@@ -16,12 +16,37 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "teste",
+        "complete": "payload",
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 220,
-        "y": 120,
+        "x": 660,
+        "y": 180,
         "wires": []
+    },
+    {
+        "id": "0b52e5d9d904fec3",
+        "type": "inject",
+        "z": "d293a890379c9923",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Hello World",
+        "payloadType": "str",
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "2233c240989bf1e1"
+            ]
+        ]
     }
 ]
