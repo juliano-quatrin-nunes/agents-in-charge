@@ -8,86 +8,253 @@
         "env": []
     },
     {
-        "id": "2233c240989bf1e1",
-        "type": "debug",
-        "z": "d293a890379c9923",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 660,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "0b52e5d9d904fec3",
-        "type": "inject",
+        "id": "9568c2b2.ae4098",
+        "type": "http in",
         "z": "d293a890379c9923",
         "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "Hello World",
-        "payloadType": "str",
-        "x": 370,
-        "y": 220,
+        "url": "/update",
+        "method": "put",
+        "swaggerDoc": "",
+        "x": 310,
+        "y": 320,
         "wires": [
             [
-                "2233c240989bf1e1"
+                "de0d507c.2e3c6"
             ]
         ]
     },
     {
-        "id": "5a3fc05e57b1b3f6",
-        "type": "inject",
+        "id": "80b7d10e.159df",
+        "type": "http response",
         "z": "d293a890379c9923",
         "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "alemao",
-        "payloadType": "str",
-        "x": 370,
-        "y": 340,
-        "wires": [
-            [
-                "ef999dd4bfca47b3"
-            ]
-        ]
-    },
-    {
-        "id": "ef999dd4bfca47b3",
-        "type": "debug",
-        "z": "d293a890379c9923",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 620,
+        "x": 1042,
         "y": 320,
         "wires": []
+    },
+    {
+        "id": "a8dde467.e5dcd8",
+        "type": "template",
+        "z": "d293a890379c9923",
+        "name": "Web Template",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en-GB\">\n<head>\n    <title>Users</title>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css\" />\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js\"></script>\n    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css\" />\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css\" />\n    <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js\"></script>\n\n    <script type=\"text/javascript\">\n        $(function () {\n            console.log(\"crud demo\");\n\n            var db = {{#payload}}{{{.}}}{{/payload}};\n\n            $(\"#jsgrid\").jsGrid({\n                width: \"100%\",\n                inserting: true,\n                editing: true,\n                sorting: true,\n                paging: true,\n\n                data: db,\n\n                fields: [\n                    { title:\"ID\", name: \"id\", type: \"number\", width: 20, readOnly: true },\n                    { title:\"User ID\", name: \"userID\", type: \"text\", width: 50 },\n                    { title:\"First Name\", name: \"foreName\", type: \"text\", width: 50 },\n                    { title:\"Last Name\", name: \"sirName\", type: \"text\", width: 50 },\n                    { title:\"Age\", name: \"age\", type:\"number\", width: 25},\n                    { type: \"control\" }\n                ],\n           \n                controller: {\n                    insertItem: function(item) {\n                        return $.ajax({\n                            type: \"POST\",\n                            url: \"/insert\",\n                            data: item\n                        });\n                    },\n                    updateItem: function(item) {\n                       return $.ajax({\n                            type: \"PUT\",\n                            url: \"/update\",\n                            data: item\n                        });\n                    },\n                    deleteItem: function(item) {\n                        return $.ajax({\n                            type: \"DELETE\",\n                            url: \"/delete\",\n                            data: item\n                        });\n                    }\n                }   \n            });\n        });\n    \n  </script>\n</head>\n<body class=\"container\">\n    <section class=\"row\">\n        \n        <div class=\"col-md-6\"></div>\n        <div class=\"col-md-6\" id=\"jsgrid\">\n        </div>\n    </section>\n</body>\n</html>\n\n",
+        "x": 832,
+        "y": 256,
+        "wires": [
+            [
+                "e4bd0337.229be8"
+            ]
+        ]
+    },
+    {
+        "id": "3fa8dafa.229966",
+        "type": "http in",
+        "z": "d293a890379c9923",
+        "name": "",
+        "url": "/index",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 300,
+        "y": 256,
+        "wires": [
+            [
+                "5a339947.2e2cf8"
+            ]
+        ]
+    },
+    {
+        "id": "e4bd0337.229be8",
+        "type": "http response",
+        "z": "d293a890379c9923",
+        "name": "",
+        "x": 1042,
+        "y": 256,
+        "wires": []
+    },
+    {
+        "id": "66d97ed7.39f1c",
+        "type": "http response",
+        "z": "d293a890379c9923",
+        "name": "",
+        "x": 1042,
+        "y": 384,
+        "wires": []
+    },
+    {
+        "id": "a60ce791.6f5ae8",
+        "type": "http in",
+        "z": "d293a890379c9923",
+        "name": "",
+        "url": "/insert",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 310,
+        "y": 384,
+        "wires": [
+            [
+                "9ca4b651.6f2aa8"
+            ]
+        ]
+    },
+    {
+        "id": "5f79d9fd.25c4f",
+        "type": "http in",
+        "z": "d293a890379c9923",
+        "name": "",
+        "url": "/delete",
+        "method": "delete",
+        "swaggerDoc": "",
+        "x": 320,
+        "y": 448,
+        "wires": [
+            [
+                "fe020366.04d91"
+            ]
+        ]
+    },
+    {
+        "id": "17b5b5c4.a8a7b2",
+        "type": "http response",
+        "z": "d293a890379c9923",
+        "name": "",
+        "x": 1042,
+        "y": 448,
+        "wires": []
+    },
+    {
+        "id": "a2dfdc4a.dc161",
+        "type": "function",
+        "z": "d293a890379c9923",
+        "name": "Generate dummy data",
+        "func": "const firstNames =  [\"Liam\",\"Noah\",\"Oliver\",\"William\",\"Elijah\",\"James\",\"Benjamin\",\"Lucas\",\"Mason\",\"Ethan\",\"Alexander\",\"Henry\",\"Jacob\",\"Michael\",\"Daniel\",\"Logan\",\"Jackson\",\"Sebastian\",\"Jack\",\"Aiden\"];\nconst sirNames = [\"Jones\",\"Taylor\",\"Williams\",\"Brown\",\"White\",\"Harris\",\"Martin\",\"Davies\",\"Wilson\",\"Cooper\",\"Evans\",\"King\",\"Thomas\",\"Baker\",\"Green\",\"Wright\",\"Johnson\",\"Edwards\",\"Clark\",\"Roberts\",\"Robinson\",\"Hall\",\"Lewis\",\"Young\",\"Davis\",\"Turner\",\"Hill\",\"Phillips\",\"Collins\",\"Allen\",\"Moore\",\"Thompson\",\"Carter\",\"James\",\"Knight\",\"Walker\",\"Wood\",\"Hughes\",\"Parker\",\"Ward\",\"Bennett\",\"Cook\",\"Webb\",\"Bailey\",\"Scott\",\"Jackson\",\"Lee\",\"Cox\"];\n         \n         \n\nvar database = [];\n\nfor(let i = 1; i <= 30; i++) {\n    var item = {\"id\":i, \"timestamp\":Date.now()};\n    item.foreName = randomFirstname();\n    item.sirName = randomSirname();\n    item.userID = \"U\" + randomInt(1000, 2999);\n    item.age = randomInt(20, 65);\n    database.push(item);\n}\n\n\nfunction randomFirstname() {\n   return firstNames[randomInt(0, firstNames.length-1)];\n}\n\nfunction randomSirname() {\n    return sirNames[randomInt(0, sirNames.length-1)];\n}\n\nfunction randomInt(min, max) { \n  return Math.floor(Math.random() * (max - min + 1) + min);\n}\n\nflow.set(\"database\", database);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 548,
+        "y": 176,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b023f12.50205",
+        "type": "inject",
+        "z": "d293a890379c9923",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 271,
+        "y": 176,
+        "wires": [
+            [
+                "a2dfdc4a.dc161"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "de0d507c.2e3c6",
+        "type": "function",
+        "z": "d293a890379c9923",
+        "name": "update-query",
+        "func": "\nvar database = flow.get(\"database\") || [];\n\nvar item = database.find(e => e.id == msg.payload.id );\n\nif(msg.payload.foreName == \"\" || msg.payload.sirName == \"\" || msg.payload.userID == \"\") {\n    msg.statusCode = 400;\n    msg.payload = null;\n    return msg;\n}\n\nif(item) {\n    item.foreName = msg.payload.foreName;\n    item.sirName = msg.payload.sirName;\n    item.age = msg.payload.age;\n    item.userID = msg.payload.userID;\n    flow.set(\"database\", database);\n} else {\n    msg.statusCode = 404;//not found\n    msg.payload = null;\n    return msg;\n}\nmsg.payload = item;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 502,
+        "y": 320,
+        "wires": [
+            [
+                "80b7d10e.159df"
+            ]
+        ]
+    },
+    {
+        "id": "9ca4b651.6f2aa8",
+        "type": "function",
+        "z": "d293a890379c9923",
+        "name": "insert-query",
+        "func": "var database = flow.get(\"database\") || [];\nvar nextID = Math.max.apply(Math, database.map(function(o) { return o.id; })) + 1;\nvar item = {\n    id: nextID,\n    timestamp: Date.now(),\n    foreName : msg.payload.foreName,\n    sirName : msg.payload.sirName,\n    age : msg.payload.age,\n    userID : msg.payload.userID,\n}\n\nif(item.foreName == \"\" || item.sirName == \"\" || item.userID == \"\") {\n    msg.statusCode = 400;\n    msg.payload = null;\n    return msg;\n}\n\ndatabase.push(item);\nflow.set(\"database\", database);\n\nmsg.payload = item;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 502,
+        "y": 384,
+        "wires": [
+            [
+                "66d97ed7.39f1c"
+            ]
+        ]
+    },
+    {
+        "id": "fe020366.04d91",
+        "type": "function",
+        "z": "d293a890379c9923",
+        "name": "delete-query",
+        "func": "\nvar database = flow.get(\"database\") || [];\n\ndatabase = database.filter(function( obj ) {\n    return obj.id != msg.payload.id;\n});\n\nflow.set(\"database\", database);\n\nmsg.payload = database;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 502,
+        "y": 448,
+        "wires": [
+            [
+                "17b5b5c4.a8a7b2"
+            ]
+        ]
+    },
+    {
+        "id": "5a339947.2e2cf8",
+        "type": "function",
+        "z": "d293a890379c9923",
+        "name": "get database",
+        "func": "\nvar database = flow.get(\"database\") || [];\nmsg.payload = database;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 502,
+        "y": 256,
+        "wires": [
+            [
+                "43fff851.e2c7f8"
+            ]
+        ]
+    },
+    {
+        "id": "43fff851.e2c7f8",
+        "type": "json",
+        "z": "d293a890379c9923",
+        "name": "",
+        "x": 658,
+        "y": 256,
+        "wires": [
+            [
+                "a8dde467.e5dcd8"
+            ]
+        ]
     }
 ]
