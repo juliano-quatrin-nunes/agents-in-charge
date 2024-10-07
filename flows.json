@@ -8,12 +8,21 @@
         "env": []
     },
     {
+        "id": "0008fcf0ac8e3fc4",
+        "type": "tab",
+        "label": "SeparatingMainConveyor",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "9568c2b2.ae4098",
         "type": "http in",
         "z": "d293a890379c9923",
         "name": "",
         "url": "/update",
         "method": "put",
+        "upload": false,
         "swaggerDoc": "",
         "x": 310,
         "y": 320,
@@ -28,6 +37,8 @@
         "type": "http response",
         "z": "d293a890379c9923",
         "name": "",
+        "statusCode": "",
+        "headers": {},
         "x": 1042,
         "y": 320,
         "wires": []
@@ -72,6 +83,8 @@
         "type": "http response",
         "z": "d293a890379c9923",
         "name": "",
+        "statusCode": "",
+        "headers": {},
         "x": 1042,
         "y": 256,
         "wires": []
@@ -92,6 +105,7 @@
         "name": "",
         "url": "/insert",
         "method": "post",
+        "upload": false,
         "swaggerDoc": "",
         "x": 310,
         "y": 384,
@@ -133,9 +147,11 @@
         "name": "Generate dummy data",
         "func": "const firstNames =  [\"Liam\",\"Noah\",\"Oliver\",\"William\",\"Elijah\",\"James\",\"Benjamin\",\"Lucas\",\"Mason\",\"Ethan\",\"Alexander\",\"Henry\",\"Jacob\",\"Michael\",\"Daniel\",\"Logan\",\"Jackson\",\"Sebastian\",\"Jack\",\"Aiden\"];\nconst sirNames = [\"Jones\",\"Taylor\",\"Williams\",\"Brown\",\"White\",\"Harris\",\"Martin\",\"Davies\",\"Wilson\",\"Cooper\",\"Evans\",\"King\",\"Thomas\",\"Baker\",\"Green\",\"Wright\",\"Johnson\",\"Edwards\",\"Clark\",\"Roberts\",\"Robinson\",\"Hall\",\"Lewis\",\"Young\",\"Davis\",\"Turner\",\"Hill\",\"Phillips\",\"Collins\",\"Allen\",\"Moore\",\"Thompson\",\"Carter\",\"James\",\"Knight\",\"Walker\",\"Wood\",\"Hughes\",\"Parker\",\"Ward\",\"Bennett\",\"Cook\",\"Webb\",\"Bailey\",\"Scott\",\"Jackson\",\"Lee\",\"Cox\"];\n         \n         \n\nvar database = [];\n\nfor(let i = 1; i <= 30; i++) {\n    var item = {\"id\":i, \"timestamp\":Date.now()};\n    item.foreName = randomFirstname();\n    item.sirName = randomSirname();\n    item.userID = \"U\" + randomInt(1000, 2999);\n    item.age = randomInt(20, 65);\n    database.push(item);\n}\n\n\nfunction randomFirstname() {\n   return firstNames[randomInt(0, firstNames.length-1)];\n}\n\nfunction randomSirname() {\n    return sirNames[randomInt(0, sirNames.length-1)];\n}\n\nfunction randomInt(min, max) { \n  return Math.floor(Math.random() * (max - min + 1) + min);\n}\n\nflow.set(\"database\", database);\n\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 548,
         "y": 176,
         "wires": [
@@ -179,9 +195,11 @@
         "name": "update-query",
         "func": "\nvar database = flow.get(\"database\") || [];\n\nvar item = database.find(e => e.id == msg.payload.id );\n\nif(msg.payload.foreName == \"\" || msg.payload.sirName == \"\" || msg.payload.userID == \"\") {\n    msg.statusCode = 400;\n    msg.payload = null;\n    return msg;\n}\n\nif(item) {\n    item.foreName = msg.payload.foreName;\n    item.sirName = msg.payload.sirName;\n    item.age = msg.payload.age;\n    item.userID = msg.payload.userID;\n    flow.set(\"database\", database);\n} else {\n    msg.statusCode = 404;//not found\n    msg.payload = null;\n    return msg;\n}\nmsg.payload = item;\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 502,
         "y": 320,
         "wires": [
@@ -197,9 +215,11 @@
         "name": "insert-query",
         "func": "var database = flow.get(\"database\") || [];\nvar nextID = Math.max.apply(Math, database.map(function(o) { return o.id; })) + 1;\nvar item = {\n    id: nextID,\n    timestamp: Date.now(),\n    foreName : msg.payload.foreName,\n    sirName : msg.payload.sirName,\n    age : msg.payload.age,\n    userID : msg.payload.userID,\n}\n\nif(item.foreName == \"\" || item.sirName == \"\" || item.userID == \"\") {\n    msg.statusCode = 400;\n    msg.payload = null;\n    return msg;\n}\n\ndatabase.push(item);\nflow.set(\"database\", database);\n\nmsg.payload = item;\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 502,
         "y": 384,
         "wires": [
@@ -233,9 +253,11 @@
         "name": "get database",
         "func": "\nvar database = flow.get(\"database\") || [];\nmsg.payload = database;\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 502,
         "y": 256,
         "wires": [
@@ -249,6 +271,9 @@
         "type": "json",
         "z": "d293a890379c9923",
         "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
         "x": 658,
         "y": 256,
         "wires": [
@@ -256,5 +281,118 @@
                 "a8dde467.e5dcd8"
             ]
         ]
+    },
+    {
+        "id": "b3167a04a4347352",
+        "type": "http in",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "post status",
+        "url": "/separating/mainConveyor",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 300,
+        "y": 260,
+        "wires": [
+            [
+                "f9218c6d85ee5484"
+            ]
+        ]
+    },
+    {
+        "id": "c10fc7857031d826",
+        "type": "http response",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 990,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "97f80a11c9c65983",
+        "type": "function",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "change-conveyor-status",
+        "func": "// Retorna o valor recebido\nmsg.payload = { value: msg.payload };\nconsole.log(msg.payload.value)\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f9218c6d85ee5484",
+        "type": "file",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "filename": "/home/aawz/.node-red/data/mainConveyor.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 630,
+        "y": 260,
+        "wires": [
+            [
+                "c10fc7857031d826"
+            ]
+        ]
+    },
+    {
+        "id": "0b7991cfc665dd32",
+        "type": "http in",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "get status",
+        "url": "/separating/mainConveyor",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 320,
+        "y": 320,
+        "wires": [
+            [
+                "0e0755a698733018"
+            ]
+        ]
+    },
+    {
+        "id": "0e0755a698733018",
+        "type": "file in",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "filename": "/home/aawz/.node-red/data/mainConveyor.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 630,
+        "y": 320,
+        "wires": [
+            [
+                "2ea2b427facd83e1"
+            ]
+        ]
+    },
+    {
+        "id": "2ea2b427facd83e1",
+        "type": "http response",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 990,
+        "y": 320,
+        "wires": []
     }
 ]
