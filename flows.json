@@ -1,13 +1,5 @@
 [
     {
-        "id": "d293a890379c9923",
-        "type": "tab",
-        "label": "Fluxo 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "0008fcf0ac8e3fc4",
         "type": "tab",
         "label": "SeparatingMainConveyor",
@@ -16,271 +8,16 @@
         "env": []
     },
     {
-        "id": "9568c2b2.ae4098",
-        "type": "http in",
-        "z": "d293a890379c9923",
-        "name": "",
-        "url": "/update",
-        "method": "put",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 310,
-        "y": 320,
-        "wires": [
-            [
-                "de0d507c.2e3c6"
-            ]
-        ]
-    },
-    {
-        "id": "80b7d10e.159df",
-        "type": "http response",
-        "z": "d293a890379c9923",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 1042,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "a8dde467.e5dcd8",
-        "type": "template",
-        "z": "d293a890379c9923",
-        "name": "Web Template",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "<!DOCTYPE html>\n<html lang=\"en-GB\">\n<head>\n    <title>Users</title>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css\" />\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js\"></script>\n    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css\" />\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css\" />\n    <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js\"></script>\n\n    <script type=\"text/javascript\">\n        $(function () {\n            console.log(\"crud demo\");\n\n            var db = {{#payload}}{{{.}}}{{/payload}};\n\n            $(\"#jsgrid\").jsGrid({\n                width: \"100%\",\n                inserting: true,\n                editing: true,\n                sorting: true,\n                paging: true,\n\n                data: db,\n\n                fields: [\n                    { title:\"ID\", name: \"id\", type: \"number\", width: 20, readOnly: true },\n                    { title:\"User ID\", name: \"userID\", type: \"text\", width: 50 },\n                    { title:\"First Name\", name: \"foreName\", type: \"text\", width: 50 },\n                    { title:\"Last Name\", name: \"sirName\", type: \"text\", width: 50 },\n                    { title:\"Age\", name: \"age\", type:\"number\", width: 25},\n                    { type: \"control\" }\n                ],\n           \n                controller: {\n                    insertItem: function(item) {\n                        return $.ajax({\n                            type: \"POST\",\n                            url: \"/insert\",\n                            data: item\n                        });\n                    },\n                    updateItem: function(item) {\n                       return $.ajax({\n                            type: \"PUT\",\n                            url: \"/update\",\n                            data: item\n                        });\n                    },\n                    deleteItem: function(item) {\n                        return $.ajax({\n                            type: \"DELETE\",\n                            url: \"/delete\",\n                            data: item\n                        });\n                    }\n                }   \n            });\n        });\n    \n  </script>\n</head>\n<body class=\"container\">\n    <section class=\"row\">\n        \n        <div class=\"col-md-6\"></div>\n        <div class=\"col-md-6\" id=\"jsgrid\">\n        </div>\n    </section>\n</body>\n</html>\n\n",
-        "x": 832,
-        "y": 256,
-        "wires": [
-            [
-                "e4bd0337.229be8"
-            ]
-        ]
-    },
-    {
-        "id": "3fa8dafa.229966",
-        "type": "http in",
-        "z": "d293a890379c9923",
-        "name": "",
-        "url": "/index",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 300,
-        "y": 256,
-        "wires": [
-            [
-                "5a339947.2e2cf8"
-            ]
-        ]
-    },
-    {
-        "id": "e4bd0337.229be8",
-        "type": "http response",
-        "z": "d293a890379c9923",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 1042,
-        "y": 256,
-        "wires": []
-    },
-    {
-        "id": "66d97ed7.39f1c",
-        "type": "http response",
-        "z": "d293a890379c9923",
-        "name": "",
-        "x": 1042,
-        "y": 384,
-        "wires": []
-    },
-    {
-        "id": "a60ce791.6f5ae8",
-        "type": "http in",
-        "z": "d293a890379c9923",
-        "name": "",
-        "url": "/insert",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 310,
-        "y": 384,
-        "wires": [
-            [
-                "9ca4b651.6f2aa8"
-            ]
-        ]
-    },
-    {
-        "id": "5f79d9fd.25c4f",
-        "type": "http in",
-        "z": "d293a890379c9923",
-        "name": "",
-        "url": "/delete",
-        "method": "delete",
-        "swaggerDoc": "",
-        "x": 320,
-        "y": 448,
-        "wires": [
-            [
-                "fe020366.04d91"
-            ]
-        ]
-    },
-    {
-        "id": "17b5b5c4.a8a7b2",
-        "type": "http response",
-        "z": "d293a890379c9923",
-        "name": "",
-        "x": 1042,
-        "y": 448,
-        "wires": []
-    },
-    {
-        "id": "a2dfdc4a.dc161",
-        "type": "function",
-        "z": "d293a890379c9923",
-        "name": "Generate dummy data",
-        "func": "const firstNames =  [\"Liam\",\"Noah\",\"Oliver\",\"William\",\"Elijah\",\"James\",\"Benjamin\",\"Lucas\",\"Mason\",\"Ethan\",\"Alexander\",\"Henry\",\"Jacob\",\"Michael\",\"Daniel\",\"Logan\",\"Jackson\",\"Sebastian\",\"Jack\",\"Aiden\"];\nconst sirNames = [\"Jones\",\"Taylor\",\"Williams\",\"Brown\",\"White\",\"Harris\",\"Martin\",\"Davies\",\"Wilson\",\"Cooper\",\"Evans\",\"King\",\"Thomas\",\"Baker\",\"Green\",\"Wright\",\"Johnson\",\"Edwards\",\"Clark\",\"Roberts\",\"Robinson\",\"Hall\",\"Lewis\",\"Young\",\"Davis\",\"Turner\",\"Hill\",\"Phillips\",\"Collins\",\"Allen\",\"Moore\",\"Thompson\",\"Carter\",\"James\",\"Knight\",\"Walker\",\"Wood\",\"Hughes\",\"Parker\",\"Ward\",\"Bennett\",\"Cook\",\"Webb\",\"Bailey\",\"Scott\",\"Jackson\",\"Lee\",\"Cox\"];\n         \n         \n\nvar database = [];\n\nfor(let i = 1; i <= 30; i++) {\n    var item = {\"id\":i, \"timestamp\":Date.now()};\n    item.foreName = randomFirstname();\n    item.sirName = randomSirname();\n    item.userID = \"U\" + randomInt(1000, 2999);\n    item.age = randomInt(20, 65);\n    database.push(item);\n}\n\n\nfunction randomFirstname() {\n   return firstNames[randomInt(0, firstNames.length-1)];\n}\n\nfunction randomSirname() {\n    return sirNames[randomInt(0, sirNames.length-1)];\n}\n\nfunction randomInt(min, max) { \n  return Math.floor(Math.random() * (max - min + 1) + min);\n}\n\nflow.set(\"database\", database);\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 548,
-        "y": 176,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "3b023f12.50205",
-        "type": "inject",
-        "z": "d293a890379c9923",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 271,
-        "y": 176,
-        "wires": [
-            [
-                "a2dfdc4a.dc161"
-            ]
-        ],
-        "l": false
-    },
-    {
-        "id": "de0d507c.2e3c6",
-        "type": "function",
-        "z": "d293a890379c9923",
-        "name": "update-query",
-        "func": "\nvar database = flow.get(\"database\") || [];\n\nvar item = database.find(e => e.id == msg.payload.id );\n\nif(msg.payload.foreName == \"\" || msg.payload.sirName == \"\" || msg.payload.userID == \"\") {\n    msg.statusCode = 400;\n    msg.payload = null;\n    return msg;\n}\n\nif(item) {\n    item.foreName = msg.payload.foreName;\n    item.sirName = msg.payload.sirName;\n    item.age = msg.payload.age;\n    item.userID = msg.payload.userID;\n    flow.set(\"database\", database);\n} else {\n    msg.statusCode = 404;//not found\n    msg.payload = null;\n    return msg;\n}\nmsg.payload = item;\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 502,
-        "y": 320,
-        "wires": [
-            [
-                "80b7d10e.159df"
-            ]
-        ]
-    },
-    {
-        "id": "9ca4b651.6f2aa8",
-        "type": "function",
-        "z": "d293a890379c9923",
-        "name": "insert-query",
-        "func": "var database = flow.get(\"database\") || [];\nvar nextID = Math.max.apply(Math, database.map(function(o) { return o.id; })) + 1;\nvar item = {\n    id: nextID,\n    timestamp: Date.now(),\n    foreName : msg.payload.foreName,\n    sirName : msg.payload.sirName,\n    age : msg.payload.age,\n    userID : msg.payload.userID,\n}\n\nif(item.foreName == \"\" || item.sirName == \"\" || item.userID == \"\") {\n    msg.statusCode = 400;\n    msg.payload = null;\n    return msg;\n}\n\ndatabase.push(item);\nflow.set(\"database\", database);\n\nmsg.payload = item;\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 502,
-        "y": 384,
-        "wires": [
-            [
-                "66d97ed7.39f1c"
-            ]
-        ]
-    },
-    {
-        "id": "fe020366.04d91",
-        "type": "function",
-        "z": "d293a890379c9923",
-        "name": "delete-query",
-        "func": "\nvar database = flow.get(\"database\") || [];\n\ndatabase = database.filter(function( obj ) {\n    return obj.id != msg.payload.id;\n});\n\nflow.set(\"database\", database);\n\nmsg.payload = database;\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 502,
-        "y": 448,
-        "wires": [
-            [
-                "17b5b5c4.a8a7b2"
-            ]
-        ]
-    },
-    {
-        "id": "5a339947.2e2cf8",
-        "type": "function",
-        "z": "d293a890379c9923",
-        "name": "get database",
-        "func": "\nvar database = flow.get(\"database\") || [];\nmsg.payload = database;\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 502,
-        "y": 256,
-        "wires": [
-            [
-                "43fff851.e2c7f8"
-            ]
-        ]
-    },
-    {
-        "id": "43fff851.e2c7f8",
-        "type": "json",
-        "z": "d293a890379c9923",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 658,
-        "y": 256,
-        "wires": [
-            [
-                "a8dde467.e5dcd8"
-            ]
-        ]
+        "id": "14e0290e2bea4e8c",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "opc.tcp://150.162.14.27:4840",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
     },
     {
         "id": "b3167a04a4347352",
@@ -291,11 +28,11 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 300,
-        "y": 260,
+        "x": 160,
+        "y": 620,
         "wires": [
             [
-                "f9218c6d85ee5484"
+                "b9c0c8cc76eaf506"
             ]
         ]
     },
@@ -306,41 +43,23 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 990,
+        "x": 910,
         "y": 260,
         "wires": []
-    },
-    {
-        "id": "97f80a11c9c65983",
-        "type": "function",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "change-conveyor-status",
-        "func": "// Retorna o valor recebido\nmsg.payload = { value: msg.payload };\nconsole.log(msg.payload.value)\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 610,
-        "y": 420,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "f9218c6d85ee5484",
         "type": "file",
         "z": "0008fcf0ac8e3fc4",
         "name": "",
-        "filename": "/home/aawz/.node-red/data/mainConveyor.txt",
+        "filename": "",
         "filenameType": "str",
-        "appendNewline": true,
+        "appendNewline": false,
         "createDir": false,
-        "overwriteFile": "true",
+        "overwriteFile": "false",
         "encoding": "none",
-        "x": 630,
-        "y": 260,
+        "x": 580,
+        "y": 120,
         "wires": [
             [
                 "c10fc7857031d826"
@@ -356,11 +75,11 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 320,
-        "y": 320,
+        "x": 140,
+        "y": 440,
         "wires": [
             [
-                "0e0755a698733018"
+                "a961b59b528f1362"
             ]
         ]
     },
@@ -391,8 +110,252 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 990,
+        "x": 910,
         "y": 320,
+        "wires": []
+    },
+    {
+        "id": "0c06c7ef740f289b",
+        "type": "function",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "function 1",
+        "func": "// Obtenha o diretório atual de onde o Node-RED está executando\nconst baseDir = process.env.NODE_RED_HOME || __dirname;\n\n// Construa o caminho para o arquivo file.txt\nconst filePath = `${baseDir}/data/file.txt`;\n\n// Defina o caminho no msg.filename\nmsg.filename = filePath;\n\n// Não sobrescreva msg.payload, que já contém os dados da POST\n// Caso queira adicionar algum texto antes, pode fazer assim:\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 260,
+        "wires": [
+            [
+                "f9218c6d85ee5484"
+            ]
+        ]
+    },
+    {
+        "id": "a961b59b528f1362",
+        "type": "OpcUa-Item",
+        "z": "0008fcf0ac8e3fc4",
+        "item": "ns=4;i=2",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 400,
+        "y": 500,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "17c7057090b2d153",
+        "type": "OpcUa-Client",
+        "z": "0008fcf0ac8e3fc4",
+        "endpoint": "14e0290e2bea4e8c",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "",
+        "x": 600,
+        "y": 500,
+        "wires": [
+            [
+                "cb1c983261db0b83",
+                "ad2e6a82219b9515"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7a9d55ba0cba4aba",
+        "type": "inject",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 500,
+        "wires": [
+            [
+                "a961b59b528f1362"
+            ]
+        ]
+    },
+    {
+        "id": "cb1c983261db0b83",
+        "type": "debug",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "08f42bf24c561626",
+        "type": "http response",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 890,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "ad2e6a82219b9515",
+        "type": "json",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 750,
+        "y": 440,
+        "wires": [
+            [
+                "08f42bf24c561626"
+            ]
+        ]
+    },
+    {
+        "id": "b9c0c8cc76eaf506",
+        "type": "OpcUa-Item",
+        "z": "0008fcf0ac8e3fc4",
+        "item": "ns=4;i=2",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 400,
+        "y": 680,
+        "wires": [
+            [
+                "ce3f6ea078daf688"
+            ]
+        ]
+    },
+    {
+        "id": "ce3f6ea078daf688",
+        "type": "OpcUa-Client",
+        "z": "0008fcf0ac8e3fc4",
+        "endpoint": "14e0290e2bea4e8c",
+        "action": "write",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "",
+        "x": 600,
+        "y": 680,
+        "wires": [
+            [
+                "a1ab53647f7916b3",
+                "df9b6ea2fda7202d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "01f3fa6e17663c76",
+        "type": "inject",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "true",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 680,
+        "wires": [
+            [
+                "b9c0c8cc76eaf506"
+            ]
+        ]
+    },
+    {
+        "id": "a1ab53647f7916b3",
+        "type": "debug",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "df9b6ea2fda7202d",
+        "type": "http response",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 890,
+        "y": 660,
         "wires": []
     }
 ]
