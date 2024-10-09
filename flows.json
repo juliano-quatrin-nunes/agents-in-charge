@@ -52,9 +52,44 @@
         "color": "#DDAA99"
     },
     {
+        "id": "1a29c5eb11ee4ae1",
+        "type": "subflow",
+        "name": "Send Bad Request",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "d90610f48c819e2e"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "14e0290e2bea4e8c",
         "type": "OpcUa-Endpoint",
         "endpoint": "opc.tcp://150.162.14.27:4840",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
+    },
+    {
+        "id": "5eef420cd0425bb0",
+        "type": "OpcUa-Endpoint",
+        "z": "3b54fe11238dcaed",
+        "endpoint": "opc.tcp://Bridge:53530/OPCUA/SimulationServer",
         "secpol": "None",
         "secmode": "None",
         "none": true,
@@ -72,11 +107,11 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 200,
-        "y": 80,
+        "x": 60,
+        "y": 200,
         "wires": [
             [
-                "95131e188b58964e"
+                "4ae7398ac61c5732"
             ]
         ]
     },
@@ -88,8 +123,8 @@
         "datatype": "Boolean",
         "value": "",
         "name": "",
-        "x": 540,
-        "y": 120,
+        "x": 600,
+        "y": 200,
         "wires": [
             [
                 "ce3f6ea078daf688"
@@ -117,8 +152,8 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "",
-        "x": 720,
-        "y": 120,
+        "x": 780,
+        "y": 200,
         "wires": [
             [
                 "e8ced68061e96677"
@@ -143,28 +178,8 @@
         "topic": "",
         "payload": "false",
         "payloadType": "str",
-        "x": 210,
-        "y": 120,
-        "wires": [
-            [
-                "b9c0c8cc76eaf506"
-            ]
-        ]
-    },
-    {
-        "id": "95131e188b58964e",
-        "type": "function",
-        "z": "3b54fe11238dcaed",
-        "name": "payload",
-        "func": "msg.payload = msg.req.body.value;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 360,
-        "y": 80,
+        "x": 370,
+        "y": 20,
         "wires": [
             [
                 "b9c0c8cc76eaf506"
@@ -179,8 +194,8 @@
         "datatype": "Boolean",
         "value": "",
         "name": "",
-        "x": 920,
-        "y": 160,
+        "x": 980,
+        "y": 240,
         "wires": [
             [
                 "cb7ef1c3f473e5da"
@@ -191,7 +206,7 @@
         "id": "cb7ef1c3f473e5da",
         "type": "OpcUa-Client",
         "z": "3b54fe11238dcaed",
-        "endpoint": "14e0290e2bea4e8c",
+        "endpoint": "5eef420cd0425bb0",
         "action": "read",
         "deadbandtype": "a",
         "deadbandvalue": 1,
@@ -208,8 +223,8 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "",
-        "x": 1120,
-        "y": 160,
+        "x": 1180,
+        "y": 240,
         "wires": [
             [
                 "2fbf8dac450c8cdc"
@@ -229,8 +244,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1150,
-        "y": 220,
+        "x": 1410,
+        "y": 240,
         "wires": [
             [
                 "df9b6ea2fda7202d"
@@ -244,8 +259,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1270,
-        "y": 300,
+        "x": 1590,
+        "y": 240,
         "wires": []
     },
     {
@@ -254,8 +269,8 @@
         "z": "3b54fe11238dcaed",
         "name": "recupera o estado do componente",
         "info": "OPC UA Cliente sempre retorna\num \"payload: 0\", independente do que é\npassado.\n\nAssim é feito um 'get' do estado\npara retornar se o estado do componente\nmudou de fato",
-        "x": 1020,
-        "y": 120,
+        "x": 1080,
+        "y": 200,
         "wires": []
     },
     {
@@ -264,8 +279,72 @@
         "z": "3b54fe11238dcaed",
         "name": "altera o estado do componente",
         "info": "",
-        "x": 630,
-        "y": 80,
+        "x": 690,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "4ae7398ac61c5732",
+        "type": "function",
+        "z": "3b54fe11238dcaed",
+        "name": "payload",
+        "func": "msg.payload = msg.req.body.value;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "ab68424856c22849"
+            ]
+        ]
+    },
+    {
+        "id": "ab68424856c22849",
+        "type": "switch",
+        "z": "3b54fe11238dcaed",
+        "name": "validate",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 360,
+        "y": 200,
+        "wires": [
+            [
+                "b9c0c8cc76eaf506"
+            ],
+            [
+                "b9c0c8cc76eaf506"
+            ],
+            [
+                "4c38741330d8e4f4"
+            ]
+        ]
+    },
+    {
+        "id": "4c38741330d8e4f4",
+        "type": "subflow:1a29c5eb11ee4ae1",
+        "z": "3b54fe11238dcaed",
+        "name": "Send Bad Request",
+        "x": 650,
+        "y": 360,
         "wires": []
     },
     {
@@ -408,6 +487,36 @@
         "x": 190,
         "y": 80,
         "wires": []
+    },
+    {
+        "id": "6afc88ee26fba6ac",
+        "type": "http response",
+        "z": "1a29c5eb11ee4ae1",
+        "name": "Bad request",
+        "statusCode": "400",
+        "headers": {},
+        "x": 410,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d90610f48c819e2e",
+        "type": "template",
+        "z": "1a29c5eb11ee4ae1",
+        "name": "Prepare Response",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"value\": {{payload}},\n    \"message\": \"Valor não é do tipo esperado.\"\n}",
+        "output": "json",
+        "x": 230,
+        "y": 80,
+        "wires": [
+            [
+                "6afc88ee26fba6ac"
+            ]
+        ]
     },
     {
         "id": "bc5bf8f6432d32df",
