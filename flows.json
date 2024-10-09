@@ -8,6 +8,14 @@
         "env": []
     },
     {
+        "id": "3ed6860563e1d5fc",
+        "type": "tab",
+        "label": "TesteAPi",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "14e0290e2bea4e8c",
         "type": "OpcUa-Endpoint",
         "endpoint": "opc.tcp://150.162.14.27:4840",
@@ -24,15 +32,15 @@
         "type": "http in",
         "z": "0008fcf0ac8e3fc4",
         "name": "post status",
-        "url": "/separating/mainConveyor",
+        "url": "/separating/discardDiverter",
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 160,
-        "y": 620,
+        "x": 60,
+        "y": 680,
         "wires": [
             [
-                "b9c0c8cc76eaf506"
+                "95131e188b58964e"
             ]
         ]
     },
@@ -175,10 +183,11 @@
         "y": 500,
         "wires": [
             [
-                "cb1c983261db0b83",
-                "ad2e6a82219b9515"
+                "4f67abc41e51a106"
             ],
-            []
+            [
+                "cb1c983261db0b83"
+            ]
         ]
     },
     {
@@ -223,7 +232,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 800,
+        "x": 820,
         "y": 540,
         "wires": []
     },
@@ -234,25 +243,9 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 890,
-        "y": 480,
+        "x": 970,
+        "y": 460,
         "wires": []
-    },
-    {
-        "id": "ad2e6a82219b9515",
-        "type": "json",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 750,
-        "y": 440,
-        "wires": [
-            [
-                "08f42bf24c561626"
-            ]
-        ]
     },
     {
         "id": "b9c0c8cc76eaf506",
@@ -262,7 +255,7 @@
         "datatype": "Boolean",
         "value": "",
         "name": "",
-        "x": 400,
+        "x": 460,
         "y": 680,
         "wires": [
             [
@@ -291,7 +284,7 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "",
-        "x": 600,
+        "x": 660,
         "y": 680,
         "wires": [
             [
@@ -309,21 +302,17 @@
         "props": [
             {
                 "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
             }
         ],
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "true",
-        "payload": "",
-        "payloadType": "date",
-        "x": 180,
-        "y": 680,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "str",
+        "x": 270,
+        "y": 780,
         "wires": [
             [
                 "b9c0c8cc76eaf506"
@@ -339,11 +328,11 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 800,
+        "x": 860,
         "y": 720,
         "wires": []
     },
@@ -357,5 +346,138 @@
         "x": 890,
         "y": 660,
         "wires": []
+    },
+    {
+        "id": "4f67abc41e51a106",
+        "type": "function",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "function 3",
+        "func": "msg.payload = { \"status\": msg.payload };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 460,
+        "wires": [
+            [
+                "08f42bf24c561626"
+            ]
+        ]
+    },
+    {
+        "id": "95131e188b58964e",
+        "type": "function",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "function 4",
+        "func": "msg.payload = msg.req.body.value;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 680,
+        "wires": [
+            [
+                "b9c0c8cc76eaf506"
+            ]
+        ]
+    },
+    {
+        "id": "64ec626b5718298f",
+        "type": "http in",
+        "z": "3ed6860563e1d5fc",
+        "name": "",
+        "url": "/api/test",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "02952edc7f44ab70",
+                "4407052da14e8443"
+            ]
+        ]
+    },
+    {
+        "id": "02952edc7f44ab70",
+        "type": "debug",
+        "z": "3ed6860563e1d5fc",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "9dcd89b5bc7ad504",
+        "type": "http response",
+        "z": "3ed6860563e1d5fc",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1000,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "4407052da14e8443",
+        "type": "change",
+        "z": "3ed6860563e1d5fc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "413ea6d2aed6c3f5"
+            ]
+        ]
+    },
+    {
+        "id": "413ea6d2aed6c3f5",
+        "type": "function",
+        "z": "3ed6860563e1d5fc",
+        "name": "function 2",
+        "func": "msg.payload = { \"status\": msg.payload };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 280,
+        "wires": [
+            [
+                "9dcd89b5bc7ad504"
+            ]
+        ]
     }
 ]
