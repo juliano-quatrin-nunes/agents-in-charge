@@ -2,7 +2,7 @@
     {
         "id": "0008fcf0ac8e3fc4",
         "type": "tab",
-        "label": "Discard Diverter Module",
+        "label": "Main",
         "disabled": false,
         "info": "",
         "env": []
@@ -18,26 +18,38 @@
     {
         "id": "3b54fe11238dcaed",
         "type": "subflow",
-        "name": "Subflow 1",
+        "name": "discard_diverter_post",
         "info": "",
+        "category": "",
         "in": [],
-        "out": []
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
     },
     {
         "id": "501e718aecea2ca7",
         "type": "subflow",
-        "name": "Subflow 2",
+        "name": "discard_diverter_get",
         "info": "",
+        "category": "",
         "in": [],
-        "out": []
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
     },
     {
         "id": "1f735b7c1ec2a540",
         "type": "subflow",
-        "name": "Subflow 3",
+        "name": "endpoint_discard_diverter_module",
         "info": "",
+        "category": "",
         "in": [],
-        "out": []
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
     },
     {
         "id": "14e0290e2bea4e8c",
