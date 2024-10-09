@@ -16,14 +16,6 @@
         "env": []
     },
     {
-        "id": "3ed6860563e1d5fc",
-        "type": "tab",
-        "label": "TesteAPi",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "14e0290e2bea4e8c",
         "type": "OpcUa-Endpoint",
         "endpoint": "opc.tcp://150.162.14.27:4840",
@@ -44,41 +36,11 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 60,
-        "y": 680,
+        "x": 200,
+        "y": 560,
         "wires": [
             [
                 "95131e188b58964e"
-            ]
-        ]
-    },
-    {
-        "id": "c10fc7857031d826",
-        "type": "http response",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 910,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "f9218c6d85ee5484",
-        "type": "file",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "",
-        "filename": "",
-        "filenameType": "str",
-        "appendNewline": false,
-        "createDir": false,
-        "overwriteFile": "false",
-        "encoding": "none",
-        "x": 580,
-        "y": 120,
-        "wires": [
-            [
-                "c10fc7857031d826"
             ]
         ]
     },
@@ -91,62 +53,11 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 140,
-        "y": 440,
+        "x": 200,
+        "y": 300,
         "wires": [
             [
                 "a961b59b528f1362"
-            ]
-        ]
-    },
-    {
-        "id": "0e0755a698733018",
-        "type": "file in",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "",
-        "filename": "/home/aawz/.node-red/data/mainConveyor.txt",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 630,
-        "y": 320,
-        "wires": [
-            [
-                "2ea2b427facd83e1"
-            ]
-        ]
-    },
-    {
-        "id": "2ea2b427facd83e1",
-        "type": "http response",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 910,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "0c06c7ef740f289b",
-        "type": "function",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "function 1",
-        "func": "// Obtenha o diretório atual de onde o Node-RED está executando\nconst baseDir = process.env.NODE_RED_HOME || __dirname;\n\n// Construa o caminho para o arquivo file.txt\nconst filePath = ${baseDir}/data/file.txt;\n\n// Defina o caminho no msg.filename\nmsg.filename = filePath;\n\n// Não sobrescreva msg.payload, que já contém os dados da POST\n// Caso queira adicionar algum texto antes, pode fazer assim:\n\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 540,
-        "y": 260,
-        "wires": [
-            [
-                "f9218c6d85ee5484"
             ]
         ]
     },
@@ -158,8 +69,8 @@
         "datatype": "Boolean",
         "value": "",
         "name": "",
-        "x": 400,
-        "y": 500,
+        "x": 460,
+        "y": 360,
         "wires": [
             [
                 "17c7057090b2d153"
@@ -187,8 +98,8 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "",
-        "x": 600,
-        "y": 500,
+        "x": 660,
+        "y": 360,
         "wires": [
             [
                 "4f67abc41e51a106"
@@ -219,8 +130,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 160,
-        "y": 500,
+        "x": 220,
+        "y": 360,
         "wires": [
             [
                 "a961b59b528f1362"
@@ -240,8 +151,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 820,
-        "y": 540,
+        "x": 880,
+        "y": 400,
         "wires": []
     },
     {
@@ -251,8 +162,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 970,
-        "y": 460,
+        "x": 1030,
+        "y": 320,
         "wires": []
     },
     {
@@ -263,8 +174,8 @@
         "datatype": "Boolean",
         "value": "",
         "name": "",
-        "x": 460,
-        "y": 680,
+        "x": 600,
+        "y": 560,
         "wires": [
             [
                 "ce3f6ea078daf688"
@@ -292,8 +203,8 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "",
-        "x": 660,
-        "y": 680,
+        "x": 800,
+        "y": 560,
         "wires": [
             [
                 "a1ab53647f7916b3",
@@ -319,8 +230,8 @@
         "topic": "",
         "payload": "false",
         "payloadType": "str",
-        "x": 270,
-        "y": 780,
+        "x": 410,
+        "y": 660,
         "wires": [
             [
                 "b9c0c8cc76eaf506"
@@ -340,8 +251,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 860,
-        "y": 720,
+        "x": 1000,
+        "y": 600,
         "wires": []
     },
     {
@@ -351,8 +262,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 890,
-        "y": 660,
+        "x": 1030,
+        "y": 540,
         "wires": []
     },
     {
@@ -367,8 +278,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 820,
-        "y": 460,
+        "x": 880,
+        "y": 320,
         "wires": [
             [
                 "08f42bf24c561626"
@@ -387,8 +298,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 260,
-        "y": 680,
+        "x": 400,
+        "y": 560,
         "wires": [
             [
                 "b9c0c8cc76eaf506"
