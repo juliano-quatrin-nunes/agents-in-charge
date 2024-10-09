@@ -2,7 +2,15 @@
     {
         "id": "0008fcf0ac8e3fc4",
         "type": "tab",
-        "label": "SeparatingMainConveyor",
+        "label": "Discard Diverter Module",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3ed6860563e1d5fc",
+        "type": "tab",
+        "label": "TesteAPi",
         "disabled": false,
         "info": "",
         "env": []
@@ -79,7 +87,7 @@
         "type": "http in",
         "z": "0008fcf0ac8e3fc4",
         "name": "get status",
-        "url": "/separating/mainConveyor",
+        "url": "/separating/discardDiverter",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
@@ -127,7 +135,7 @@
         "type": "function",
         "z": "0008fcf0ac8e3fc4",
         "name": "function 1",
-        "func": "// Obtenha o diretório atual de onde o Node-RED está executando\nconst baseDir = process.env.NODE_RED_HOME || __dirname;\n\n// Construa o caminho para o arquivo file.txt\nconst filePath = `${baseDir}/data/file.txt`;\n\n// Defina o caminho no msg.filename\nmsg.filename = filePath;\n\n// Não sobrescreva msg.payload, que já contém os dados da POST\n// Caso queira adicionar algum texto antes, pode fazer assim:\n\nreturn msg;\n",
+        "func": "// Obtenha o diretório atual de onde o Node-RED está executando\nconst baseDir = process.env.NODE_RED_HOME || __dirname;\n\n// Construa o caminho para o arquivo file.txt\nconst filePath = ${baseDir}/data/file.txt;\n\n// Defina o caminho no msg.filename\nmsg.filename = filePath;\n\n// Não sobrescreva msg.payload, que já contém os dados da POST\n// Caso queira adicionar algum texto antes, pode fazer assim:\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
