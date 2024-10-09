@@ -16,6 +16,30 @@
         "env": []
     },
     {
+        "id": "3b54fe11238dcaed",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
+        "id": "501e718aecea2ca7",
+        "type": "subflow",
+        "name": "Subflow 2",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
+        "id": "1f735b7c1ec2a540",
+        "type": "subflow",
+        "name": "Subflow 3",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
         "id": "14e0290e2bea4e8c",
         "type": "OpcUa-Endpoint",
         "endpoint": "opc.tcp://150.162.14.27:4840",
@@ -30,14 +54,14 @@
     {
         "id": "b3167a04a4347352",
         "type": "http in",
-        "z": "0008fcf0ac8e3fc4",
+        "z": "3b54fe11238dcaed",
         "name": "post status",
         "url": "/separating/discardDiverter",
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
         "x": 200,
-        "y": 560,
+        "y": 80,
         "wires": [
             [
                 "95131e188b58964e"
@@ -45,137 +69,15 @@
         ]
     },
     {
-        "id": "0b7991cfc665dd32",
-        "type": "http in",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "get status",
-        "url": "/separating/discardDiverter",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 200,
-        "y": 300,
-        "wires": [
-            [
-                "a961b59b528f1362"
-            ]
-        ]
-    },
-    {
-        "id": "a961b59b528f1362",
-        "type": "OpcUa-Item",
-        "z": "0008fcf0ac8e3fc4",
-        "item": "ns=4;i=2",
-        "datatype": "Boolean",
-        "value": "",
-        "name": "",
-        "x": 460,
-        "y": 360,
-        "wires": [
-            [
-                "17c7057090b2d153"
-            ]
-        ]
-    },
-    {
-        "id": "17c7057090b2d153",
-        "type": "OpcUa-Client",
-        "z": "0008fcf0ac8e3fc4",
-        "endpoint": "14e0290e2bea4e8c",
-        "action": "read",
-        "deadbandtype": "a",
-        "deadbandvalue": 1,
-        "time": 10,
-        "timeUnit": "s",
-        "certificate": "n",
-        "localfile": "",
-        "localkeyfile": "",
-        "securitymode": "None",
-        "securitypolicy": "None",
-        "useTransport": false,
-        "maxChunkCount": 1,
-        "maxMessageSize": 8192,
-        "receiveBufferSize": 8192,
-        "sendBufferSize": 8192,
-        "name": "",
-        "x": 660,
-        "y": 360,
-        "wires": [
-            [
-                "4f67abc41e51a106"
-            ],
-            [
-                "cb1c983261db0b83"
-            ]
-        ]
-    },
-    {
-        "id": "7a9d55ba0cba4aba",
-        "type": "inject",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 220,
-        "y": 360,
-        "wires": [
-            [
-                "a961b59b528f1362"
-            ]
-        ]
-    },
-    {
-        "id": "cb1c983261db0b83",
-        "type": "debug",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 880,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "08f42bf24c561626",
-        "type": "http response",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 1030,
-        "y": 320,
-        "wires": []
-    },
-    {
         "id": "b9c0c8cc76eaf506",
         "type": "OpcUa-Item",
-        "z": "0008fcf0ac8e3fc4",
+        "z": "3b54fe11238dcaed",
         "item": "ns=4;i=2",
         "datatype": "Boolean",
         "value": "",
         "name": "",
-        "x": 600,
-        "y": 560,
+        "x": 540,
+        "y": 120,
         "wires": [
             [
                 "ce3f6ea078daf688"
@@ -185,7 +87,7 @@
     {
         "id": "ce3f6ea078daf688",
         "type": "OpcUa-Client",
-        "z": "0008fcf0ac8e3fc4",
+        "z": "3b54fe11238dcaed",
         "endpoint": "14e0290e2bea4e8c",
         "action": "write",
         "deadbandtype": "a",
@@ -203,12 +105,11 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "",
-        "x": 800,
-        "y": 560,
+        "x": 720,
+        "y": 120,
         "wires": [
             [
-                "a1ab53647f7916b3",
-                "df9b6ea2fda7202d"
+                "e8ced68061e96677"
             ],
             []
         ]
@@ -216,7 +117,7 @@
     {
         "id": "01f3fa6e17663c76",
         "type": "inject",
-        "z": "0008fcf0ac8e3fc4",
+        "z": "3b54fe11238dcaed",
         "name": "",
         "props": [
             {
@@ -230,8 +131,8 @@
         "topic": "",
         "payload": "false",
         "payloadType": "str",
-        "x": 410,
-        "y": 660,
+        "x": 210,
+        "y": 120,
         "wires": [
             [
                 "b9c0c8cc76eaf506"
@@ -239,58 +140,10 @@
         ]
     },
     {
-        "id": "a1ab53647f7916b3",
-        "type": "debug",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1000,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "df9b6ea2fda7202d",
-        "type": "http response",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 1030,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "4f67abc41e51a106",
-        "type": "function",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "function 3",
-        "func": "msg.payload = { \"status\": msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 880,
-        "y": 320,
-        "wires": [
-            [
-                "08f42bf24c561626"
-            ]
-        ]
-    },
-    {
         "id": "95131e188b58964e",
         "type": "function",
-        "z": "0008fcf0ac8e3fc4",
-        "name": "function 4",
+        "z": "3b54fe11238dcaed",
+        "name": "payload",
         "func": "msg.payload = msg.req.body.value;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
@@ -298,13 +151,260 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 560,
+        "x": 360,
+        "y": 80,
         "wires": [
             [
                 "b9c0c8cc76eaf506"
             ]
         ]
+    },
+    {
+        "id": "e8ced68061e96677",
+        "type": "OpcUa-Item",
+        "z": "3b54fe11238dcaed",
+        "item": "ns=4;i=2",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 920,
+        "y": 160,
+        "wires": [
+            [
+                "cb7ef1c3f473e5da"
+            ]
+        ]
+    },
+    {
+        "id": "cb7ef1c3f473e5da",
+        "type": "OpcUa-Client",
+        "z": "3b54fe11238dcaed",
+        "endpoint": "14e0290e2bea4e8c",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "",
+        "x": 1120,
+        "y": 160,
+        "wires": [
+            [
+                "2fbf8dac450c8cdc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2fbf8dac450c8cdc",
+        "type": "function",
+        "z": "3b54fe11238dcaed",
+        "name": "prepare_response",
+        "func": "msg.payload = { \"status\": msg.payload };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 220,
+        "wires": [
+            [
+                "df9b6ea2fda7202d"
+            ]
+        ]
+    },
+    {
+        "id": "df9b6ea2fda7202d",
+        "type": "http response",
+        "z": "3b54fe11238dcaed",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1270,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "60552216b3504c5a",
+        "type": "comment",
+        "z": "3b54fe11238dcaed",
+        "name": "recupera o estado do componente",
+        "info": "OPC UA Cliente sempre retorna\num \"payload: 0\", independente do que é\npassado.\n\nAssim é feito um 'get' do estado\npara retornar se o estado do componente\nmudou de fato",
+        "x": 1020,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "31402a45caf73a3b",
+        "type": "comment",
+        "z": "3b54fe11238dcaed",
+        "name": "altera o estado do componente",
+        "info": "",
+        "x": 630,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "0b7991cfc665dd32",
+        "type": "http in",
+        "z": "501e718aecea2ca7",
+        "name": "get status",
+        "url": "/separating/discardDiverter",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "a961b59b528f1362"
+            ]
+        ]
+    },
+    {
+        "id": "a961b59b528f1362",
+        "type": "OpcUa-Item",
+        "z": "501e718aecea2ca7",
+        "item": "ns=4;i=2",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 420,
+        "y": 100,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "17c7057090b2d153",
+        "type": "OpcUa-Client",
+        "z": "501e718aecea2ca7",
+        "endpoint": "14e0290e2bea4e8c",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "",
+        "x": 620,
+        "y": 100,
+        "wires": [
+            [
+                "4f67abc41e51a106"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7a9d55ba0cba4aba",
+        "type": "inject",
+        "z": "501e718aecea2ca7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 120,
+        "wires": [
+            [
+                "a961b59b528f1362"
+            ]
+        ]
+    },
+    {
+        "id": "08f42bf24c561626",
+        "type": "http response",
+        "z": "501e718aecea2ca7",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1010,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4f67abc41e51a106",
+        "type": "function",
+        "z": "501e718aecea2ca7",
+        "name": "prepare_response",
+        "func": "msg.payload = { \"status\": msg.payload };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 100,
+        "wires": [
+            [
+                "08f42bf24c561626"
+            ]
+        ]
+    },
+    {
+        "id": "9bac4cf327fd1c4c",
+        "type": "subflow:3b54fe11238dcaed",
+        "z": "1f735b7c1ec2a540",
+        "name": "post",
+        "x": 190,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "3906a6a6ab0a6293",
+        "type": "subflow:501e718aecea2ca7",
+        "z": "1f735b7c1ec2a540",
+        "name": "get",
+        "x": 190,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "bc5bf8f6432d32df",
+        "type": "subflow:1f735b7c1ec2a540",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "endpoint_discard_diverter_module",
+        "x": 400,
+        "y": 340,
+        "wires": []
     },
     {
         "id": "64ec626b5718298f",
