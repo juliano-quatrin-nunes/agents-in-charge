@@ -8,7 +8,7 @@
         "env": [
             {
                 "name": "opc_endpoint",
-                "value": "opc.tcp://Bridge:53530/OPCUA/SimulationServer",
+                "value": "opc.tcp://150.162.14.27:4840",
                 "type": "str"
             }
         ]
@@ -25,7 +25,7 @@
             {
                 "name": "node_id",
                 "type": "str",
-                "value": "ns=3;i=1007"
+                "value": "ns=4;i=2"
             }
         ],
         "meta": {},
@@ -134,6 +134,24 @@
         "usercert": false,
         "usercertificate": "",
         "userprivatekey": ""
+    },
+    {
+        "id": "69d845c11d15f13f",
+        "type": "websocket-listener",
+        "z": "1f735b7c1ec2a540",
+        "path": "/ws/separating/discardDiverter",
+        "wholemsg": "false"
+    },
+    {
+        "id": "dbd529ba3fdb4f4e",
+        "type": "websocket-client",
+        "z": "1f735b7c1ec2a540",
+        "path": "",
+        "tls": "",
+        "wholemsg": "false",
+        "hb": "0",
+        "subprotocol": "",
+        "headers": []
     },
     {
         "id": "0b7991cfc665dd32",
@@ -445,6 +463,404 @@
         "z": "1f735b7c1ec2a540",
         "x": 1080,
         "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b086d1fca168efa8",
+        "type": "OpcUa-Item",
+        "z": "1f735b7c1ec2a540",
+        "item": "${node_id}",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 740,
+        "y": 580,
+        "wires": [
+            [
+                "7d643f2ee3ab610a"
+            ]
+        ]
+    },
+    {
+        "id": "7d643f2ee3ab610a",
+        "type": "OpcUa-Client",
+        "z": "1f735b7c1ec2a540",
+        "endpoint": "c2fd6ea3cc083b70",
+        "action": "subscribe",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "1",
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "Client Subscribe",
+        "x": 960,
+        "y": 580,
+        "wires": [
+            [
+                "e6830508d6db9ef0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "395a1f6725999c1a",
+        "type": "comment",
+        "z": "1f735b7c1ec2a540",
+        "name": "recupera o estado do componente",
+        "info": "OPC UA Cliente sempre retorna\num \"payload: 0\", independente do que é\npassado.\n\nAssim é feito um 'get' do estado\npara retornar se o estado do componente\nmudou de fato",
+        "x": 847.7777709960938,
+        "y": 525.5555534362793,
+        "wires": []
+    },
+    {
+        "id": "e6830508d6db9ef0",
+        "type": "websocket out",
+        "z": "1f735b7c1ec2a540",
+        "name": "",
+        "server": "69d845c11d15f13f",
+        "client": "",
+        "x": 1220,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "e4512e9f933ea44d",
+        "type": "websocket in",
+        "z": "1f735b7c1ec2a540",
+        "name": "Subscribe on",
+        "server": "69d845c11d15f13f",
+        "client": "",
+        "x": 70,
+        "y": 600,
+        "wires": [
+            [
+                "33500f3a8ceb48e6"
+            ]
+        ]
+    },
+    {
+        "id": "a16205b60bddb11e",
+        "type": "OpcUa-Item",
+        "z": "1f735b7c1ec2a540",
+        "item": "${node_id}",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 740,
+        "y": 640,
+        "wires": [
+            [
+                "220dcbb6455d1977"
+            ]
+        ]
+    },
+    {
+        "id": "220dcbb6455d1977",
+        "type": "OpcUa-Client",
+        "z": "1f735b7c1ec2a540",
+        "endpoint": "c2fd6ea3cc083b70",
+        "action": "unsubscribe",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "1",
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "Client Unsubscribe",
+        "x": 970,
+        "y": 640,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "33500f3a8ceb48e6",
+        "type": "json",
+        "z": "1f735b7c1ec2a540",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 230,
+        "y": 600,
+        "wires": [
+            [
+                "819ba519bbe9235d"
+            ]
+        ]
+    },
+    {
+        "id": "819ba519bbe9235d",
+        "type": "switch",
+        "z": "1f735b7c1ec2a540",
+        "name": "",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "subscribe",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "unsubscribe",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "read",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "write",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 390,
+        "y": 600,
+        "wires": [
+            [
+                "b086d1fca168efa8"
+            ],
+            [
+                "a16205b60bddb11e"
+            ],
+            [
+                "eb08fa54eebe8311"
+            ],
+            [
+                "b8b53ed4e2acfa62"
+            ]
+        ]
+    },
+    {
+        "id": "eb08fa54eebe8311",
+        "type": "OpcUa-Item",
+        "z": "1f735b7c1ec2a540",
+        "item": "${node_id}",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 740,
+        "y": 720,
+        "wires": [
+            [
+                "4524420de44f08b5"
+            ]
+        ]
+    },
+    {
+        "id": "4524420de44f08b5",
+        "type": "OpcUa-Client",
+        "z": "1f735b7c1ec2a540",
+        "endpoint": "c2fd6ea3cc083b70",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "Client Read",
+        "x": 950,
+        "y": 720,
+        "wires": [
+            [
+                "912d7b42a69cf36e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "912d7b42a69cf36e",
+        "type": "websocket out",
+        "z": "1f735b7c1ec2a540",
+        "name": "",
+        "server": "69d845c11d15f13f",
+        "client": "",
+        "x": 1220,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "6a8fd81d9764de4b",
+        "type": "comment",
+        "z": "1f735b7c1ec2a540",
+        "name": "recupera o estado do componente",
+        "info": "OPC UA Cliente sempre retorna\num \"payload: 0\", independente do que é\npassado.\n\nAssim é feito um 'get' do estado\npara retornar se o estado do componente\nmudou de fato",
+        "x": 980,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "bee9ca37e44f3bfd",
+        "type": "comment",
+        "z": "1f735b7c1ec2a540",
+        "name": "altera o estado do componente",
+        "info": "",
+        "x": 610,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "c3248d5dad5b911b",
+        "type": "OpcUa-Item",
+        "z": "1f735b7c1ec2a540",
+        "item": "${node_id}",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 520,
+        "y": 860,
+        "wires": [
+            [
+                "9907d2657fe35197"
+            ]
+        ]
+    },
+    {
+        "id": "9907d2657fe35197",
+        "type": "OpcUa-Client",
+        "z": "1f735b7c1ec2a540",
+        "endpoint": "c2fd6ea3cc083b70",
+        "action": "write",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "Client Write",
+        "x": 690,
+        "y": 860,
+        "wires": [
+            [
+                "20791cb493f89336"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "20791cb493f89336",
+        "type": "OpcUa-Item",
+        "z": "1f735b7c1ec2a540",
+        "item": "${node_id}",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 900,
+        "y": 920,
+        "wires": [
+            [
+                "d370d5b5323825b5"
+            ]
+        ]
+    },
+    {
+        "id": "d370d5b5323825b5",
+        "type": "OpcUa-Client",
+        "z": "1f735b7c1ec2a540",
+        "endpoint": "c2fd6ea3cc083b70",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "Client Read",
+        "x": 1070,
+        "y": 920,
+        "wires": [
+            [
+                "92e32589be279c65"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b8b53ed4e2acfa62",
+        "type": "change",
+        "z": "1f735b7c1ec2a540",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 740,
+        "wires": [
+            [
+                "c3248d5dad5b911b"
+            ]
+        ]
+    },
+    {
+        "id": "92e32589be279c65",
+        "type": "websocket out",
+        "z": "1f735b7c1ec2a540",
+        "name": "",
+        "server": "69d845c11d15f13f",
+        "client": "",
+        "x": 1320,
+        "y": 920,
         "wires": []
     },
     {
