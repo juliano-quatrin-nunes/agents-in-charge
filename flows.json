@@ -8,7 +8,7 @@
         "env": [
             {
                 "name": "opc_endpoint",
-                "value": "opc.tcp://Bridge:53530/OPCUA/SimulationServer",
+                "value": "opc.tcp://150.162.14.27:4840",
                 "type": "str"
             }
         ]
@@ -25,7 +25,7 @@
             {
                 "name": "node_id",
                 "type": "str",
-                "value": "ns=3;i=1007"
+                "value": "ns=4;i=2"
             }
         ],
         "meta": {},
@@ -542,6 +542,13 @@
         "type": "subflow:1f735b7c1ec2a540",
         "z": "0008fcf0ac8e3fc4",
         "name": "endpoint_discard_diverter_module",
+        "env": [
+            {
+                "name": "node_id",
+                "value": "ns=4;i=2",
+                "type": "str"
+            }
+        ],
         "x": 400,
         "y": 340,
         "wires": []
