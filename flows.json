@@ -569,7 +569,7 @@
         "sendBufferSize": 8192,
         "name": "Client Read",
         "x": 750,
-        "y": 460,
+        "y": 880,
         "wires": [
             [
                 "bdcab355156dd0af"
@@ -595,7 +595,7 @@
             }
         ],
         "x": 530,
-        "y": 380,
+        "y": 360,
         "wires": [
             [
                 "17c7057090b2d153"
@@ -609,7 +609,7 @@
         "name": "Discard Conveyor",
         "info": "",
         "x": 350,
-        "y": 380,
+        "y": 360,
         "wires": []
     },
     {
@@ -633,8 +633,8 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "Client Read",
-        "x": 1630,
-        "y": 460,
+        "x": 1610,
+        "y": 880,
         "wires": [
             [
                 "c0ef01a1f55e0068"
@@ -663,8 +663,8 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "Client Write",
-        "x": 1470,
-        "y": 460,
+        "x": 1450,
+        "y": 880,
         "wires": [
             [
                 "151f4ba59d3c52fa"
@@ -689,7 +689,7 @@
         "name": "Discard Conveyor",
         "info": "",
         "x": 1550,
-        "y": 380,
+        "y": 360,
         "wires": []
     },
     {
@@ -710,7 +710,7 @@
             }
         ],
         "x": 1250,
-        "y": 380,
+        "y": 360,
         "wires": [
             [
                 "0bb9fba15c901e17"
@@ -723,7 +723,7 @@
         "z": "0008fcf0ac8e3fc4",
         "name": "",
         "x": 920,
-        "y": 460,
+        "y": 880,
         "wires": []
     },
     {
@@ -731,8 +731,323 @@
         "type": "subflow:e5b98768751d086a",
         "z": "0008fcf0ac8e3fc4",
         "name": "",
-        "x": 1820,
-        "y": 460,
+        "x": 1800,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "ccc9caf600c9274f",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/separating/mainConveyor",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=4",
+                "type": "str"
+            }
+        ],
+        "x": 530,
+        "y": 420,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "87e0bb1522d19ec8",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Main Conveyor",
+        "info": "",
+        "x": 340,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "575d0698db586476",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Discard Conveyor",
+        "info": "",
+        "x": 1550,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "be566b3ea68dfcc3",
+        "type": "subflow:1f735b7c1ec2a540",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "node_id",
+                "value": "ns=4;i=4",
+                "type": "str"
+            },
+            {
+                "name": "http_endpoint",
+                "value": "/separating/mainConveyor",
+                "type": "str"
+            }
+        ],
+        "x": 1250,
+        "y": 420,
+        "wires": [
+            [
+                "0bb9fba15c901e17"
+            ]
+        ]
+    },
+    {
+        "id": "a780be106a6681d2",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/separating/lock",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=3",
+                "type": "str"
+            }
+        ],
+        "x": 530,
+        "y": 480,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "2f30f81055c4a360",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Lock",
+        "info": "",
+        "x": 310,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "d148e5a92b4f9916",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Lock",
+        "info": "",
+        "x": 1510,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "51795d20be613dff",
+        "type": "subflow:1f735b7c1ec2a540",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "node_id",
+                "value": "ns=4;i=3",
+                "type": "str"
+            },
+            {
+                "name": "http_endpoint",
+                "value": "/separating/lock",
+                "type": "str"
+            }
+        ],
+        "x": 1250,
+        "y": 480,
+        "wires": [
+            [
+                "0bb9fba15c901e17"
+            ]
+        ]
+    },
+    {
+        "id": "252f30f113605119",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/separating/arrivalSensor",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=6",
+                "type": "str"
+            }
+        ],
+        "x": 530,
+        "y": 540,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "6d252cb8cad1562f",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Arrival Sensor",
+        "info": "",
+        "x": 330,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "50fe9e7b6d8c5af4",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/separating/stopped",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=7",
+                "type": "str"
+            }
+        ],
+        "x": 530,
+        "y": 600,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "e6f65592d30622de",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Stopped Sensor",
+        "info": "",
+        "x": 340,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "9dbca52b9bd95c98",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/separating/height",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=8",
+                "type": "str"
+            }
+        ],
+        "x": 530,
+        "y": 660,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "def37964a3c2176a",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Height Sensor",
+        "info": "",
+        "x": 330,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "cb23f8320c9c4de1",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/separating/discard",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=10",
+                "type": "str"
+            }
+        ],
+        "x": 530,
+        "y": 720,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "a86caf86bdb4a723",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Discard Sensor",
+        "info": "",
+        "x": 340,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "ad4f56d221faf8ca",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/separating/exit",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=9",
+                "type": "str"
+            }
+        ],
+        "x": 530,
+        "y": 780,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "318e64db59e34e3f",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Exit Sensor",
+        "info": "",
+        "x": 330,
+        "y": 780,
         "wires": []
     }
 ]
