@@ -16,16 +16,47 @@
     {
         "id": "1f735b7c1ec2a540",
         "type": "subflow",
-        "name": "endpoint_discard_diverter_module",
+        "name": "POST request",
         "info": "",
         "category": "",
-        "in": [],
-        "out": [],
+        "in": [
+            {
+                "x": 1500,
+                "y": 440,
+                "wires": [
+                    {
+                        "id": "37f6bca919a33793"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1020,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "5527d91086708f8f",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
         "env": [
             {
                 "name": "node_id",
                 "type": "str",
-                "value": "ns=4;i=2"
+                "value": ""
+            },
+            {
+                "name": "opc_endpoint",
+                "type": "env",
+                "value": "opc_endpoint"
+            },
+            {
+                "name": "http_endpoint",
+                "type": "str",
+                "value": ""
             }
         ],
         "meta": {},
@@ -111,6 +142,56 @@
         "icon": "font-awesome/fa-check"
     },
     {
+        "id": "c7b5baace1041e43",
+        "type": "subflow",
+        "name": "GET request",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 720,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "ef9d28ae711ebb4e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 540,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "a961b59b528f1362",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "http_endpoint",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "opc_endpoint",
+                "type": "env",
+                "value": "opc_endpoint"
+            },
+            {
+                "name": "node_id",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#FFCC66",
+        "icon": "font-awesome/fa-arrow-left"
+    },
+    {
         "id": "14e0290e2bea4e8c",
         "type": "OpcUa-Endpoint",
         "endpoint": "opc.tcp://150.162.14.27:4840",
@@ -126,7 +207,7 @@
         "id": "c2fd6ea3cc083b70",
         "type": "OpcUa-Endpoint",
         "z": "1f735b7c1ec2a540",
-        "endpoint": "${$parent.opc_endpoint}",
+        "endpoint": "${opc_endpoint}",
         "secpol": "None",
         "secmode": "None",
         "none": true,
@@ -136,74 +217,36 @@
         "userprivatekey": ""
     },
     {
-        "id": "0b7991cfc665dd32",
-        "type": "http in",
-        "z": "1f735b7c1ec2a540",
-        "name": "get status",
-        "url": "/separating/discardDiverter",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 440,
-        "y": 100,
-        "wires": [
-            [
-                "a961b59b528f1362"
-            ]
-        ]
+        "id": "cc5c531b1a3180a0",
+        "type": "OpcUa-Endpoint",
+        "z": "c7b5baace1041e43",
+        "endpoint": "${opc_endpoint}",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
     },
     {
-        "id": "a961b59b528f1362",
-        "type": "OpcUa-Item",
-        "z": "1f735b7c1ec2a540",
-        "item": "${node_id}",
-        "datatype": "Boolean",
-        "value": "",
-        "name": "",
-        "x": 660,
-        "y": 100,
-        "wires": [
-            [
-                "17c7057090b2d153"
-            ]
-        ]
-    },
-    {
-        "id": "17c7057090b2d153",
-        "type": "OpcUa-Client",
-        "z": "1f735b7c1ec2a540",
-        "endpoint": "c2fd6ea3cc083b70",
-        "action": "read",
-        "deadbandtype": "a",
-        "deadbandvalue": 1,
-        "time": 10,
-        "timeUnit": "s",
-        "certificate": "n",
-        "localfile": "",
-        "localkeyfile": "",
-        "securitymode": "None",
-        "securitypolicy": "None",
-        "useTransport": false,
-        "maxChunkCount": 1,
-        "maxMessageSize": 8192,
-        "receiveBufferSize": 8192,
-        "sendBufferSize": 8192,
-        "name": "Client Read",
-        "x": 870,
-        "y": 100,
-        "wires": [
-            [
-                "ef9d28ae711ebb4e"
-            ],
-            []
-        ]
+        "id": "ba1646fb305b7868",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "${opc_endpoint}",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
     },
     {
         "id": "b3167a04a4347352",
         "type": "http in",
         "z": "1f735b7c1ec2a540",
         "name": "post status",
-        "url": "/separating/discardDiverter",
+        "url": "${http_endpoint}",
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
@@ -214,16 +257,6 @@
                 "4ae7398ac61c5732"
             ]
         ]
-    },
-    {
-        "id": "60552216b3504c5a",
-        "type": "comment",
-        "z": "1f735b7c1ec2a540",
-        "name": "recupera o estado do componente",
-        "info": "OPC UA Cliente sempre retorna\num \"payload: 0\", independente do que é\npassado.\n\nAssim é feito um 'get' do estado\npara retornar se o estado do componente\nmudou de fato",
-        "x": 1340,
-        "y": 360,
-        "wires": []
     },
     {
         "id": "31402a45caf73a3b",
@@ -348,103 +381,17 @@
         "x": 880,
         "y": 340,
         "wires": [
-            [
-                "0bb9fba15c901e17"
-            ]
-        ]
-    },
-    {
-        "id": "0bb9fba15c901e17",
-        "type": "OpcUa-Client",
-        "z": "1f735b7c1ec2a540",
-        "endpoint": "c2fd6ea3cc083b70",
-        "action": "write",
-        "deadbandtype": "a",
-        "deadbandvalue": 1,
-        "time": 10,
-        "timeUnit": "s",
-        "certificate": "n",
-        "localfile": "",
-        "localkeyfile": "",
-        "securitymode": "None",
-        "securitypolicy": "None",
-        "useTransport": false,
-        "maxChunkCount": 1,
-        "maxMessageSize": 8192,
-        "receiveBufferSize": 8192,
-        "sendBufferSize": 8192,
-        "name": "Client Write",
-        "x": 1050,
-        "y": 340,
-        "wires": [
-            [
-                "ee4a2ec4a3c6a9ec"
-            ],
             []
         ]
     },
     {
-        "id": "ee4a2ec4a3c6a9ec",
-        "type": "OpcUa-Item",
-        "z": "1f735b7c1ec2a540",
-        "item": "${node_id}",
-        "datatype": "Boolean",
-        "value": "",
-        "name": "",
-        "x": 1260,
-        "y": 400,
-        "wires": [
-            [
-                "151f4ba59d3c52fa"
-            ]
-        ]
-    },
-    {
-        "id": "151f4ba59d3c52fa",
-        "type": "OpcUa-Client",
-        "z": "1f735b7c1ec2a540",
-        "endpoint": "c2fd6ea3cc083b70",
-        "action": "read",
-        "deadbandtype": "a",
-        "deadbandvalue": 1,
-        "time": 10,
-        "timeUnit": "s",
-        "certificate": "n",
-        "localfile": "",
-        "localkeyfile": "",
-        "securitymode": "None",
-        "securitypolicy": "None",
-        "useTransport": false,
-        "maxChunkCount": 1,
-        "maxMessageSize": 8192,
-        "receiveBufferSize": 8192,
-        "sendBufferSize": 8192,
-        "name": "Client Read",
-        "x": 1430,
-        "y": 400,
-        "wires": [
-            [
-                "37f6bca919a33793"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "83ba442383dd061b",
+        "id": "60552216b3504c5a",
         "type": "comment",
         "z": "1f735b7c1ec2a540",
         "name": "recupera o estado do componente",
         "info": "OPC UA Cliente sempre retorna\num \"payload: 0\", independente do que é\npassado.\n\nAssim é feito um 'get' do estado\npara retornar se o estado do componente\nmudou de fato",
-        "x": 767.7777709960938,
-        "y": 45.5555534362793,
-        "wires": []
-    },
-    {
-        "id": "ef9d28ae711ebb4e",
-        "type": "subflow:dc1ef54720b3dae9",
-        "z": "1f735b7c1ec2a540",
-        "x": 1080,
-        "y": 100,
+        "x": 1340,
+        "y": 360,
         "wires": []
     },
     {
@@ -538,19 +485,284 @@
         ]
     },
     {
-        "id": "bc5bf8f6432d32df",
-        "type": "subflow:1f735b7c1ec2a540",
+        "id": "0b7991cfc665dd32",
+        "type": "http in",
+        "z": "c7b5baace1041e43",
+        "name": "get status",
+        "url": "${http_endpoint}",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 120,
+        "wires": [
+            [
+                "a961b59b528f1362"
+            ]
+        ]
+    },
+    {
+        "id": "a961b59b528f1362",
+        "type": "OpcUa-Item",
+        "z": "c7b5baace1041e43",
+        "item": "${node_id}",
+        "datatype": "Boolean",
+        "value": "",
+        "name": "",
+        "x": 420,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83ba442383dd061b",
+        "type": "comment",
+        "z": "c7b5baace1041e43",
+        "name": "recupera o estado do componente",
+        "info": "OPC UA Cliente sempre retorna\num \"payload: 0\", independente do que é\npassado.\n\nAssim é feito um 'get' do estado\npara retornar se o estado do componente\nmudou de fato",
+        "x": 527.7777709960938,
+        "y": 65.5555534362793,
+        "wires": []
+    },
+    {
+        "id": "ef9d28ae711ebb4e",
+        "type": "subflow:dc1ef54720b3dae9",
+        "z": "c7b5baace1041e43",
+        "x": 840,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "b6668ccdd7f575b1",
+        "type": "subflow:c7b5baace1041e43",
         "z": "0008fcf0ac8e3fc4",
-        "name": "endpoint_discard_diverter_module",
+        "name": "",
         "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/separating/discardDiverter",
+                "type": "str"
+            },
             {
                 "name": "node_id",
                 "value": "ns=4;i=2",
                 "type": "str"
             }
         ],
-        "x": 400,
-        "y": 340,
+        "x": 850,
+        "y": 300,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "217a4b1eb044e1b2",
+        "type": "subflow:1f735b7c1ec2a540",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "node_id",
+                "value": "ns=4;i=2",
+                "type": "str"
+            },
+            {
+                "name": "http_endpoint",
+                "value": "/separating/discardDiverter",
+                "type": "str"
+            }
+        ],
+        "x": 1270,
+        "y": 300,
+        "wires": [
+            [
+                "0bb9fba15c901e17"
+            ]
+        ]
+    },
+    {
+        "id": "443c43b7bd6b2114",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Discard Diverter",
+        "info": "",
+        "x": 640,
+        "y": 300,
         "wires": []
+    },
+    {
+        "id": "17c7057090b2d153",
+        "type": "OpcUa-Client",
+        "z": "0008fcf0ac8e3fc4",
+        "endpoint": "14e0290e2bea4e8c",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "Client Read",
+        "x": 850,
+        "y": 460,
+        "wires": [
+            [
+                "b6668ccdd7f575b1",
+                "e4bde408c8dbd04f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e4bde408c8dbd04f",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/separating/discardConveyor",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=5",
+                "type": "str"
+            }
+        ],
+        "x": 850,
+        "y": 380,
+        "wires": [
+            [
+                "17c7057090b2d153"
+            ]
+        ]
+    },
+    {
+        "id": "85f9a2b2f3bfe2d3",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Discard Conveyor",
+        "info": "",
+        "x": 650,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "151f4ba59d3c52fa",
+        "type": "OpcUa-Client",
+        "z": "0008fcf0ac8e3fc4",
+        "endpoint": "14e0290e2bea4e8c",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "Client Read",
+        "x": 1350,
+        "y": 460,
+        "wires": [
+            [
+                "217a4b1eb044e1b2",
+                "b837eeb86e59ef35"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "0bb9fba15c901e17",
+        "type": "OpcUa-Client",
+        "z": "0008fcf0ac8e3fc4",
+        "endpoint": "14e0290e2bea4e8c",
+        "action": "write",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "name": "Client Write",
+        "x": 1190,
+        "y": 460,
+        "wires": [
+            [
+                "151f4ba59d3c52fa"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4ea71096cbfaaa5a",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Discard Diverter",
+        "info": "",
+        "x": 1540,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "758d7e8bdd1bd2e7",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Discard Conveyor",
+        "info": "",
+        "x": 1550,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b837eeb86e59ef35",
+        "type": "subflow:1f735b7c1ec2a540",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "node_id",
+                "value": "ns=4;i=5",
+                "type": "str"
+            },
+            {
+                "name": "http_endpoint",
+                "value": "/separating/discardConveyor",
+                "type": "str"
+            }
+        ],
+        "x": 1270,
+        "y": 380,
+        "wires": [
+            [
+                "0bb9fba15c901e17"
+            ]
+        ]
     }
 ]
