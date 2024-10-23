@@ -19,17 +19,7 @@
         "name": "POST request",
         "info": "",
         "category": "",
-        "in": [
-            {
-                "x": 1500,
-                "y": 440,
-                "wires": [
-                    {
-                        "id": "37f6bca919a33793"
-                    }
-                ]
-            }
-        ],
+        "in": [],
         "out": [
             {
                 "x": 1020,
@@ -147,17 +137,7 @@
         "name": "GET request",
         "info": "",
         "category": "",
-        "in": [
-            {
-                "x": 720,
-                "y": 120,
-                "wires": [
-                    {
-                        "id": "ef9d28ae711ebb4e"
-                    }
-                ]
-            }
-        ],
+        "in": [],
         "out": [
             {
                 "x": 540,
@@ -353,24 +333,6 @@
         ]
     },
     {
-        "id": "f65f540e7eb6936c",
-        "type": "comment",
-        "z": "1f735b7c1ec2a540",
-        "name": "envia o resultado positivo para o cliente",
-        "info": "",
-        "x": 1630,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "37f6bca919a33793",
-        "type": "subflow:e5b98768751d086a",
-        "z": "1f735b7c1ec2a540",
-        "x": 1640,
-        "y": 440,
-        "wires": []
-    },
-    {
         "id": "5527d91086708f8f",
         "type": "OpcUa-Item",
         "z": "1f735b7c1ec2a540",
@@ -526,14 +488,6 @@
         "wires": []
     },
     {
-        "id": "ef9d28ae711ebb4e",
-        "type": "subflow:dc1ef54720b3dae9",
-        "z": "c7b5baace1041e43",
-        "x": 840,
-        "y": 120,
-        "wires": []
-    },
-    {
         "id": "b6668ccdd7f575b1",
         "type": "subflow:c7b5baace1041e43",
         "z": "0008fcf0ac8e3fc4",
@@ -550,7 +504,7 @@
                 "type": "str"
             }
         ],
-        "x": 850,
+        "x": 530,
         "y": 300,
         "wires": [
             [
@@ -575,7 +529,7 @@
                 "type": "str"
             }
         ],
-        "x": 1270,
+        "x": 1250,
         "y": 300,
         "wires": [
             [
@@ -589,7 +543,7 @@
         "z": "0008fcf0ac8e3fc4",
         "name": "Discard Diverter",
         "info": "",
-        "x": 640,
+        "x": 340,
         "y": 300,
         "wires": []
     },
@@ -614,12 +568,11 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "Client Read",
-        "x": 850,
+        "x": 750,
         "y": 460,
         "wires": [
             [
-                "b6668ccdd7f575b1",
-                "e4bde408c8dbd04f"
+                "bdcab355156dd0af"
             ],
             []
         ]
@@ -641,7 +594,7 @@
                 "type": "str"
             }
         ],
-        "x": 850,
+        "x": 530,
         "y": 380,
         "wires": [
             [
@@ -655,7 +608,7 @@
         "z": "0008fcf0ac8e3fc4",
         "name": "Discard Conveyor",
         "info": "",
-        "x": 650,
+        "x": 350,
         "y": 380,
         "wires": []
     },
@@ -680,12 +633,11 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "Client Read",
-        "x": 1350,
+        "x": 1630,
         "y": 460,
         "wires": [
             [
-                "217a4b1eb044e1b2",
-                "b837eeb86e59ef35"
+                "c0ef01a1f55e0068"
             ],
             []
         ]
@@ -711,7 +663,7 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "Client Write",
-        "x": 1190,
+        "x": 1470,
         "y": 460,
         "wires": [
             [
@@ -757,12 +709,30 @@
                 "type": "str"
             }
         ],
-        "x": 1270,
+        "x": 1250,
         "y": 380,
         "wires": [
             [
                 "0bb9fba15c901e17"
             ]
         ]
+    },
+    {
+        "id": "bdcab355156dd0af",
+        "type": "subflow:dc1ef54720b3dae9",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "x": 920,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c0ef01a1f55e0068",
+        "type": "subflow:e5b98768751d086a",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "x": 1820,
+        "y": 460,
+        "wires": []
     }
 ]
