@@ -190,7 +190,7 @@
         ],
         "out": [
             {
-                "x": 900,
+                "x": 1040,
                 "y": 200,
                 "wires": [
                     {
@@ -338,15 +338,6 @@
         ]
     },
     {
-        "id": "4c38741330d8e4f4",
-        "type": "subflow:1a29c5eb11ee4ae1",
-        "z": "1f735b7c1ec2a540",
-        "name": "Send Bad Request",
-        "x": 970,
-        "y": 440,
-        "wires": []
-    },
-    {
         "id": "c33f019dedc2ee5c",
         "type": "function",
         "z": "1f735b7c1ec2a540",
@@ -388,6 +379,15 @@
         "info": "OPC UA Cliente sempre retorna\num \"payload: 0\", independente do que é\npassado.\n\nAssim é feito um 'get' do estado\npara retornar se o estado do componente\nmudou de fato",
         "x": 1340,
         "y": 360,
+        "wires": []
+    },
+    {
+        "id": "4c38741330d8e4f4",
+        "type": "subflow:1a29c5eb11ee4ae1",
+        "z": "1f735b7c1ec2a540",
+        "name": "Send Bad Request",
+        "x": 970,
+        "y": 440,
         "wires": []
     },
     {
@@ -542,12 +542,13 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "Client Read",
-        "x": 510,
-        "y": 160,
+        "x": 670,
+        "y": 80,
         "wires": [
             [
                 "0bb36ec5b5352b4a"
             ],
+            [],
             []
         ]
     },
@@ -569,8 +570,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 510,
-        "y": 220,
+        "x": 690,
+        "y": 200,
         "wires": [
             [
                 "ac53b49bf5cfeb29"
@@ -587,7 +588,7 @@
         "name": "",
         "statusCode": "500",
         "headers": {},
-        "x": 820,
+        "x": 980,
         "y": 300,
         "wires": []
     },
@@ -602,7 +603,7 @@
         "syntax": "mustache",
         "template": "{\n    \"message\": \"Não conectou-se a bancada.\"\n}",
         "output": "json",
-        "x": 590,
+        "x": 750,
         "y": 300,
         "wires": [
             [
@@ -618,8 +619,8 @@
         "datatype": "Boolean",
         "value": "",
         "name": "",
-        "x": 300,
-        "y": 160,
+        "x": 460,
+        "y": 80,
         "wires": [
             [
                 "a3f90678a47d8292"
@@ -646,7 +647,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 760,
+        "x": 900,
         "y": 200,
         "wires": [
             []
@@ -722,7 +723,7 @@
                 "type": "str"
             }
         ],
-        "x": 1610,
+        "x": 1130,
         "y": 300,
         "wires": [
             [
@@ -767,6 +768,7 @@
             [
                 "bdcab355156dd0af"
             ],
+            [],
             []
         ]
     },
@@ -826,12 +828,13 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "Client Read",
-        "x": 2230,
+        "x": 1750,
         "y": 880,
         "wires": [
             [
                 "c0ef01a1f55e0068"
             ],
+            [],
             []
         ]
     },
@@ -856,12 +859,13 @@
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
         "name": "Client Write",
-        "x": 2070,
+        "x": 1590,
         "y": 880,
         "wires": [
             [
                 "151f4ba59d3c52fa"
             ],
+            [],
             []
         ]
     },
@@ -871,7 +875,7 @@
         "z": "0008fcf0ac8e3fc4",
         "name": "Discard Diverter",
         "info": "",
-        "x": 1900,
+        "x": 1420,
         "y": 300,
         "wires": []
     },
@@ -881,7 +885,7 @@
         "z": "0008fcf0ac8e3fc4",
         "name": "Discard Conveyor",
         "info": "",
-        "x": 1910,
+        "x": 1430,
         "y": 360,
         "wires": []
     },
@@ -902,7 +906,7 @@
                 "type": "str"
             }
         ],
-        "x": 1610,
+        "x": 1130,
         "y": 360,
         "wires": [
             [
@@ -924,7 +928,7 @@
         "type": "subflow:e5b98768751d086a",
         "z": "0008fcf0ac8e3fc4",
         "name": "",
-        "x": 2420,
+        "x": 1940,
         "y": 880,
         "wires": []
     },
@@ -969,7 +973,7 @@
         "z": "0008fcf0ac8e3fc4",
         "name": "Main Conveyor",
         "info": "",
-        "x": 1900,
+        "x": 1420,
         "y": 420,
         "wires": []
     },
@@ -990,7 +994,7 @@
                 "type": "str"
             }
         ],
-        "x": 1610,
+        "x": 1130,
         "y": 420,
         "wires": [
             [
@@ -1039,7 +1043,7 @@
         "z": "0008fcf0ac8e3fc4",
         "name": "Lock",
         "info": "",
-        "x": 1870,
+        "x": 1390,
         "y": 480,
         "wires": []
     },
@@ -1060,7 +1064,7 @@
                 "type": "str"
             }
         ],
-        "x": 1610,
+        "x": 1130,
         "y": 480,
         "wires": [
             [
@@ -1260,7 +1264,7 @@
         "id": "0b959b5188eabbef",
         "type": "subflow:ee1d8aad80d43cea",
         "z": "0008fcf0ac8e3fc4",
-        "x": 1880,
+        "x": 1400,
         "y": 880,
         "wires": [
             [
