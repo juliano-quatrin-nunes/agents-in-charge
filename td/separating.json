@@ -1,0 +1,287 @@
+{
+    "@context": "https://www.w3.org/2019/wot/td/v1",
+    "title": "FESTO Separating Bench",
+    "description": "Bench for separating objects using sensors and actuators.",
+    "properties": {
+        "arrival_sensor": {
+            "title": "Part arrival sensor.",
+            "description": "Returns the arrival of a part from the previous bench.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/arrivalSensor",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "stopped_sensor": {
+            "title": "Part stopped sensor.",
+            "description": "Returns the arrival of the part for verification.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/stoppedSensor",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "depth_sensor": {
+            "title": "Depth sensor.",
+            "description": "Returns the depth (upside-down part).",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/height",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "discard_status": {
+            "title": "Discard sensor.",
+            "description": "Indicates if the discard bin is full of parts.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/discard",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "exit_sensor": {
+            "title": "Part exit sensor.",
+            "description": "Indicates if the part is at the end of the conveyor.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/exit",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "communicator_status": {
+            "title": "Communicator status.",
+            "description": "Indicates the availability of the next bench.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/communicator",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "bench_status": {
+            "title": "Bench sensor.",
+            "description": "Returns the operating status of the bench.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/stateMachine",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "main_conveyor_status": {
+            "title": "Main conveyor status.",
+            "description": "Returns the status of the main conveyor.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/mainConveyor",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "discard_conveyor_status": {
+            "title": "Discard conveyor status.",
+            "description": "Returns the status of the discard conveyor.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/discardConveyor",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "lock_status": {
+            "title": "Lock status for part height measurement.",
+            "description": "Indicates the operating status of the discard bench.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/lock",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "discard_diverter_status": {
+            "title": "Discard diverter status.",
+            "description": "Indicates the discard claw for part redirection.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/discardDiverter",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        }
+    },
+    "actions": {
+        "activate_main_conveyor": {
+            "title": "Main conveyor.",
+            "description": "Changes the state of the main conveyor.",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "value": "boolean"
+                }
+            },
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/mainConveyor",
+                    "contentType": "application/json",
+                    "op": "invokeaction"
+                }
+            ]
+        },
+        "activate_discard_conveyor": {
+            "title": "Discard conveyor.",
+            "description": "Changes the state of the discard conveyor.",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "value": "boolean"
+                }
+            },
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/discardConveyor",
+                    "contentType": "application/json",
+                    "op": "invokeaction"
+                }
+            ]
+        },
+        "activate_lock": {
+            "title": "Lock for part analysis.",
+            "description": "Changes the state of the lock pin for part height measurement.",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "value": "boolean"
+                }
+            },
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/lock",
+                    "contentType": "application/json",
+                    "op": "invokeaction"
+                }
+            ]
+        },
+        "activate_discard_diverter": {
+            "title": "Discard diverter for part.",
+            "description": "Changes the state of the discard claw for part redirection.",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "value": "boolean"
+                }
+            },
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/discardDiverter",
+                    "contentType": "application/json",
+                    "op": "invokeaction"
+                }
+            ]
+        },
+        "change_bench_state": {
+            "title": "Bench state change.",
+            "description": "Activates the desired operating state of the bench.",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "value": "boolean"
+                }
+            },
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/stateMachine",
+                    "contentType": "application/json",
+                    "op": "invokeaction"
+                }
+            ]
+        },
+        "perform_communication": {
+            "title": "Communicate with the next bench.",
+            "description": "Communicates availability to the previous bench.",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "value": "boolean"
+                }
+            },
+            "forms": [
+                {
+                    "href": "http://<bench_ip>/separating/communicator",
+                    "contentType": "application/json",
+                    "op": "invokeaction"
+                }
+            ]
+        }
+    }
+}
