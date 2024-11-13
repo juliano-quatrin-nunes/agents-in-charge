@@ -135,7 +135,7 @@
                     "href": "/separating/mainConveyor",
                     "contentType": "application/json",
                     "op": "readproperty",
-                    "htv:methodName": "GET",
+                    "htv:methodName": "GET"
                 }
             ]
         },
