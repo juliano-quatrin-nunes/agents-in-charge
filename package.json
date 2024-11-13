@@ -1,7 +1,7 @@
 {
-    "name": "agents-in-charge",
-    "description": "A Node-RED Project",
-    "version": "0.0.1",
+    "name": "Agents in Charge",
+    "description": "Control of FESTO educational bench via REST API using OPC UA communication",
+    "version": "0.1.0",
     "node-red": {
         "settings": {
             "flowFile": "flows.json",
@@ -9,6 +9,7 @@
         }
     },
     "dependencies": {
-        "node-red-contrib-opcua": "^0.2.334"
+        "node-red-contrib-opcua": "^0.2.334",
+        "node-red-dashboard": "^3.6.5"
     }
 }

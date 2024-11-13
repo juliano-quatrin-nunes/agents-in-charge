@@ -2,13 +2,18 @@
     {
         "id": "0008fcf0ac8e3fc4",
         "type": "tab",
-        "label": "Main",
+        "label": "Separating",
         "disabled": false,
         "info": "",
         "env": [
             {
                 "name": "opc_endpoint",
                 "value": "opc.tcp://150.162.14.27:4840",
+                "type": "str"
+            },
+            {
+                "name": "http",
+                "value": "https://127.0.0.1:3000",
                 "type": "str"
             }
         ]
@@ -1115,7 +1120,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/stopped",
+                "value": "/separating/stoppedSensor",
                 "type": "str"
             },
             {
@@ -1150,7 +1155,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/height",
+                "value": "/separating/heightSensor",
                 "type": "str"
             },
             {
@@ -1185,7 +1190,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/discard",
+                "value": "/separating/discardSensor",
                 "type": "str"
             },
             {
@@ -1220,7 +1225,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/exit",
+                "value": "/separating/exitSensor",
                 "type": "str"
             },
             {
@@ -1271,5 +1276,73 @@
                 "0bb9fba15c901e17"
             ]
         ]
+    },
+    {
+        "id": "ab69d73f6fbbbf51",
+        "type": "function",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Complete href URL",
+        "func": "const td = JSON.parse(msg.payload)\n\nconst properties = Object.entries(td.properties).forEach(([key, value]) => {\n    if(value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + value.forms[0].href\n    return value\n})\n\nconst actions = Object.entries(td.actions).forEach(([key, value]) => {\n    if (value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + value.forms[0].href\n    return value\n})\n\nmsg.payload = { properties, actions, ...td }\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 1020,
+        "wires": [
+            [
+                "5049e2ddfb18babc"
+            ]
+        ]
+    },
+    {
+        "id": "e9d3486ec2a99511",
+        "type": "file in",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Read td file",
+        "filename": "/data/td/separating.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 770,
+        "y": 1020,
+        "wires": [
+            [
+                "ab69d73f6fbbbf51"
+            ]
+        ]
+    },
+    {
+        "id": "f4ef609fc312896d",
+        "type": "http in",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "GET td",
+        "url": "/td",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 570,
+        "y": 1020,
+        "wires": [
+            [
+                "e9d3486ec2a99511"
+            ]
+        ]
+    },
+    {
+        "id": "5049e2ddfb18babc",
+        "type": "http response",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "TD Response",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1220,
+        "y": 1020,
+        "wires": []
     }
 ]

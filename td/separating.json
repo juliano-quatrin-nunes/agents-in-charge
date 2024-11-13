@@ -13,7 +13,7 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/arrivalSensor",
+                    "href": "/separating/arrivalSensor",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
@@ -29,15 +29,15 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/stoppedSensor",
+                    "href": "/separating/stoppedSensor",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
             ]
         },
-        "depth_sensor": {
-            "title": "Depth sensor.",
-            "description": "Returns the depth (upside-down part).",
+        "height_sensor": {
+            "title": "Height sensor.",
+            "description": "Returns the height (upside-down part).",
             "type": "object",
             "properties": {
                 "value": "boolean"
@@ -45,13 +45,13 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/height",
+                    "href": "/separating/heightSensor",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
             ]
         },
-        "discard_status": {
+        "discard_sensor": {
             "title": "Discard sensor.",
             "description": "Indicates if the discard bin is full of parts.",
             "type": "object",
@@ -61,7 +61,7 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/discard",
+                    "href": "/separating/discardSensor",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
@@ -77,31 +77,15 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/exit",
-                    "contentType": "application/json",
-                    "op": "readproperty"
-                }
-            ]
-        },
-        "communicator_status": {
-            "title": "Communicator status.",
-            "description": "Indicates the availability of the next bench.",
-            "type": "object",
-            "properties": {
-                "value": "boolean"
-            },
-            "readOnly": true,
-            "forms": [
-                {
-                    "href": "http://<bench_ip>/separating/communicator",
+                    "href": "/separating/exitSensor",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
             ]
         },
         "bench_status": {
-            "title": "Bench sensor.",
-            "description": "Returns the operating status of the bench.",
+            "title": "Bench status.",
+            "description": "Returns whether the bench is ready to receive a piece or not.",
             "type": "object",
             "properties": {
                 "value": "boolean"
@@ -109,7 +93,23 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/stateMachine",
+                    "href": "/separating/benchStatus",
+                    "contentType": "application/json",
+                    "op": "readproperty"
+                }
+            ]
+        },
+        "next_bench_status": {
+            "title": "Next bench status.",
+            "description": "Returns whether the next bench is ready to receive a piece or not.",
+            "type": "object",
+            "properties": {
+                "value": "boolean"
+            },
+            "readOnly": true,
+            "forms": [
+                {
+                    "href": "/separating/benchStatus",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
@@ -125,7 +125,7 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/mainConveyor",
+                    "href": "/separating/mainConveyor",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
@@ -141,7 +141,7 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/discardConveyor",
+                    "href": "/separating/discardConveyor",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
@@ -157,7 +157,7 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/lock",
+                    "href": "/separating/lock",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
@@ -173,7 +173,7 @@
             "readOnly": true,
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/discardDiverter",
+                    "href": "/separating/discardDiverter",
                     "contentType": "application/json",
                     "op": "readproperty"
                 }
@@ -192,7 +192,7 @@
             },
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/mainConveyor",
+                    "href": "/separating/mainConveyor",
                     "contentType": "application/json",
                     "op": "invokeaction"
                 }
@@ -209,7 +209,7 @@
             },
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/discardConveyor",
+                    "href": "/separating/discardConveyor",
                     "contentType": "application/json",
                     "op": "invokeaction"
                 }
@@ -226,7 +226,7 @@
             },
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/lock",
+                    "href": "/separating/lock",
                     "contentType": "application/json",
                     "op": "invokeaction"
                 }
@@ -243,7 +243,7 @@
             },
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/discardDiverter",
+                    "href": "/separating/discardDiverter",
                     "contentType": "application/json",
                     "op": "invokeaction"
                 }
@@ -260,7 +260,7 @@
             },
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/stateMachine",
+                    "href": "/separating/stateMachine",
                     "contentType": "application/json",
                     "op": "invokeaction"
                 }
@@ -277,7 +277,7 @@
             },
             "forms": [
                 {
-                    "href": "http://<bench_ip>/separating/communicator",
+                    "href": "/separating/communicator",
                     "contentType": "application/json",
                     "op": "invokeaction"
                 }
