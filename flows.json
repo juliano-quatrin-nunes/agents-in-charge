@@ -188,7 +188,7 @@
                 "y": 80,
                 "wires": [
                     {
-                        "id": "d14cf6b57969aa4d"
+                        "id": "6e3428e3aa890173"
                     }
                 ]
             }
@@ -199,7 +199,7 @@
                 "y": 200,
                 "wires": [
                     {
-                        "id": "ac53b49bf5cfeb29",
+                        "id": "609abcc028c9214a",
                         "port": 0
                     }
                 ]
@@ -664,7 +664,7 @@
         "y": 200,
         "wires": [
             [
-                "ac53b49bf5cfeb29"
+                "609abcc028c9214a"
             ],
             [
                 "b8a9038007d940d9"
@@ -718,57 +718,41 @@
         ]
     },
     {
-        "id": "ac53b49bf5cfeb29",
-        "type": "change",
+        "id": "6e3428e3aa890173",
+        "type": "function",
         "z": "ee1d8aad80d43cea",
-        "name": "Set topic to item",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "item",
-                "tot": "msg",
-                "dc": true
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 900,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "d14cf6b57969aa4d",
-        "type": "change",
-        "z": "ee1d8aad80d43cea",
-        "name": "Set item to topic",
-        "rules": [
-            {
-                "t": "set",
-                "p": "item",
-                "pt": "msg",
-                "to": "topic",
-                "tot": "msg",
-                "dc": true
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 260,
+        "name": "function 2",
+        "func": "msg = {...msg, benchComponent: msg}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
         "y": 80,
         "wires": [
             [
                 "e0ac18730cae4f6f"
             ]
+        ]
+    },
+    {
+        "id": "609abcc028c9214a",
+        "type": "function",
+        "z": "ee1d8aad80d43cea",
+        "name": "function 3",
+        "func": "msg = msg.benchComponent\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 200,
+        "wires": [
+            []
         ]
     },
     {
