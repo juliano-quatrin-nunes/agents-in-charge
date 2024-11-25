@@ -6,4 +6,5 @@ services:
     ports:
       - "1880:1880"
     volumes:
-      - ./:/data
+      - ./node-red/:/data
+      - ./td/:/data/td
