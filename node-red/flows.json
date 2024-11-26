@@ -13,7 +13,7 @@
             },
             {
                 "name": "http",
-                "value": "https://127.0.0.1:3000",
+                "value": "http://127.0.0.1:1880",
                 "type": "str"
             }
         ]
