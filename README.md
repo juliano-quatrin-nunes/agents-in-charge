@@ -53,6 +53,53 @@ O corpo da requisição deve ser enviado no formato JSON com a seguinte estrutur
 
 * message: Mensagem indicando o sucesso da operação
 
+---
+
+## Discard Conveyor
+
+### GET `/separating/discardConveyor`
+
+#### Descrição:
+Obtém o estado atual da esteira de descarte de peças da bancada Separating.
+
+#### Response:
+```json
+{
+  "message": "Estado obtido com sucesso.",
+  "status": true
+}
+```
+* message: Mensagem indicando o sucesso da requisiçao
+* status: Estado atual da esteira de descarte de peças
+    * true para ligada
+    * false para desligada
+ 
+### POST `separating/discardConveyor`
+
+#### Descrição:
+Altera o estado atual da esteira de descarte de peças da bancada Separating.
+
+#### Body:
+O corpo da requisição deve ser enviado no formato JSON com a seguinte estrutura:
+
+```json
+{
+  "status": true
+}
+```
+
+* status:
+    * true para ligar a esteira
+    * false para desligar a esteira
+
+#### Response:
+```json
+{
+  "message": "Estado alterado com sucesso"
+}
+```
+
+* message: Mensagem indicando o sucesso da operação
 
 
 
