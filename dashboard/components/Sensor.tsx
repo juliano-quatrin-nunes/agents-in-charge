@@ -3,8 +3,8 @@
 import { useFetchProperty } from "@/hooks/useFetchComponent";
 import { ComponentProperties } from "@/lib/types";
 
-const Sensor = ({ property }: { property: ComponentProperties }) => {
-  const { data } = useFetchProperty(property.forms[0].href);
+const Sensor = ({ property, refetchInterval }: { property: ComponentProperties; refetchInterval: number }) => {
+  const { data } = useFetchProperty(property.forms[0].href, refetchInterval);
 
   const styleOn = "bg-yellow-200 border-yellow-500";
   const styleOff = "bg-black border-black";

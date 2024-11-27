@@ -354,7 +354,7 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 80,
+        "x": 60,
         "y": 340,
         "wires": [
             [
@@ -377,14 +377,14 @@
         "type": "function",
         "z": "1f735b7c1ec2a540",
         "name": "payload",
-        "func": "msg.payload = msg.req.body.value;\nreturn msg;",
+        "func": "const body = JSON.parse(msg.req.body)\n\nmsg.payload = body.value;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 240,
+        "x": 280,
         "y": 340,
         "wires": [
             [
@@ -413,7 +413,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 680,
+        "x": 720,
         "y": 340,
         "wires": [
             [
@@ -439,7 +439,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 460,
+        "x": 540,
         "y": 340,
         "wires": [
             [

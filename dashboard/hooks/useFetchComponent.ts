@@ -1,18 +1,24 @@
 "use client";
 
-import { getComponentState } from "@/services/componentApiService";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { RequestBody, ResponseData } from "@/lib/types";
+import { getComponentState, postComponentState } from "@/services/componentApiService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const useFetchProperty = (href: string) => {
-  return useQuery({
+export const useFetchProperty = (href: string, refetchInterval: number) => {
+  return useQuery<ResponseData>({
     queryKey: ["componentState", href],
     queryFn: () => getComponentState(href as string),
-    refetchInterval: 100,
+    refetchInterval,
   });
 };
 
 export const useMutateAction = (href: string) => {
-  return useMutation({
-    mutationFn: (data: { value: boolean }) => fetch(href, { body: JSON.stringify(data), method: "POST" }),
+  const queryClient = useQueryClient();
+
+  return useMutation<ResponseData, Error, RequestBody>({
+    mutationFn: (data) => postComponentState(href, data),
+    onSuccess: (data) => {
+      queryClient.setQueryData(["componentState", href], data);
+    },
   });
 };

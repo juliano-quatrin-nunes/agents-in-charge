@@ -43,3 +43,12 @@ export type ParsedThingDescription = {
   properties: ComponentProperties[];
   actions: ComponentActions[];
 };
+
+export type ResponseData = {
+  value: boolean;
+  message: string;
+};
+
+export type RequestBody = {
+  value: boolean;
+};
