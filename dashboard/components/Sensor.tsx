@@ -3,7 +3,12 @@
 import { useFetchProperty } from "@/hooks/useFetchComponent";
 import { ComponentProperties } from "@/lib/types";
 
-const Sensor = ({ property, refetchInterval }: { property: ComponentProperties; refetchInterval: number }) => {
+interface SensorProps {
+  property: ComponentProperties;
+  refetchInterval: number;
+}
+
+const Sensor = ({ property, refetchInterval }: SensorProps) => {
   const { data } = useFetchProperty(property.forms[0].href, refetchInterval);
 
   const styleOn = "bg-yellow-200 border-yellow-500";

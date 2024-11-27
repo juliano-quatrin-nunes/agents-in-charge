@@ -1,4 +1,5 @@
 import { Field, Form, Formik } from "formik";
+import { Button } from "./ui/Button";
 
 interface RefetchIntervalSetterProps {
   refetchInterval: number;
@@ -13,14 +14,9 @@ export const RefetchIntervalSetter = ({ refetchInterval, setRefetchInterval }: R
         setRefetchInterval(values.refetchInterval);
       }}
     >
-      <Form className="flex flex-col gap-3">
+      <Form className="flex flex-col gap-3 w-1/2">
         <Field className="shadow-sm rounded-md p-2" type="number" name="refetchInterval" />
-        <button
-          className="shadow-sm border bg-slate-500 hover:bg-slate-400 hover:transition-all text-white font-bold rounded-md p-2"
-          type="submit"
-        >
-          Set Refetch Interval
-        </button>
+        <Button type="submit">Set Refetch Interval</Button>
       </Form>
     </Formik>
   );

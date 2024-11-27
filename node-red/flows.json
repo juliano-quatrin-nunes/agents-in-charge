@@ -1391,7 +1391,7 @@
         "type": "http in",
         "z": "0008fcf0ac8e3fc4",
         "name": "GET td",
-        "url": "/td",
+        "url": "/separating/td",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
