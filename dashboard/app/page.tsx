@@ -17,9 +17,12 @@ export default function Home() {
     return (
       <div className="flex gap-4">
         <div className="flex-col gap-4">
-          {data.properties.map((property) => (
-            <Sensor key={property.id} property={property} refetchInterval={refetchInterval} />
-          ))}
+          {data.properties.map(
+            (property) =>
+              property.objectType == "sensor" && (
+                <Sensor key={property.id} property={property} refetchInterval={refetchInterval} />
+              )
+          )}
         </div>
         <div className="flex-col gap-4">
           {data.actions.map((action) => (

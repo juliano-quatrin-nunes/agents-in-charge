@@ -7,10 +7,13 @@ export type Form = {
   };
 };
 
+type ObjectTypeEnum = "sensor" | "actuator";
+
 export type ComponentProperties = {
   id: string;
   title: string;
   description: string;
+  objectType: ObjectTypeEnum;
   type: string;
   properties: Record<string, string>;
   readOnly: boolean;
