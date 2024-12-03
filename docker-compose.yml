@@ -8,3 +8,10 @@ services:
     volumes:
       - ./node-red/:/data
       - ./td/:/data/td
+
+  dashboard:
+    container_name: nextapp
+    image: nextapp
+    build: ./dashboard
+    ports:
+      - "3002:3002"

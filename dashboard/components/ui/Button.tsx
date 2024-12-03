@@ -1,6 +1,6 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import { ComponentProps } from "react";
 
-interface ButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {}
+type ButtonProps = ComponentProps<"button">;
 
 export const Button = (props: ButtonProps) => {
   return (

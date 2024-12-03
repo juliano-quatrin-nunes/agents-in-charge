@@ -1,9 +1,7 @@
 "use client";
 
-import type { Metadata } from "next";
-import "./globals.css";
-import { useTd } from "@/hooks/useTd";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "./globals.css";
 
 const queryClient = new QueryClient();
 
