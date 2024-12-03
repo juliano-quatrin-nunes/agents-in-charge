@@ -13,7 +13,21 @@
             },
             {
                 "name": "http",
-                "value": "https://127.0.0.1:3000",
+                "value": "http://127.0.0.1:1880",
+                "type": "str"
+            }
+        ]
+    },
+    {
+        "id": "b2efd43785448e94",
+        "type": "tab",
+        "label": "Main",
+        "disabled": false,
+        "info": "",
+        "env": [
+            {
+                "name": "http",
+                "value": "http://127.0.0.1:1880",
                 "type": "str"
             }
         ]
@@ -354,7 +368,7 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 80,
+        "x": 60,
         "y": 340,
         "wires": [
             [
@@ -377,14 +391,14 @@
         "type": "function",
         "z": "1f735b7c1ec2a540",
         "name": "payload",
-        "func": "msg.payload = msg.req.body.value;\nreturn msg;",
+        "func": "const body = JSON.parse(msg.req.body)\n\nmsg.payload = body.value;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 240,
+        "x": 280,
         "y": 340,
         "wires": [
             [
@@ -413,7 +427,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 680,
+        "x": 720,
         "y": 340,
         "wires": [
             [
@@ -439,7 +453,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 460,
+        "x": 540,
         "y": 340,
         "wires": [
             [
@@ -1391,7 +1405,7 @@
         "type": "http in",
         "z": "0008fcf0ac8e3fc4",
         "name": "GET td",
-        "url": "/td",
+        "url": "/separating/td",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
@@ -1798,6 +1812,74 @@
         "wires": [
             [
                 "215bd4eca056e1d2"
+            ]
+        ]
+    },
+    {
+        "id": "8068a977d2780022",
+        "type": "http response",
+        "z": "b2efd43785448e94",
+        "name": "TD Response",
+        "statusCode": "200",
+        "headers": {},
+        "x": 700,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a64ecff482a2831c",
+        "type": "file in",
+        "z": "b2efd43785448e94",
+        "name": "Read td file",
+        "filename": "/data/td/main.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 250,
+        "y": 160,
+        "wires": [
+            [
+                "c24f0def17a1a452"
+            ]
+        ]
+    },
+    {
+        "id": "9f70f2979462b758",
+        "type": "http in",
+        "z": "b2efd43785448e94",
+        "name": "GET td",
+        "url": "/listAllBenches",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 50,
+        "y": 160,
+        "wires": [
+            [
+                "a64ecff482a2831c"
+            ]
+        ]
+    },
+    {
+        "id": "c24f0def17a1a452",
+        "type": "function",
+        "z": "b2efd43785448e94",
+        "name": "Complete href URL",
+        "func": "const td = JSON.parse(msg.payload)\n\nObject.entries(td).map(([key, value]) => {\n    td[key] = env.get(\"http\") + value\n})\n\nmsg.payload = td\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 160,
+        "wires": [
+            [
+                "8068a977d2780022"
             ]
         ]
     }
