@@ -3,7 +3,7 @@ Agents in Charge
 
 # Documentação da REST API
 
-Documentação da REST API desenvolvida em **Node-RED**. Existem métodos **GET** para leitura dos estados dos sensores, e métodos **POST** para alteração do estado dos atuadores da bancada **SEPARATING**.
+Documentação da REST API desenvolvida em **Node-RED**. Existem métodos **GET** para leitura dos estados dos sensores e atuadores, e métodos **POST** para alteração do estado dos atuadores da bancada **SEPARATING**.
 
 ---
 
