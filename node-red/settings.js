@@ -590,4 +590,7 @@ module.exports = {
     //    *   - reason: if result is false, the HTTP reason string to return
     //    */
     //},
+
+    credentialSecret: process.env.NODE_RED_CREDENTIAL_SECRET, // add exactly this
+    authorizationToken: process.env.API_AUTHORIZATION_TOKEN
 }

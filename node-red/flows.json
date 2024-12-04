@@ -225,6 +225,39 @@
         "icon": "node-red/alert.svg"
     },
     {
+        "id": "de6ca196357a3c7d",
+        "type": "subflow",
+        "name": "Authorize",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "6740a3c50b6bd1c3"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 560,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "34661a7197afb53a",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "14e0290e2bea4e8c",
         "type": "OpcUa-Endpoint",
         "endpoint": "opc.tcp://150.162.14.27:4840",
@@ -275,91 +308,6 @@
         "userprivatekey": ""
     },
     {
-        "id": "32536815fe41e908",
-        "type": "ui-base",
-        "name": "My Dashboard",
-        "path": "/dashboard",
-        "appIcon": "",
-        "includeClientData": true,
-        "acceptsClientConfig": [
-            "ui-notification",
-            "ui-control"
-        ],
-        "showPathInSidebar": false,
-        "showPageTitle": true,
-        "navigationStyle": "default",
-        "titleBarStyle": "default"
-    },
-    {
-        "id": "cf44edaefa818622",
-        "type": "ui-theme",
-        "name": "Default Theme",
-        "colors": {
-            "surface": "#ffffff",
-            "primary": "#0094CE",
-            "bgPage": "#eeeeee",
-            "groupBg": "#ffffff",
-            "groupOutline": "#cccccc"
-        },
-        "sizes": {
-            "density": "default",
-            "pagePadding": "12px",
-            "groupGap": "12px",
-            "groupBorderRadius": "4px",
-            "widgetGap": "12px"
-        }
-    },
-    {
-        "id": "a47bb98b8993e45f",
-        "type": "ui-page",
-        "name": "Page 1",
-        "ui": "32536815fe41e908",
-        "path": "/page1",
-        "icon": "home",
-        "layout": "grid",
-        "theme": "cf44edaefa818622",
-        "breakpoints": [
-            {
-                "name": "Default",
-                "px": 0,
-                "cols": 3
-            },
-            {
-                "name": "Tablet",
-                "px": 576,
-                "cols": 6
-            },
-            {
-                "name": "Small Desktop",
-                "px": 768,
-                "cols": 9
-            },
-            {
-                "name": "Desktop",
-                "px": 1024,
-                "cols": 12
-            }
-        ],
-        "order": 1,
-        "className": "",
-        "visible": "true",
-        "disabled": "false"
-    },
-    {
-        "id": "8347937ce163c9e6",
-        "type": "ui-group",
-        "name": "Group 1",
-        "page": "a47bb98b8993e45f",
-        "width": 6,
-        "height": 1,
-        "order": 1,
-        "showTitle": true,
-        "className": "",
-        "visible": true,
-        "disabled": false,
-        "groupType": "default"
-    },
-    {
         "id": "b3167a04a4347352",
         "type": "http in",
         "z": "1f735b7c1ec2a540",
@@ -398,7 +346,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 280,
+        "x": 360,
         "y": 340,
         "wires": [
             [
@@ -493,6 +441,17 @@
         "x": 970,
         "y": 440,
         "wires": []
+    },
+    {
+        "id": "5bf9cf4a0f25e133",
+        "type": "subflow:de6ca196357a3c7d",
+        "z": "1f735b7c1ec2a540",
+        "name": "",
+        "x": 200,
+        "y": 340,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "6afc88ee26fba6ac",
@@ -593,11 +552,11 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 200,
+        "x": 60,
         "y": 120,
         "wires": [
             [
-                "a961b59b528f1362"
+                "a467d249beb94d3b"
             ]
         ]
     },
@@ -624,6 +583,19 @@
         "x": 527.7777709960938,
         "y": 65.5555534362793,
         "wires": []
+    },
+    {
+        "id": "a467d249beb94d3b",
+        "type": "subflow:de6ca196357a3c7d",
+        "z": "c7b5baace1041e43",
+        "name": "",
+        "x": 240,
+        "y": 120,
+        "wires": [
+            [
+                "a961b59b528f1362"
+            ]
+        ]
     },
     {
         "id": "a3f90678a47d8292",
@@ -768,6 +740,64 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "6740a3c50b6bd1c3",
+        "type": "function",
+        "z": "de6ca196357a3c7d",
+        "name": "Compare token",
+        "func": "const authToken = msg.req.headers.authorization\n\nconst correctToken = env.get(\"API_AUTHORIZATION_TOKEN\")\n\nlet authorized = false\n\nif(authToken == correctToken){\n    authorized = true\n}\n\nreturn {...msg, authorized};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 180,
+        "wires": [
+            [
+                "34661a7197afb53a"
+            ]
+        ]
+    },
+    {
+        "id": "34661a7197afb53a",
+        "type": "switch",
+        "z": "de6ca196357a3c7d",
+        "name": "",
+        "property": "authorized",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 180,
+        "wires": [
+            [],
+            [
+                "355f728f174b59af"
+            ]
+        ]
+    },
+    {
+        "id": "355f728f174b59af",
+        "type": "http response",
+        "z": "de6ca196357a3c7d",
+        "name": "",
+        "statusCode": "401",
+        "headers": {},
+        "x": 500,
+        "y": 280,
+        "wires": []
     },
     {
         "id": "b6668ccdd7f575b1",

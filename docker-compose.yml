@@ -8,6 +8,7 @@ services:
     volumes:
       - ./node-red/:/data
       - ./td/:/data/td
+    env_file: "./node-red/.env"
 
   dashboard:
     container_name: nextapp

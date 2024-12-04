@@ -2,6 +2,9 @@
     "name": "Agents in Charge",
     "description": "Control of FESTO educational bench via REST API using OPC UA communication",
     "version": "0.1.0",
+    "scripts": {
+        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flows.json",
