@@ -1055,5 +1055,24 @@
                 "file": "/data/node_modules/@flowfuse/node-red-dashboard/nodes/widgets/ui_control.js"
             }
         }
+    },
+    "node-red-contrib-localtunnel": {
+        "name": "node-red-contrib-localtunnel",
+        "version": "1.0.0-2",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "localtunnel": {
+                "name": "localtunnel",
+                "types": [
+                    "localtunnel"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-localtunnel",
+                "file": "/data/node_modules/node-red-contrib-localtunnel/localtunnel.js"
+            }
+        }
     }
 }

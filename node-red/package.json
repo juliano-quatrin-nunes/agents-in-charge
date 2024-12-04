@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@flowfuse/node-red-dashboard": "^1.19.1",
+        "node-red-contrib-localtunnel": "^1.0.0-2",
         "node-red-contrib-opcua": "^0.2.334",
         "node-red-dashboard": "^3.6.5"
     }

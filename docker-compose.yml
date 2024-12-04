@@ -14,4 +14,12 @@ services:
     image: nextapp
     build: ./dashboard
     ports:
-      - "3002:3002"
+      - "3000:3000"
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - "80:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
