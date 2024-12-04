@@ -26,7 +26,7 @@ Obtém o estado atual da esteira principal da bancada Separating.
     * true para ligada
     * false para desligada
  
-### POST `separating/mainConveyor`
+### POST `/separating/mainConveyor`
 
 #### Descrição:
 Altera o estado atual da esteira principal da bancada Separating.
@@ -74,7 +74,7 @@ Obtém o estado atual da esteira de descarte de peças da bancada Separating.
     * true para ligada
     * false para desligada
  
-### POST `separating/discardConveyor`
+### POST `/separating/discardConveyor`
 
 #### Descrição:
 Altera o estado atual da esteira de descarte de peças da bancada Separating.
@@ -122,7 +122,7 @@ Obtém o estado atual da trava da bancada Separating.
     * true para ligada
     * false para desligada
  
-### POST `separating/lock`
+### POST `/separating/lock`
 
 #### Descrição:
 Altera o estado atual da trava da bancada Separating.
@@ -170,7 +170,7 @@ Obtém o estado atual do braço de descarte da bancada Separating.
     * true para ligada
     * false para desligada
  
-### POST `separating/discardDiverter`
+### POST `/separating/discardDiverter`
 
 #### Descrição:
 Altera o estado atual do braço de descarte da bancada Separating.
