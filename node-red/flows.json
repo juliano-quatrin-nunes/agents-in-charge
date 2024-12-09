@@ -807,7 +807,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardDiverter",
+                "value": "/api/separating/discardDiverter",
                 "type": "str"
             },
             {
@@ -837,7 +837,7 @@
             },
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardDiverter",
+                "value": "/api/separating/discardDiverter",
                 "type": "str"
             }
         ],
@@ -898,7 +898,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardConveyor",
+                "value": "/api/separating/discardConveyor",
                 "type": "str"
             },
             {
@@ -1020,7 +1020,7 @@
             },
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardConveyor",
+                "value": "/api/separating/discardConveyor",
                 "type": "str"
             }
         ],
@@ -1058,7 +1058,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/mainConveyor",
+                "value": "/api/separating/mainConveyor",
                 "type": "str"
             },
             {
@@ -1108,7 +1108,7 @@
             },
             {
                 "name": "http_endpoint",
-                "value": "/separating/mainConveyor",
+                "value": "/api/separating/mainConveyor",
                 "type": "str"
             }
         ],
@@ -1128,7 +1128,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/lock",
+                "value": "/api/separating/lock",
                 "type": "str"
             },
             {
@@ -1178,7 +1178,7 @@
             },
             {
                 "name": "http_endpoint",
-                "value": "/separating/lock",
+                "value": "/api/separating/lock",
                 "type": "str"
             }
         ],
@@ -1198,7 +1198,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/arrivalSensor",
+                "value": "/api/separating/arrivalSensor",
                 "type": "str"
             },
             {
@@ -1233,7 +1233,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/stoppedSensor",
+                "value": "/api/separating/stoppedSensor",
                 "type": "str"
             },
             {
@@ -1268,7 +1268,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/heightSensor",
+                "value": "/api/separating/heightSensor",
                 "type": "str"
             },
             {
@@ -1303,7 +1303,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardSensor",
+                "value": "/api/separating/discardSensor",
                 "type": "str"
             },
             {
@@ -1338,7 +1338,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/exitSensor",
+                "value": "/api/separating/exitSensor",
                 "type": "str"
             },
             {
@@ -1395,7 +1395,7 @@
         "type": "function",
         "z": "0008fcf0ac8e3fc4",
         "name": "Complete href URL",
-        "func": "const td = JSON.parse(msg.payload)\n\nconst properties = Object.entries(td.properties).forEach(([key, value]) => {\n    if(value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + value.forms[0].href\n    return value\n})\n\nconst actions = Object.entries(td.actions).forEach(([key, value]) => {\n    if (value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + value.forms[0].href\n    return value\n})\n\nmsg.payload = { properties, actions, ...td }\n\nreturn msg;",
+        "func": "const td = JSON.parse(msg.payload)\n\nconst properties = Object.entries(td.properties).forEach(([key, value]) => {\n    if(value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + value.forms[0].href\n    return value\n})\n\nconst actions = Object.entries(td.actions).forEach(([key, value]) => {\n    if (value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + \"/api\" + value.forms[0].href\n    return value\n})\n\nmsg.payload = { properties, actions, ...td }\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1435,7 +1435,7 @@
         "type": "http in",
         "z": "0008fcf0ac8e3fc4",
         "name": "GET td",
-        "url": "/separating/td",
+        "url": "/api/separating/td",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
@@ -1494,7 +1494,7 @@
         "type": "http in",
         "z": "b2efd43785448e94",
         "name": "GET td",
-        "url": "/listAllBenches",
+        "url": "/api/listAllBenches",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
