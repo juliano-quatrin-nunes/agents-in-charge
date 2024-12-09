@@ -1395,14 +1395,14 @@
         "type": "function",
         "z": "0008fcf0ac8e3fc4",
         "name": "Complete href URL",
-        "func": "const td = JSON.parse(msg.payload)\n\nconst properties = Object.entries(td.properties).forEach(([key, value]) => {\n    if(value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + value.forms[0].href\n    return value\n})\n\nconst actions = Object.entries(td.actions).forEach(([key, value]) => {\n    if (value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + \"/api\" + value.forms[0].href\n    return value\n})\n\nmsg.payload = { properties, actions, ...td }\n\nreturn msg;",
+        "func": "const td = JSON.parse(msg.td)\n\nconst host = env.get(\"HOST\") || (\"http://\" + msg.payload.internalIPv4)\n\nconst properties = Object.entries(td.properties).forEach(([key, value]) => {\n    if(value.forms && value.forms.length)\n        value.forms[0].href = host + value.forms[0].href\n    return value\n})\n\nconst actions = Object.entries(td.actions).forEach(([key, value]) => {\n    if (value.forms && value.forms.length)\n        value.forms[0].href = host + value.forms[0].href\n    return value\n})\n\nmsg.payload = { properties, actions, ...td }\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 990,
+        "x": 1290,
         "y": 1020,
         "wires": [
             [
@@ -1422,11 +1422,11 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 770,
+        "x": 710,
         "y": 1020,
         "wires": [
             [
-                "ab69d73f6fbbbf51"
+                "ba8982aaf1aaed9b"
             ]
         ]
     },
@@ -1454,9 +1454,55 @@
         "name": "TD Response",
         "statusCode": "200",
         "headers": {},
-        "x": 1220,
+        "x": 1520,
         "y": 1020,
         "wires": []
+    },
+    {
+        "id": "8d5f5524987a8612",
+        "type": "ip",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "ip",
+        "https": false,
+        "timeout": "5000",
+        "internalIPv4": true,
+        "internalIPv6": true,
+        "publicIPv4": true,
+        "publicIPv6": false,
+        "x": 1090,
+        "y": 1020,
+        "wires": [
+            [
+                "ab69d73f6fbbbf51"
+            ]
+        ]
+    },
+    {
+        "id": "ba8982aaf1aaed9b",
+        "type": "change",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "td",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 1020,
+        "wires": [
+            [
+                "8d5f5524987a8612"
+            ]
+        ]
     },
     {
         "id": "8068a977d2780022",

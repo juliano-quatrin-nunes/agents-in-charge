@@ -552,5 +552,24 @@
                 "file": "/data/node_modules/node-red-contrib-localtunnel/localtunnel.js"
             }
         }
+    },
+    "node-red-contrib-ip": {
+        "name": "node-red-contrib-ip",
+        "version": "1.0.2",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "ip": {
+                "name": "ip",
+                "types": [
+                    "ip"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-ip",
+                "file": "/data/node_modules/node-red-contrib-ip/ip.js"
+            }
+        }
     }
 }

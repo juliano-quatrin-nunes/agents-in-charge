@@ -12,6 +12,7 @@
         }
     },
     "dependencies": {
+        "node-red-contrib-ip": "^1.0.2",
         "node-red-contrib-localtunnel": "^1.0.0-2",
         "node-red-contrib-opcua": "^0.2.334"
     }
