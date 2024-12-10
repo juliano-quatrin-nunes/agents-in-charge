@@ -7,7 +7,6 @@ services:
     ports:
       - "1880:1880"
     volumes:
-      - ./node-red/:/data
       - ./td/:/data/td
     env_file: "./node-red/.env"
 
