@@ -1,6 +1,24 @@
 Agents in Charge
 ================
 
+Pasta 'node-red' contém o backend REST API desenvolvida em node-red para a bancada separating.
+
+Pasta 'dashboard' contém o frontend desenvolvido em Next.js
+
+Pasta 'td' contém a thing-description que será consumida pelos agentes via API Rest
+
+# Requirements
+
+* Docker
+
+# How to run
+
+Clone o projeto e no caminho salvo use 'sudo docker compose up'
+
+Um container será criado e nele instalado as dependências necessárias para que o projeto rode em qualquer máquina.
+
+---
+
 # Documentação da REST API
 
 Documentação da REST API desenvolvida em **Node-RED**. Existem métodos **GET** para leitura dos estados dos sensores e atuadores, e métodos **POST** para alteração do estado dos atuadores da bancada **SEPARATING**.
