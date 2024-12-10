@@ -1,6 +1,7 @@
 services:
   node-red:
     image: nodered/node-red:latest
+    build: ./node-red
     environment:
       - TZ=America/Sao_Paulo
     ports:
