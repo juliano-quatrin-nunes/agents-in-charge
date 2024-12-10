@@ -35,6 +35,14 @@ Este repositório contém um sistema de gerenciamento para a bancada **separatin
    sudo docker compose up
     ```
 
+Isso irá
+
+* Criar um container Docker.
+* Instalar automaticamente todas as dependências necessárias.
+* Configurar o ambiente para que o projeto rode em qualquer máquina.
+
+---
+
 # Documentação da REST API
 
 Documentação da REST API desenvolvida em **Node-RED**. Existem métodos **GET** para leitura dos estados dos sensores e atuadores, e métodos **POST** para alteração do estado dos atuadores da bancada **SEPARATING**.
