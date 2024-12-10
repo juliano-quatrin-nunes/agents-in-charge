@@ -1,23 +1,39 @@
 Agents in Charge
 ================
 
-Pasta 'node-red' contém o backend REST API desenvolvida em node-red para a bancada separating.
+Este repositório contém um sistema de gerenciamento para a bancada **separating**, utilizando Node-RED no backend e Next.js no frontend.  
 
-Pasta 'dashboard' contém o frontend desenvolvido em Next.js
+## Estrutura do Projeto  
 
-Pasta 'td' contém a thing-description que será consumida pelos agentes via API Rest
+- **`node-red/`**  
+  Contém o backend desenvolvido em Node-RED, que fornece uma REST API para a interação com a bancada **separating**.  
 
-# Requirements
+- **`dashboard/`**  
+  Contém o frontend desenvolvido em Next.js, oferecendo uma interface gráfica para monitoramento e controle.  
 
-* Docker
+- **`td/`**  
+  Contém a **Thing Description (TD)**, que define como os agentes irão consumir a API REST do sistema.  
 
-# How to run
+## Requisitos  
 
-Clone o projeto e no caminho salvo use 'sudo docker compose up'
+- **Docker**: Certifique-se de que o Docker está instalado e configurado em sua máquina.  
 
-Um container será criado e nele instalado as dependências necessárias para que o projeto rode em qualquer máquina.
+## Como Executar  
 
----
+1. Clone este repositório:  
+   ```bash  
+   git clone <URL_DO_REPOSITORIO>  
+    ```
+
+2. Acesse o diretório do projeto:  
+   ```bash  
+   cd <NOME_DO_REPOSITORIO>
+    ```
+
+3. Execute o comando para inicializar o projeto:  
+   ```bash  
+   sudo docker compose up
+    ```
 
 # Documentação da REST API
 
