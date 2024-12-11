@@ -8,14 +8,20 @@ services:
       - "1880:1880"
     volumes:
       - ./td/:/data/td
-    env_file: "./node-red/.env"
+      - ./.env:/data/.env
+    env_file: "./.env"
 
   dashboard:
     container_name: nextapp
     image: nextapp
-    build: ./dashboard
+    build:
+      context: ./dashboard
+      args:
+        API_AUTHORIZATION_TOKEN: ${API_AUTHORIZATION_TOKEN}
     ports:
       - "3000:3000"
+    environment:
+      - API_AUTHORIZATION_TOKEN=${API_AUTHORIZATION_TOKEN}
 
   nginx:
     container_name: nginx
