@@ -94,8 +94,8 @@
       ]
     },
     "bench_status": {
-      "title": "Bench status.",
-      "description": "Returns whether the bench is ready to receive a piece or not.",
+      "title": "Communicator.",
+      "description": "Returns whether the current bench is ready to receive a piece or not.",
       "objectType": "actuator",
       "type": "object",
       "properties": {
@@ -104,7 +104,7 @@
       "readOnly": true,
       "forms": [
         {
-          "href": "/api/separating/benchStatus",
+          "href": "/api/separating/communicator",
           "contentType": "application/json",
           "op": "readproperty",
           "htv:methodName": "GET"
@@ -114,7 +114,7 @@
     "next_bench_status": {
       "title": "Next bench status.",
       "description": "Returns whether the next bench is ready to receive a piece or not.",
-      "objectType": "communicator",
+      "objectType": "sensor",
       "type": "object",
       "properties": {
         "value": "boolean"
@@ -122,7 +122,7 @@
       "readOnly": true,
       "forms": [
         {
-          "href": "/api/separating/benchStatus",
+          "href": "/api/separating/nextBench",
           "contentType": "application/json",
           "op": "readproperty",
           "htv:methodName": "GET"
@@ -278,7 +278,7 @@
     "perform_communication": {
       "title": "Communicator.",
       "description": "Communicates availability to the previous bench.",
-      "objectType": "communicator",
+      "objectType": "actuator",
       "input": {
         "type": "object",
         "properties": {

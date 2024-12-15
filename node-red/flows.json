@@ -219,7 +219,13 @@
                 ]
             }
         ],
-        "env": [],
+        "env": [
+            {
+                "name": "node_id",
+                "type": "str",
+                "value": ""
+            }
+        ],
         "meta": {},
         "color": "#C7E9C0",
         "icon": "node-red/alert.svg"
@@ -691,7 +697,7 @@
         "id": "e0ac18730cae4f6f",
         "type": "OpcUa-Item",
         "z": "ee1d8aad80d43cea",
-        "item": "ns=4;i=11",
+        "item": "${node_id}",
         "datatype": "Boolean",
         "value": "",
         "name": "",
@@ -817,7 +823,7 @@
             }
         ],
         "x": 530,
-        "y": 300,
+        "y": 280,
         "wires": [
             [
                 "1242d4b7f7cbd401"
@@ -842,7 +848,7 @@
             }
         ],
         "x": 1130,
-        "y": 300,
+        "y": 280,
         "wires": [
             [
                 "0b959b5188eabbef"
@@ -856,7 +862,7 @@
         "name": "Discard Diverter",
         "info": "",
         "x": 340,
-        "y": 300,
+        "y": 280,
         "wires": []
     },
     {
@@ -908,7 +914,7 @@
             }
         ],
         "x": 530,
-        "y": 360,
+        "y": 340,
         "wires": [
             [
                 "1242d4b7f7cbd401"
@@ -922,7 +928,7 @@
         "name": "Discard Conveyor",
         "info": "",
         "x": 350,
-        "y": 360,
+        "y": 340,
         "wires": []
     },
     {
@@ -994,7 +1000,7 @@
         "name": "Discard Diverter",
         "info": "",
         "x": 1420,
-        "y": 300,
+        "y": 280,
         "wires": []
     },
     {
@@ -1004,7 +1010,7 @@
         "name": "Discard Conveyor",
         "info": "",
         "x": 1430,
-        "y": 360,
+        "y": 340,
         "wires": []
     },
     {
@@ -1025,7 +1031,7 @@
             }
         ],
         "x": 1130,
-        "y": 360,
+        "y": 340,
         "wires": [
             [
                 "0b959b5188eabbef"
@@ -1068,7 +1074,7 @@
             }
         ],
         "x": 530,
-        "y": 420,
+        "y": 400,
         "wires": [
             [
                 "1242d4b7f7cbd401"
@@ -1082,7 +1088,7 @@
         "name": "Main Conveyor",
         "info": "",
         "x": 340,
-        "y": 420,
+        "y": 400,
         "wires": []
     },
     {
@@ -1092,7 +1098,7 @@
         "name": "Main Conveyor",
         "info": "",
         "x": 1420,
-        "y": 420,
+        "y": 400,
         "wires": []
     },
     {
@@ -1113,7 +1119,7 @@
             }
         ],
         "x": 1130,
-        "y": 420,
+        "y": 400,
         "wires": [
             [
                 "0b959b5188eabbef"
@@ -1138,7 +1144,7 @@
             }
         ],
         "x": 530,
-        "y": 480,
+        "y": 460,
         "wires": [
             [
                 "1242d4b7f7cbd401"
@@ -1152,7 +1158,7 @@
         "name": "Lock",
         "info": "",
         "x": 310,
-        "y": 480,
+        "y": 460,
         "wires": []
     },
     {
@@ -1162,7 +1168,7 @@
         "name": "Lock",
         "info": "",
         "x": 1390,
-        "y": 480,
+        "y": 460,
         "wires": []
     },
     {
@@ -1183,7 +1189,7 @@
             }
         ],
         "x": 1130,
-        "y": 480,
+        "y": 460,
         "wires": [
             [
                 "0b959b5188eabbef"
@@ -1208,7 +1214,7 @@
             }
         ],
         "x": 530,
-        "y": 540,
+        "y": 520,
         "wires": [
             [
                 "1242d4b7f7cbd401"
@@ -1222,7 +1228,7 @@
         "name": "Arrival Sensor",
         "info": "",
         "x": 330,
-        "y": 540,
+        "y": 520,
         "wires": []
     },
     {
@@ -1243,7 +1249,7 @@
             }
         ],
         "x": 530,
-        "y": 600,
+        "y": 580,
         "wires": [
             [
                 "1242d4b7f7cbd401"
@@ -1257,7 +1263,7 @@
         "name": "Stopped Sensor",
         "info": "",
         "x": 340,
-        "y": 600,
+        "y": 580,
         "wires": []
     },
     {
@@ -1278,7 +1284,7 @@
             }
         ],
         "x": 530,
-        "y": 660,
+        "y": 640,
         "wires": [
             [
                 "1242d4b7f7cbd401"
@@ -1292,7 +1298,7 @@
         "name": "Height Sensor",
         "info": "",
         "x": 330,
-        "y": 660,
+        "y": 640,
         "wires": []
     },
     {
@@ -1313,7 +1319,7 @@
             }
         ],
         "x": 530,
-        "y": 720,
+        "y": 700,
         "wires": [
             [
                 "1242d4b7f7cbd401"
@@ -1327,7 +1333,7 @@
         "name": "Discard Sensor",
         "info": "",
         "x": 340,
-        "y": 720,
+        "y": 700,
         "wires": []
     },
     {
@@ -1348,7 +1354,7 @@
             }
         ],
         "x": 530,
-        "y": 780,
+        "y": 760,
         "wires": [
             [
                 "1242d4b7f7cbd401"
@@ -1362,7 +1368,7 @@
         "name": "Exit Sensor",
         "info": "",
         "x": 330,
-        "y": 780,
+        "y": 760,
         "wires": []
     },
     {
@@ -1370,6 +1376,13 @@
         "type": "subflow:ee1d8aad80d43cea",
         "z": "0008fcf0ac8e3fc4",
         "name": "",
+        "env": [
+            {
+                "name": "node_id",
+                "value": "ns=4;i=11",
+                "type": "str"
+            }
+        ],
         "x": 800,
         "y": 880,
         "wires": [
@@ -1382,6 +1395,14 @@
         "id": "0b959b5188eabbef",
         "type": "subflow:ee1d8aad80d43cea",
         "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "node_id",
+                "value": "ns=4;i=11",
+                "type": "str"
+            }
+        ],
         "x": 1400,
         "y": 880,
         "wires": [
@@ -1501,6 +1522,111 @@
         "wires": [
             [
                 "8d5f5524987a8612"
+            ]
+        ]
+    },
+    {
+        "id": "480a83511d6b9cfd",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/api/separating/nextBench",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=12",
+                "type": "str"
+            }
+        ],
+        "x": 530,
+        "y": 820,
+        "wires": [
+            [
+                "1242d4b7f7cbd401"
+            ]
+        ]
+    },
+    {
+        "id": "b94704cc46044745",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Next Bench",
+        "info": "",
+        "x": 330,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "75e6bc7ffef3f976",
+        "type": "subflow:c7b5baace1041e43",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "http_endpoint",
+                "value": "/api/separating/communicator",
+                "type": "str"
+            },
+            {
+                "name": "node_id",
+                "value": "ns=4;i=13",
+                "type": "str"
+            }
+        ],
+        "x": 530,
+        "y": 880,
+        "wires": [
+            [
+                "1242d4b7f7cbd401"
+            ]
+        ]
+    },
+    {
+        "id": "500eb119029eafc1",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Communicator",
+        "info": "",
+        "x": 340,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "753084ead097e22d",
+        "type": "comment",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "Communicator",
+        "info": "",
+        "x": 1420,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "c1050a6b8035650a",
+        "type": "subflow:1f735b7c1ec2a540",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "node_id",
+                "value": "ns=4;i=13",
+                "type": "str"
+            },
+            {
+                "name": "http_endpoint",
+                "value": "/api/separating/communicator",
+                "type": "str"
+            }
+        ],
+        "x": 1130,
+        "y": 520,
+        "wires": [
+            [
+                "0b959b5188eabbef"
             ]
         ]
     },

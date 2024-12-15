@@ -27,7 +27,7 @@ export const BenchDashboard = ({ benchEndpoint }: BenchDashboardProps) => {
           <div className="grid md:grid-cols-6 sm:grid-cols-3 xs:grid-cols-2 gap-2">
             {data.properties.map(
               (property) =>
-                property.objectType !== "actuator" && (
+                property.objectType == "sensor" && (
                   <Sensor
                     key={property.id}
                     property={property}

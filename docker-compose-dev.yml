@@ -1,0 +1,31 @@
+services:
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=America/Sao_Paulo
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./td/:/data/td
+      - ./node-red/:/data
+    env_file: "./.env"
+
+  dashboard:
+    container_name: nextapp
+    image: nextapp
+    build:
+      context: ./dashboard
+      args:
+        API_AUTHORIZATION_TOKEN: ${API_AUTHORIZATION_TOKEN}
+    ports:
+      - "3000:3000"
+    environment:
+      - API_AUTHORIZATION_TOKEN=${API_AUTHORIZATION_TOKEN}
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - "80:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
