@@ -7,9 +7,16 @@ export const getComponentState = (endpoint: string): Promise<ResponseData> =>
     headers: DEFAULT_HEADER,
   }).then((res) => res.json());
 
-export const postComponentState = (endpoint: string, data: RequestBody): Promise<ResponseData> =>
+export const postComponentState = (
+  endpoint: string,
+  data: RequestBody
+): Promise<ResponseData> =>
   fetch(endpoint, {
     body: JSON.stringify(data),
-    headers: DEFAULT_HEADER,
+    headers: {
+      ...DEFAULT_HEADER,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
     method: "POST",
   }).then((res) => res.json());
