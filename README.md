@@ -37,8 +37,8 @@ Este repositório contém um sistema de gerenciamento para a bancada **separatin
 
 Isso irá
 
-* Criar um container Docker.
 * Instalar automaticamente todas as dependências necessárias.
+* Criar os containers Docker para todos os serviços.
 * Configurar o ambiente para que o projeto rode em qualquer máquina.
 
 ---
