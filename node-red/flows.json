@@ -225,6 +225,39 @@
         "icon": "node-red/alert.svg"
     },
     {
+        "id": "de6ca196357a3c7d",
+        "type": "subflow",
+        "name": "Authorize",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "6740a3c50b6bd1c3"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 560,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "34661a7197afb53a",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "14e0290e2bea4e8c",
         "type": "OpcUa-Endpoint",
         "endpoint": "opc.tcp://150.162.14.27:4840",
@@ -275,91 +308,6 @@
         "userprivatekey": ""
     },
     {
-        "id": "32536815fe41e908",
-        "type": "ui-base",
-        "name": "My Dashboard",
-        "path": "/dashboard",
-        "appIcon": "",
-        "includeClientData": true,
-        "acceptsClientConfig": [
-            "ui-notification",
-            "ui-control"
-        ],
-        "showPathInSidebar": false,
-        "showPageTitle": true,
-        "navigationStyle": "default",
-        "titleBarStyle": "default"
-    },
-    {
-        "id": "cf44edaefa818622",
-        "type": "ui-theme",
-        "name": "Default Theme",
-        "colors": {
-            "surface": "#ffffff",
-            "primary": "#0094CE",
-            "bgPage": "#eeeeee",
-            "groupBg": "#ffffff",
-            "groupOutline": "#cccccc"
-        },
-        "sizes": {
-            "density": "default",
-            "pagePadding": "12px",
-            "groupGap": "12px",
-            "groupBorderRadius": "4px",
-            "widgetGap": "12px"
-        }
-    },
-    {
-        "id": "a47bb98b8993e45f",
-        "type": "ui-page",
-        "name": "Page 1",
-        "ui": "32536815fe41e908",
-        "path": "/page1",
-        "icon": "home",
-        "layout": "grid",
-        "theme": "cf44edaefa818622",
-        "breakpoints": [
-            {
-                "name": "Default",
-                "px": 0,
-                "cols": 3
-            },
-            {
-                "name": "Tablet",
-                "px": 576,
-                "cols": 6
-            },
-            {
-                "name": "Small Desktop",
-                "px": 768,
-                "cols": 9
-            },
-            {
-                "name": "Desktop",
-                "px": 1024,
-                "cols": 12
-            }
-        ],
-        "order": 1,
-        "className": "",
-        "visible": "true",
-        "disabled": "false"
-    },
-    {
-        "id": "8347937ce163c9e6",
-        "type": "ui-group",
-        "name": "Group 1",
-        "page": "a47bb98b8993e45f",
-        "width": 6,
-        "height": 1,
-        "order": 1,
-        "showTitle": true,
-        "className": "",
-        "visible": true,
-        "disabled": false,
-        "groupType": "default"
-    },
-    {
         "id": "b3167a04a4347352",
         "type": "http in",
         "z": "1f735b7c1ec2a540",
@@ -398,7 +346,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 280,
+        "x": 360,
         "y": 340,
         "wires": [
             [
@@ -493,6 +441,17 @@
         "x": 970,
         "y": 440,
         "wires": []
+    },
+    {
+        "id": "5bf9cf4a0f25e133",
+        "type": "subflow:de6ca196357a3c7d",
+        "z": "1f735b7c1ec2a540",
+        "name": "",
+        "x": 200,
+        "y": 340,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "6afc88ee26fba6ac",
@@ -593,11 +552,11 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 200,
+        "x": 60,
         "y": 120,
         "wires": [
             [
-                "a961b59b528f1362"
+                "a467d249beb94d3b"
             ]
         ]
     },
@@ -624,6 +583,19 @@
         "x": 527.7777709960938,
         "y": 65.5555534362793,
         "wires": []
+    },
+    {
+        "id": "a467d249beb94d3b",
+        "type": "subflow:de6ca196357a3c7d",
+        "z": "c7b5baace1041e43",
+        "name": "",
+        "x": 240,
+        "y": 120,
+        "wires": [
+            [
+                "a961b59b528f1362"
+            ]
+        ]
     },
     {
         "id": "a3f90678a47d8292",
@@ -770,6 +742,64 @@
         ]
     },
     {
+        "id": "6740a3c50b6bd1c3",
+        "type": "function",
+        "z": "de6ca196357a3c7d",
+        "name": "Compare token",
+        "func": "const authToken = msg.req.headers.authorization\n\nconst correctToken = env.get(\"API_AUTHORIZATION_TOKEN\")\n\nlet authorized = false\n\nif(authToken == correctToken){\n    authorized = true\n}\n\nreturn {...msg, authorized};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 180,
+        "wires": [
+            [
+                "34661a7197afb53a"
+            ]
+        ]
+    },
+    {
+        "id": "34661a7197afb53a",
+        "type": "switch",
+        "z": "de6ca196357a3c7d",
+        "name": "",
+        "property": "authorized",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 180,
+        "wires": [
+            [],
+            [
+                "355f728f174b59af"
+            ]
+        ]
+    },
+    {
+        "id": "355f728f174b59af",
+        "type": "http response",
+        "z": "de6ca196357a3c7d",
+        "name": "",
+        "statusCode": "401",
+        "headers": {},
+        "x": 500,
+        "y": 280,
+        "wires": []
+    },
+    {
         "id": "b6668ccdd7f575b1",
         "type": "subflow:c7b5baace1041e43",
         "z": "0008fcf0ac8e3fc4",
@@ -777,7 +807,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardDiverter",
+                "value": "/api/separating/discardDiverter",
                 "type": "str"
             },
             {
@@ -807,7 +837,7 @@
             },
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardDiverter",
+                "value": "/api/separating/discardDiverter",
                 "type": "str"
             }
         ],
@@ -868,7 +898,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardConveyor",
+                "value": "/api/separating/discardConveyor",
                 "type": "str"
             },
             {
@@ -990,7 +1020,7 @@
             },
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardConveyor",
+                "value": "/api/separating/discardConveyor",
                 "type": "str"
             }
         ],
@@ -1028,7 +1058,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/mainConveyor",
+                "value": "/api/separating/mainConveyor",
                 "type": "str"
             },
             {
@@ -1078,7 +1108,7 @@
             },
             {
                 "name": "http_endpoint",
-                "value": "/separating/mainConveyor",
+                "value": "/api/separating/mainConveyor",
                 "type": "str"
             }
         ],
@@ -1098,7 +1128,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/lock",
+                "value": "/api/separating/lock",
                 "type": "str"
             },
             {
@@ -1148,7 +1178,7 @@
             },
             {
                 "name": "http_endpoint",
-                "value": "/separating/lock",
+                "value": "/api/separating/lock",
                 "type": "str"
             }
         ],
@@ -1168,7 +1198,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/arrivalSensor",
+                "value": "/api/separating/arrivalSensor",
                 "type": "str"
             },
             {
@@ -1203,7 +1233,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/stoppedSensor",
+                "value": "/api/separating/stoppedSensor",
                 "type": "str"
             },
             {
@@ -1238,7 +1268,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/heightSensor",
+                "value": "/api/separating/heightSensor",
                 "type": "str"
             },
             {
@@ -1273,7 +1303,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/discardSensor",
+                "value": "/api/separating/discardSensor",
                 "type": "str"
             },
             {
@@ -1308,7 +1338,7 @@
         "env": [
             {
                 "name": "http_endpoint",
-                "value": "/separating/exitSensor",
+                "value": "/api/separating/exitSensor",
                 "type": "str"
             },
             {
@@ -1365,14 +1395,14 @@
         "type": "function",
         "z": "0008fcf0ac8e3fc4",
         "name": "Complete href URL",
-        "func": "const td = JSON.parse(msg.payload)\n\nconst properties = Object.entries(td.properties).forEach(([key, value]) => {\n    if(value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + value.forms[0].href\n    return value\n})\n\nconst actions = Object.entries(td.actions).forEach(([key, value]) => {\n    if (value.forms && value.forms.length)\n        value.forms[0].href = env.get(\"http\") + value.forms[0].href\n    return value\n})\n\nmsg.payload = { properties, actions, ...td }\n\nreturn msg;",
+        "func": "const td = JSON.parse(msg.td)\n\nconst host = env.get(\"HOST\") || (\"http://\" + msg.payload.internalIPv4)\n\nconst properties = Object.entries(td.properties).forEach(([key, value]) => {\n    if(value.forms && value.forms.length)\n        value.forms[0].href = host + value.forms[0].href\n    return value\n})\n\nconst actions = Object.entries(td.actions).forEach(([key, value]) => {\n    if (value.forms && value.forms.length)\n        value.forms[0].href = host + value.forms[0].href\n    return value\n})\n\nmsg.payload = { properties, actions, ...td }\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 990,
+        "x": 1290,
         "y": 1020,
         "wires": [
             [
@@ -1392,11 +1422,11 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 770,
+        "x": 710,
         "y": 1020,
         "wires": [
             [
-                "ab69d73f6fbbbf51"
+                "ba8982aaf1aaed9b"
             ]
         ]
     },
@@ -1405,7 +1435,7 @@
         "type": "http in",
         "z": "0008fcf0ac8e3fc4",
         "name": "GET td",
-        "url": "/separating/td",
+        "url": "/api/separating/td",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
@@ -1424,9 +1454,55 @@
         "name": "TD Response",
         "statusCode": "200",
         "headers": {},
-        "x": 1220,
+        "x": 1520,
         "y": 1020,
         "wires": []
+    },
+    {
+        "id": "8d5f5524987a8612",
+        "type": "ip",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "ip",
+        "https": false,
+        "timeout": "5000",
+        "internalIPv4": true,
+        "internalIPv6": true,
+        "publicIPv4": true,
+        "publicIPv6": false,
+        "x": 1090,
+        "y": 1020,
+        "wires": [
+            [
+                "ab69d73f6fbbbf51"
+            ]
+        ]
+    },
+    {
+        "id": "ba8982aaf1aaed9b",
+        "type": "change",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "td",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 1020,
+        "wires": [
+            [
+                "8d5f5524987a8612"
+            ]
+        ]
     },
     {
         "id": "8068a977d2780022",
@@ -1464,7 +1540,7 @@
         "type": "http in",
         "z": "b2efd43785448e94",
         "name": "GET td",
-        "url": "/listAllBenches",
+        "url": "/api/listAllBenches",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",

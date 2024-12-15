@@ -1,7 +1,10 @@
 "use client";
 
 import { RequestBody, ResponseData } from "@/lib/types";
-import { getComponentState, postComponentState } from "@/services/componentApiService";
+import {
+  getComponentState,
+  postComponentState,
+} from "@/services/componentApiService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useFetchProperty = (href: string, refetchInterval: number) => {
@@ -9,6 +12,7 @@ export const useFetchProperty = (href: string, refetchInterval: number) => {
     queryKey: ["componentState", href],
     queryFn: () => getComponentState(href as string),
     refetchInterval,
+    retry: false,
   });
 };
 

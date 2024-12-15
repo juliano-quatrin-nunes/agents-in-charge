@@ -6,7 +6,10 @@ interface RefetchIntervalSetterProps {
   setRefetchInterval: (value: number) => void;
 }
 
-export const RefetchIntervalSetter = ({ refetchInterval, setRefetchInterval }: RefetchIntervalSetterProps) => {
+export const RefetchIntervalSetter = ({
+  refetchInterval,
+  setRefetchInterval,
+}: RefetchIntervalSetterProps) => {
   return (
     <Formik
       initialValues={{ refetchInterval }}
@@ -15,7 +18,11 @@ export const RefetchIntervalSetter = ({ refetchInterval, setRefetchInterval }: R
       }}
     >
       <Form className="flex flex-col gap-3 w-1/2">
-        <Field className="shadow-sm rounded-md p-2" type="number" name="refetchInterval" />
+        <Field
+          className="shadow-md border rounded-md p-2"
+          type="number"
+          name="refetchInterval"
+        />
         <Button type="submit">Set Refetch Interval</Button>
       </Form>
     </Formik>

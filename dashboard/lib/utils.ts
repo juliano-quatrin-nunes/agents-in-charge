@@ -1,4 +1,6 @@
-export const addIdToComponents = <T extends { id: string }>(component: Record<string, T>) => {
+export const addIdToComponents = <T extends { id: string }>(
+  component: Record<string, T>
+) => {
   return Object.entries(component).map(([key, value]) => {
     value.id = key;
     return value;
@@ -15,6 +17,9 @@ export const benchEndpointToUrl = (benchEndpoint: string) => {
   return path;
 };
 
-export const BASE_URL = "http://localhost:1880";
+export const INITIAL_ENDPOINT = "/api/listAllBenches";
 
-export const INITIAL_ENDPOINT = "http://localhost:1880/listAllBenches";
+export const DEFAULT_HEADER = {
+  Authorization: `${process.env.API_AUTHORIZATION_TOKEN}`,
+  "ngrok-skip-browser-warning": "69420",
+};
