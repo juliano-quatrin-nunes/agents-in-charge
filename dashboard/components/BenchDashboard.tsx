@@ -19,22 +19,43 @@ export const BenchDashboard = ({ benchEndpoint }: BenchDashboardProps) => {
 
   if (data && isSuccess)
     return (
-      <div className="flex flex-col gap-4 justify-center">
-        <div className="flex gap-4">
-          {data.properties.map(
-            (property) =>
-              property.objectType == "sensor" && (
-                <Sensor key={property.id} property={property} refetchInterval={refetchInterval} />
-              )
-          )}
+      <div className="flex flex-col gap-10 justify-center p-10">
+        <div>
+          <h2 className="text-center w-full pb-2 text-xl font-bold">
+            Sensores:
+          </h2>
+          <div className="grid md:grid-cols-6 sm:grid-cols-3 xs:grid-cols-2 gap-2">
+            {data.properties.map(
+              (property) =>
+                property.objectType !== "actuator" && (
+                  <Sensor
+                    key={property.id}
+                    property={property}
+                    refetchInterval={refetchInterval}
+                  />
+                )
+            )}
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          {data.actions.map((action) => (
-            <Actuator key={action.id} action={action} refetchInterval={refetchInterval} />
-          ))}
+        <div>
+          <h2 className="text-center w-full pb-2 text-xl font-bold">
+            Atuadores:
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
+            {data.actions.map((action) => (
+              <Actuator
+                key={action.id}
+                action={action}
+                refetchInterval={refetchInterval}
+              />
+            ))}
+          </div>
         </div>
         <div className="flex justify-center">
-          <RefetchIntervalSetter refetchInterval={refetchInterval} setRefetchInterval={setRefetchInterval} />
+          <RefetchIntervalSetter
+            refetchInterval={refetchInterval}
+            setRefetchInterval={setRefetchInterval}
+          />
         </div>
       </div>
     );

@@ -18,6 +18,9 @@ export const RefetchIntervalSetter = ({
       }}
     >
       <Form className="flex flex-col gap-3 w-1/2">
+        <label htmlFor="refetchInterval" className="text-lg font-semibold">
+          Refetch Interval (ms)
+        </label>
         <Field
           className="shadow-md border rounded-md p-2"
           type="number"

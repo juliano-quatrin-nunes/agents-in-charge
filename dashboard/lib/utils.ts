@@ -1,3 +1,6 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 export const addIdToComponents = <T extends { id: string }>(
   component: Record<string, T>
 ) => {
@@ -23,3 +26,7 @@ export const DEFAULT_HEADER = {
   Authorization: `${process.env.API_AUTHORIZATION_TOKEN}`,
   "ngrok-skip-browser-warning": "69420",
 };
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}

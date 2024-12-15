@@ -114,7 +114,7 @@
     "next_bench_status": {
       "title": "Next bench status.",
       "description": "Returns whether the next bench is ready to receive a piece or not.",
-      "objectType": "actuator",
+      "objectType": "communicator",
       "type": "object",
       "properties": {
         "value": "boolean"
@@ -275,27 +275,10 @@
         }
       ]
     },
-    "change_bench_state": {
-      "title": "Bench state change.",
-      "description": "Activates the desired operating state of the bench.",
-      "input": {
-        "type": "object",
-        "properties": {
-          "value": "boolean"
-        }
-      },
-      "forms": [
-        {
-          "href": "/api/separating/stateMachine",
-          "contentType": "application/json",
-          "op": "invokeaction",
-          "htv:methodName": "POST"
-        }
-      ]
-    },
     "perform_communication": {
-      "title": "Communicate with the next bench.",
+      "title": "Communicator.",
       "description": "Communicates availability to the previous bench.",
+      "objectType": "communicator",
       "input": {
         "type": "object",
         "properties": {

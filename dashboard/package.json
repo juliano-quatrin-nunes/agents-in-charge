@@ -13,11 +13,17 @@
     "react-dom": "$react-dom"
   },
   "dependencies": {
+    "@radix-ui/react-tooltip": "^1.1.5",
     "@tanstack/react-query": "^5.0.0-rc.16",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "formik": "^2.4.6",
+    "lucide-react": "^0.468.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",
