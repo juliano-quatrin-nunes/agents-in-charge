@@ -22,7 +22,7 @@ export const BenchDashboard = ({ benchEndpoint }: BenchDashboardProps) => {
       <div className="flex flex-col gap-10 justify-center p-10">
         <div>
           <h2 className="text-center w-full pb-2 text-xl font-bold">
-            Sensores:
+            Sensors:
           </h2>
           <div className="grid md:grid-cols-6 sm:grid-cols-3 xs:grid-cols-2 gap-2">
             {data.properties.map(
@@ -39,7 +39,7 @@ export const BenchDashboard = ({ benchEndpoint }: BenchDashboardProps) => {
         </div>
         <div>
           <h2 className="text-center w-full pb-2 text-xl font-bold">
-            Atuadores:
+            Actuators:
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
             {data.actions.map((action) => (

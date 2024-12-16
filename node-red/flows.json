@@ -345,7 +345,7 @@
         "type": "function",
         "z": "1f735b7c1ec2a540",
         "name": "payload",
-        "func": "const body = JSON.parse(msg.req.body)\n\nmsg.payload = body.value;\nreturn msg;",
+        "func": "const body = msg.req.body\n\nmsg.payload = body.value;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
