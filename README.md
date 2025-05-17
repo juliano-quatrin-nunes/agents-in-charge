@@ -5,13 +5,13 @@ Este repositório contém um sistema de gerenciamento para a bancada **separatin
 
 ## Estrutura do Projeto  
 
-- **`node-red/`**  
+- **`/apps/node-red/`**  
   Contém o backend desenvolvido em Node-RED, que fornece uma REST API para a interação com a bancada **separating**.  
 
-- **`dashboard/`**  
+- **`/apps/dashboard/`**  
   Contém o frontend desenvolvido em Next.js, oferecendo uma interface gráfica para monitoramento e controle.  
 
-- **`td/`**  
+- **`/apps/td/`**  
   Contém a **Thing Description (TD)**, que define como os agentes irão consumir a API REST do sistema.  
 
 ## Requisitos  
