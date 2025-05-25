@@ -43,3 +43,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Java/Maven specific ignores for semantic project
+apps/semantic/target/
+apps/semantic/.classpath
+apps/semantic/.project
+apps/semantic/.settings/
+apps/semantic/*.iml
+apps/semantic/.idea/
+apps/semantic/logs/
+apps/semantic/*.log
+
+# Jena TDB database files
+apps/semantic/data/tdb/
+**/tdb-*/
