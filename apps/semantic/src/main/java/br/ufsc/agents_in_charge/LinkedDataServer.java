@@ -1,11 +1,23 @@
 package br.ufsc.agents_in_charge;
 
-import org.apache.jena.rdf.model.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.jena.query.Dataset;
+import org.apache.jena.query.ReadWrite;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.tdb2.TDB2Factory;
-import org.apache.jena.query.Dataset;
-import org.apache.jena.query.ReadWrite;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -14,12 +26,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Servidor HTTP que expõe os dados RDF com content negotiation
@@ -27,7 +33,7 @@ import java.util.Set;
 public class LinkedDataServer {
     private final String tdbDirectory;
     private final int port;
-    private final Pattern resourcePattern = Pattern.compile("/resource/(.+)");
+    private final Pattern resourcePattern = Pattern.compile("/kg/(.+)");
     
     public LinkedDataServer(String tdbDirectory, int port) {
         this.tdbDirectory = tdbDirectory;
@@ -42,14 +48,6 @@ public class LinkedDataServer {
         
         // Criar servidor Jetty
         Server server = new Server(port);
-
-        // Conectar ao dataset TDB
-        Dataset dataset = TDB2Factory.connectDataset(tdbDirectory);
-        dataset.begin(ReadWrite.READ);
-        Model model = dataset.getDefaultModel();
-        System.out.println("dataset: " + model.toString());
-        dataset.end();
-        dataset.close();
         
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
@@ -61,7 +59,7 @@ public class LinkedDataServer {
         // Iniciar o servidor
         server.start();
         System.out.println("Servidor iniciado com sucesso em http://localhost:" + port);
-        System.out.println("Exemplo de recurso: http://localhost:" + port + "/resource/sensors/temperature1");
+        System.out.println("Exemplo de recurso: http://localhost:" + port + "/kg/HeightSensor");
         System.out.println("Pressione Ctrl+C para encerrar o servidor");
         server.join();
     }
@@ -166,20 +164,6 @@ public class LinkedDataServer {
             RDFNode obj = stmt.getObject();
             if (obj.isAnon()) {
                 extractSubgraph(sourceModel, obj, targetModel, visited);
-            }
-            // Para recursos normais, não expandimos para evitar trazer o grafo inteiro
-        }
-        
-        // Adicionar declarações onde o nó é o objeto
-        StmtIterator objIt = sourceModel.listStatements(null, null, node);
-        while (objIt.hasNext()) {
-            Statement stmt = objIt.next();
-            targetModel.add(stmt);
-            
-            // Se o sujeito é um nó em branco, processar recursivamente
-            Resource subj = stmt.getSubject();
-            if (subj.isAnon()) {
-                extractSubgraph(sourceModel, subj, targetModel, visited);
             }
             // Para recursos normais, não expandimos para evitar trazer o grafo inteiro
         }
