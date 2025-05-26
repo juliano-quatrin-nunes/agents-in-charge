@@ -162,6 +162,40 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>serve</id>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>br.ufsc.agents_in_charge.Main</mainClass>
+              <arguments>
+                <argument>serve</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>build</id>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>br.ufsc.agents_in_charge.Main</mainClass>
+              <arguments>
+                <argument>build</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>br.ufsc.agents_in_charge.Main</mainClass>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
