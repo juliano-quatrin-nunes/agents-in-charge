@@ -1,5 +1,7 @@
 package br.ufsc.agents_in_charge;
 
+import java.io.File;
+
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
@@ -18,6 +20,13 @@ public class TDBBuilder {
   public void buildTDB() {
     System.out.println("Iniciando a construção do banco de dados TDB em: " + tdbDirectory);
     
+    // Delete existing TDB directory if it exists
+    File tdbDir = new File(tdbDirectory);
+    if (tdbDir.exists()) {
+        System.out.println("Deleting existing TDB directory: " + tdbDirectory);
+        deleteDirectory(tdbDir);
+    }
+    
     Dataset dataset = TDB2Factory.connectDataset(tdbDirectory);
 
     dataset.begin(ReadWrite.WRITE);
@@ -31,10 +40,14 @@ public class TDBBuilder {
       model.setNsPrefix("td", Td.NS);
       model.setNsPrefix("hctl", Hctl.NS);
       model.setNsPrefix("htv", Htv.NS);
-
+      model.setNsPrefix("rdfs", RDFS.getURI());
+      
+      Resource heightProperty = model.createResource(Vocabulary.PROPERTY_URI + "Height");
+      heightProperty.addProperty(RDF.type, Sosa.ObservableProperty);
+      
       Resource heightSensor = model.createResource(Vocabulary.BASE_URI + "HeightSensor");
       heightSensor.addProperty(RDF.type, Sosa.Sensor);
-      heightSensor.addProperty(Sosa.observes, Vocabulary.PROPERTY_URI + "Height");
+      heightSensor.addProperty(Sosa.observes, heightProperty);
 
       Resource propertyAffordance = model.createResource();
       propertyAffordance.addProperty(RDF.type, Td.PropertyAffordance);
@@ -44,8 +57,6 @@ public class TDBBuilder {
         
       heightSensor.addProperty(Td.hasPropertyAffordance, propertyAffordance);
 
-      Resource heightProperty = model.createResource(Vocabulary.PROPERTY_URI + "Height");
-      heightProperty.addProperty(RDF.type, Sosa.ObservableProperty);
 
       // Commit the transaction
       dataset.commit();
@@ -78,5 +89,24 @@ public class TDBBuilder {
     form.addProperty(Hctl.hasOperationType, Td.writeProperty);
     form.addProperty(Hctl.hasTarget, url);
     return form;
+  }
+
+  /**
+   * Deletes a directory and all its contents recursively
+   */
+  private boolean deleteDirectory(File directory) {
+    if (directory.exists()) {
+      File[] files = directory.listFiles();
+      if (files != null) {
+        for (File file : files) {
+          if (file.isDirectory()) {
+            deleteDirectory(file);
+          } else {
+            file.delete();
+          }
+        }
+      }
+    }
+    return directory.delete();
   }
 }
