@@ -8,8 +8,8 @@
         "env": [
             {
                 "name": "opc_endpoint",
-                "value": "opc.tcp://150.162.14.27:4840",
-                "type": "str"
+                "value": "opc_endpoint_separating",
+                "type": "env"
             },
             {
                 "name": "http",
@@ -266,45 +266,7 @@
     {
         "id": "14e0290e2bea4e8c",
         "type": "OpcUa-Endpoint",
-        "endpoint": "opc.tcp://150.162.14.27:4840",
-        "secpol": "None",
-        "secmode": "None",
-        "none": true,
-        "login": false,
-        "usercert": false,
-        "usercertificate": "",
-        "userprivatekey": ""
-    },
-    {
-        "id": "c2fd6ea3cc083b70",
-        "type": "OpcUa-Endpoint",
-        "z": "1f735b7c1ec2a540",
-        "endpoint": "${opc_endpoint}",
-        "secpol": "None",
-        "secmode": "None",
-        "none": true,
-        "login": false,
-        "usercert": false,
-        "usercertificate": "",
-        "userprivatekey": ""
-    },
-    {
-        "id": "cc5c531b1a3180a0",
-        "type": "OpcUa-Endpoint",
-        "z": "c7b5baace1041e43",
-        "endpoint": "${opc_endpoint}",
-        "secpol": "None",
-        "secmode": "None",
-        "none": true,
-        "login": false,
-        "usercert": false,
-        "usercertificate": "",
-        "userprivatekey": ""
-    },
-    {
-        "id": "ba1646fb305b7868",
-        "type": "OpcUa-Endpoint",
-        "endpoint": "${opc_endpoint}",
+        "endpoint": "${opc_endpoint_separating}",
         "secpol": "None",
         "secmode": "None",
         "none": true,
@@ -623,6 +585,8 @@
         "maxMessageSize": 8192,
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
         "name": "Client Read",
         "x": 670,
         "y": 80,
@@ -885,6 +849,8 @@
         "maxMessageSize": 8192,
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
         "name": "Client Read",
         "x": 990,
         "y": 880,
@@ -951,6 +917,8 @@
         "maxMessageSize": 8192,
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
         "name": "Client Read",
         "x": 1750,
         "y": 880,
@@ -982,6 +950,8 @@
         "maxMessageSize": 8192,
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
         "name": "Client Write",
         "x": 1590,
         "y": 880,

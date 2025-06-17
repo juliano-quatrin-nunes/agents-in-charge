@@ -1,16 +1,28 @@
 FROM nodered/node-red
 
-# Copy package.json to the WORKDIR so npm builds all
-# of your added nodes modules for Node-RED
-WORKDIR /data
-COPY package.json /data
-RUN npm install --unsafe-perm --no-update-notifier --no-fund --only=production
-WORKDIR /usr/src/node-red
+# Switch to root to install pnpm globally
+USER root
+RUN npm install -g pnpm
 
-# Copy _your_ Node-RED project files into place
-# NOTE: This will only work if you DO NOT later mount /data as an external volume.
-#       If you need to use an external volume for persistence then
-#       copy your settings and flows files to that volume instead.
-COPY settings.js /data/settings.js
-COPY flows_cred.json /data/flows_cred.json
-COPY flows.json /data/flows.json
+# Switch back to node-red user for security
+USER node-red
+
+# Set working directory to /data (Node-RED's user directory)
+WORKDIR /data
+
+# Copy package.json and pnpm-lock.yaml for deterministic installs
+COPY --chown=node-red:root package.json pnpm-lock.yaml ./
+
+# Install dependencies using the lock file for deterministic builds
+# --frozen-lockfile ensures exact versions from lock file (like npm ci)
+# --prod installs only production dependencies (important for Node-RED contrib modules)
+RUN pnpm install --frozen-lockfile --prod && pnpm store prune
+
+# Copy Node-RED configuration files
+COPY --chown=node-red:root settings.js flows_cred.json flows.json ./
+
+# Verify modules are installed and discoverable
+RUN pnpm list --depth=0
+
+# Switch back to Node-RED working directory
+WORKDIR /usr/src/node-red

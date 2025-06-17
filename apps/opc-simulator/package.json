@@ -1,0 +1,11 @@
+{
+    "name": "opc-ua-simulator",
+    "description": "OPC-UA simulation server for FESTO separating station",
+    "version": "0.1.0",
+    "scripts": {
+        "start": "node festo-server.js"
+    },
+    "dependencies": {
+        "node-opcua": "^2.108.0"
+    }
+} 

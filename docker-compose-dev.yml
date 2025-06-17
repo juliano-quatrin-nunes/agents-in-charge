@@ -1,14 +1,18 @@
 services:
   node-red:
     image: nodered/node-red:latest
+    build: ./apps/node-red
     environment:
       - TZ=America/Sao_Paulo
+      - NODE_RED_CREDENTIAL_SECRET=agents-in-charge-secret-key-2024
     ports:
       - "1880:1880"
     volumes:
       - ./apps/td/:/data/td
-      - ./apps/node-red/:/data
-    env_file: "./.env"
+      - ./apps/node-red:/data
+      - ./apps/td/:/data/td
+      - /data/node_modules
+    env_file: "./.env.dev"
 
   dashboard:
     container_name: nextapp
@@ -29,3 +33,28 @@ services:
       - "80:80"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  semantic-app:
+    build: ./apps/semantic
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./apps/semantic/data:/app/data
+    command: ["serve"]
+    environment:
+      - TZ=America/Sao_Paulo
+
+  semantic-builder:
+    build: ./apps/semantic
+    volumes:
+      - ./apps/semantic/data:/app/data
+    command: ["build"]
+    profiles: ["builder"] 
+
+  opc-simulator:
+    build: ./apps/opc-simulator
+    ports:
+      - "4840:4840"
+    environment:
+      - NODE_ENV=development
+    profiles: ["dev"]
