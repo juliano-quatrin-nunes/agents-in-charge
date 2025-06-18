@@ -15,16 +15,13 @@ const { OPCUAServer, Variant, DataType, makeNodeId } = require("node-opcua");
     console.log("🔧 FESTO OPC-UA Server initialized");
 
     const addressSpace = server.engine.addressSpace;
-    const namespace = addressSpace.getOwnNamespace();
-
-    // Register additional namespaces to get to namespace 4
-    const ns2 = addressSpace.registerNamespace("urn:namespace2");
-    const ns3 = addressSpace.registerNamespace("urn:namespace3");  
+    const _ns1 = addressSpace.getOwnNamespace();
+    const _ns2 = addressSpace.registerNamespace("urn:namespace2");
+    const _ns3 = addressSpace.registerNamespace("urn:namespace3");  
     const ns4 = addressSpace.registerNamespace("urn:FestoSeparatingStation");
 
     console.log(`📋 Registered namespaces - ns4 index: ${ns4.index}`);
 
-    // Create a device object to organize variables using namespace 4
     const device = ns4.addObject({
         organizedBy: addressSpace.rootFolder.objects,
         browseName: "FestoSeparatingStation",
@@ -33,10 +30,7 @@ const { OPCUAServer, Variant, DataType, makeNodeId } = require("node-opcua");
 
     console.log("📦 Device object created in namespace 4");
 
-    // Create variables with the exact node IDs your Node-RED flows expect
     const variables = {};
-
-    // Now we can properly use namespace 4 as requested
 
     variables.discardDiverter = ns4.addVariable({
         componentOf: device,
@@ -148,49 +142,6 @@ const { OPCUAServer, Variant, DataType, makeNodeId } = require("node-opcua");
 
     console.log("✅ All FESTO variables created");
 
-    // Simulation logic - realistic sensor behavior
-    setInterval(() => {
-        const sensors = [
-            variables.arrivalSensor,
-            variables.stoppedSensor,
-            variables.heightSensor,
-            variables.discardSensor,
-            variables.exitSensor
-        ];
-        
-        const randomSensor = sensors[Math.floor(Math.random() * sensors.length)];
-        const newValue = Math.random() > 0.7; // 30% chance of being active
-        
-        randomSensor.setValueFromSource(new Variant({
-            dataType: DataType.Boolean,
-            value: newValue
-        }));
-        
-        console.log(`🔍 ${randomSensor.browseName.name} (${randomSensor.nodeId.toString()}): ${newValue}`);
-    }, 3000);
-
-    // Actuator simulation - less frequent changes
-    setInterval(() => {
-        const actuators = [
-            variables.mainConveyor,
-            variables.discardConveyor,
-            variables.lock,
-            variables.discardDiverter
-        ];
-        
-        if (Math.random() > 0.8) { // 20% chance
-            const randomActuator = actuators[Math.floor(Math.random() * actuators.length)];
-            const newValue = Math.random() > 0.5;
-            
-            randomActuator.setValueFromSource(new Variant({
-                dataType: DataType.Boolean,
-                value: newValue
-            }));
-            
-            console.log(`⚙️  ${randomActuator.browseName.name} (${randomActuator.nodeId.toString()}): ${newValue}`);
-        }
-    }, 5000);
-
     await server.start();
     
     console.log("🚀 FESTO Separating Station Simulator started!");
@@ -200,9 +151,7 @@ const { OPCUAServer, Variant, DataType, makeNodeId } = require("node-opcua");
     });
     console.log(`🌐 Server endpoint: ${server.endpoints[0].endpointUrl}`);
     console.log(`🔗 Connect from Node-RED using: opc.tcp://opc-simulator:4840`);
-    console.log("⚠️  NOTE: Use ns=1;i=X instead of ns=4;i=X in Node-RED flows");
 
-    // Graceful shutdown
     process.on("SIGINT", async () => {
         console.log("\n🛑 Shutting down FESTO simulator...");
         await server.shutdown();
