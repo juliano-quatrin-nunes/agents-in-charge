@@ -5,7 +5,7 @@ Este repositório contém um sistema de gerenciamento para a bancada **separatin
 
 ## Estrutura do Projeto  
 
-- **`apps/node-red/`**  
+- **`apps/wot-server/`**  
   Contém o backend desenvolvido em Node-RED, que fornece uma REST API para a interação com a bancada **separating**.  
 
 - **`apps/dashboard/`**  
@@ -58,12 +58,24 @@ Isso irá:
 
 Após a execução, os seguintes serviços estarão disponíveis:
 
-- **Node-RED**: http://localhost:1880 - Interface de desenvolvimento de fluxos
+- **WoT Server**: http://localhost:1880 - Interface de desenvolvimento de fluxos e API
 - **Dashboard**: http://localhost:3000 - Interface web principal
 - **Nginx**: http://localhost:80 - Servidor web e proxy
 - **Semantic App**: http://localhost:8080 - Aplicação semântica
 
 ## Desenvolvimento
+
+Será necessário criar um arquivo de variáveis de ambiente (`.env.dev`), com o seguinte conteúdo:
+```bash
+# Development Environment Variables
+API_AUTHORIZATION_TOKEN=dev-api-token-here
+
+# OPC-UA endpoints for development  
+opc_endpoint_separating=opc.tcp://opc-simulator:4840
+
+# Development specific settings
+NODE_ENV=development
+```
 
 Para desenvolvimento, você pode usar o arquivo de configuração específico:
 

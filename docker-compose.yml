@@ -1,7 +1,7 @@
 services:
-  node-red:
+  wot-server:
     image: nodered/node-red:latest
-    build: ./apps/node-red
+    build: ./apps/wot-server
     environment:
       - TZ=America/Sao_Paulo
       - NODE_RED_CREDENTIAL_SECRET=agents-in-charge-secret-key-2024
@@ -9,9 +9,9 @@ services:
       - "1880:1880"
     volumes:
       - ./apps/td/:/data/td
-      - ./apps/node-red/flows.json:/data/flows.json
-      - ./apps/node-red/flows_cred.json:/data/flows_cred.json
-      - ./apps/node-red/settings.js:/data/settings.js
+      - ./apps/wot-server/flows.json:/data/flows.json
+      - ./apps/wot-server/flows_cred.json:/data/flows_cred.json
+      - ./apps/wot-server/settings.js:/data/settings.js
     env_file: "./.env.prod"
 
   dashboard:

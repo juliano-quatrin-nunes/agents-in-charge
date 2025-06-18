@@ -1,7 +1,7 @@
 services:
-  node-red:
+  wot-server:
     image: nodered/node-red:latest
-    build: ./apps/node-red
+    build: ./apps/wot-server
     environment:
       - TZ=America/Sao_Paulo
       - NODE_RED_CREDENTIAL_SECRET=agents-in-charge-secret-key-2024
@@ -9,7 +9,7 @@ services:
       - "1880:1880"
     volumes:
       - ./apps/td/:/data/td
-      - ./apps/node-red:/data
+      - ./apps/wot-server:/data
       - ./apps/td/:/data/td
       - /data/node_modules
     env_file: "./.env.dev"
