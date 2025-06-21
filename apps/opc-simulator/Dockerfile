@@ -2,15 +2,19 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy package.json and install dependencies
-COPY package.json ./
-RUN npm install
+RUN npm install -g pnpm
+
+# Copy package.json and lockfile
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 # Copy server files
-COPY server.js simple-server.js festo-server.js ./
+COPY festo-server.js ./
+COPY src ./src
 
-# Expose OPC-UA port
+# Expose OPC-UA and HTTP ports
 EXPOSE 4840
+EXPOSE 4041
 
 # Start the simulation server
-CMD ["npm", "start"] 
+CMD ["pnpm", "start"]

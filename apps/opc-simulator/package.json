@@ -6,6 +6,8 @@
         "start": "node festo-server.js"
     },
     "dependencies": {
-        "node-opcua": "^2.108.0"
+        "node-opcua": "^2.108.0",
+        "express": "^4.19.2",
+        "cors": "^2.8.5"
     }
-} 
+}

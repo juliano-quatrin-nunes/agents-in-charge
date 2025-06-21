@@ -12,7 +12,7 @@ services:
       - ./apps/wot-server:/data
       - ./apps/td/:/data/td
       - /data/node_modules
-    env_file: "./.env.dev"
+    env_file: "./.env"
 
   dashboard:
     container_name: nextapp
@@ -20,11 +20,10 @@ services:
     build:
       context: ./apps/dashboard
       args:
-        API_AUTHORIZATION_TOKEN: ${API_AUTHORIZATION_TOKEN}
+        NEXT_PUBLIC_API_AUTHORIZATION_TOKEN: ${API_AUTHORIZATION_TOKEN}
     ports:
       - "3000:3000"
-    environment:
-      - API_AUTHORIZATION_TOKEN=${API_AUTHORIZATION_TOKEN}
+    env_file: "./.env"
 
   nginx:
     container_name: nginx
@@ -54,7 +53,8 @@ services:
   opc-simulator:
     build: ./apps/opc-simulator
     ports:
-      - "4840:4840"
+      - "4840:4840" # OPC-UA Port
+      - "4041:4041" # HTTP Port for adding pieces
     environment:
       - NODE_ENV=development
     profiles: ["dev"]

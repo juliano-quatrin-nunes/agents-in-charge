@@ -6,16 +6,21 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
+# Install pnpm for dependency management
+RUN npm install -g pnpm
+
 # Install dependencies based on the preferred package manager
 COPY ./package.json ./
-RUN yarn install --frozen-lockfile
+# We don't have a lockfile, so we'll just run install.
+# For reproducible builds, a pnpm-lock.yaml file should be generated and committed.
+RUN pnpm install
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 
-ARG API_AUTHORIZATION_TOKEN
-ENV API_AUTHORIZATION_TOKEN=${API_AUTHORIZATION_TOKEN}
+ARG NEXT_PUBLIC_API_AUTHORIZATION_TOKEN
+ENV NEXT_PUBLIC_API_AUTHORIZATION_TOKEN=${NEXT_PUBLIC_API_AUTHORIZATION_TOKEN}
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -25,10 +30,9 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN yarn build
-
-# If using npm comment out above and use below instead
-# RUN npm run build
+# Install pnpm and build
+RUN npm install -g pnpm
+RUN pnpm build
 
 # Production image, copy all the files and run next
 FROM base AS runner
