@@ -82,8 +82,17 @@ import NODE_INFOS from "./lib/components";
   await server.start();
   console.log(`🔗 Connect from Node-RED using: ${server.getEndpointUrl()}`);
 
+  console.log(`
+  📊 Stats Legend:
+  -----------------
+  T: Total pieces
+  H: High pieces
+  L: Low pieces
+  C: Completed (Correctly/Incorrectly)
+  D: Discarded (Correctly/Incorrectly)
+  -----------------
+  `);
+
   startSimulation(components);
   startHttpServer(simulation);
-
-  
 })();
