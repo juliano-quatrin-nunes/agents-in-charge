@@ -9,26 +9,23 @@ services:
       - "1880:1880"
     volumes:
       - ./apps/td/:/data/td
-      - ./apps/wot-server/flows.json:/data/flows.json
-      - ./apps/wot-server/flows_cred.json:/data/flows_cred.json
-      - ./apps/wot-server/settings.js:/data/settings.js
-    env_file: "./.env.prod"
+      - ./apps/wot-server:/data
+      - /data/node_modules
+    env_file: "./.env"
 
   dashboard:
-    container_name: nextapp
     image: nextapp
     build:
       context: ./apps/dashboard
       args:
-        API_AUTHORIZATION_TOKEN: ${API_AUTHORIZATION_TOKEN}
+        NEXT_PUBLIC_API_AUTHORIZATION_TOKEN: ${API_AUTHORIZATION_TOKEN}
+        NEXT_PUBLIC_ENVIRONMENT: ${NODE_ENV}
+        NEXT_PUBLIC_SIMULATOR_URL: ${SIMULATOR_URL}
     ports:
       - "3000:3000"
-    environment:
-      - API_AUTHORIZATION_TOKEN=${API_AUTHORIZATION_TOKEN}
-      - NEXT_PUBLIC_SIMULATOR_URL=${SIMULATOR_URL}
+    env_file: "./.env"
 
   nginx:
-    container_name: nginx
     build: ./apps/nginx
     ports:
       - "80:80"
@@ -51,3 +48,13 @@ services:
       - ./apps/semantic/data:/app/data
     command: ["build"]
     profiles: ["builder"]
+
+  opc-simulator:
+    build: ./apps/opc-simulator
+    ports:
+      - "4840:4840"
+      - "4041:4041"
+    environment:
+      - NODE_ENV=development
+    profiles: ["dev"]
+
