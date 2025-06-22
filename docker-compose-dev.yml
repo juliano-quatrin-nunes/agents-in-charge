@@ -21,6 +21,7 @@ services:
       context: ./apps/dashboard
       args:
         NEXT_PUBLIC_API_AUTHORIZATION_TOKEN: ${API_AUTHORIZATION_TOKEN}
+        NEXT_PUBLIC_ENVIRONMENT: ${NODE_ENV}
     ports:
       - "3000:3000"
     env_file: "./.env"

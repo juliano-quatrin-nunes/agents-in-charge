@@ -25,6 +25,7 @@ services:
       - "3000:3000"
     environment:
       - API_AUTHORIZATION_TOKEN=${API_AUTHORIZATION_TOKEN}
+      - NEXT_PUBLIC_SIMULATOR_URL=${SIMULATOR_URL}
 
   nginx:
     container_name: nginx

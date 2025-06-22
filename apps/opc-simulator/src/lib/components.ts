@@ -1,4 +1,5 @@
 import Actuator from "../components/Actuator";
+import { HeightSensor } from "../components/HeightSensor";
 import Sensor from "../components/Sensor";
 import { NodeActuator, NodeInfo, NodeSensor } from "./types";
 
@@ -49,7 +50,7 @@ const SENSOR_NODES = {
     name: "Height Sensor",
     nodeId: 8,
     type: "sensor",
-    class: Sensor,
+    class: HeightSensor,
     position: { x: 200, y: 0 },
   },
   discardSensor: {
