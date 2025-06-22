@@ -2,12 +2,22 @@
     "name": "opc-ua-simulator",
     "description": "OPC-UA simulation server for FESTO separating station",
     "version": "0.1.0",
+    "author": "",
+    "license": "ISC",
     "scripts": {
-        "start": "node festo-server.js"
+        "start": "ts-node src/festo-server.ts",
+        "build": "tsc"
     },
     "dependencies": {
-        "node-opcua": "^2.108.0",
-        "express": "^4.19.2",
+        "node-opcua": "^2.156.0",
+        "express": "^4.21.2",
         "cors": "^2.8.5"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.17",
+        "@types/express": "^4.17.21",
+        "@types/node": "^20.14.2",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.5"
     }
 }
