@@ -3,12 +3,12 @@
 import { Button } from "./ui/Button";
 import { WithTooltip } from "./WithTooltip";
 
-const SIMULATOR_URL =
-  process.env.NEXT_PUBLIC_SIMULATOR_URL || "http://localhost:4041";
+const SIMULATOR_URI =
+  process.env.NEXT_PUBLIC_SIMULATOR_URI || "http://localhost:4041";
 
 const addPiece = (height: "high" | "low" | "random") => {
   try {
-    fetch(`${SIMULATOR_URL}/add-piece`, {
+    fetch(`${SIMULATOR_URI}/add-piece`, {
       method: "POST",
       body: JSON.stringify({ height }),
     });

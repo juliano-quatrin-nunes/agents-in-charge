@@ -20,7 +20,7 @@ services:
       args:
         NEXT_PUBLIC_API_AUTHORIZATION_TOKEN: ${API_AUTHORIZATION_TOKEN}
         NEXT_PUBLIC_ENVIRONMENT: ${NODE_ENV}
-        NEXT_PUBLIC_SIMULATOR_URL: ${SIMULATOR_URL}
+        NEXT_PUBLIC_SIMULATOR_URI: ${SIMULATOR_URI}
     ports:
       - "3000:3000"
     env_file: "./.env"
@@ -39,6 +39,7 @@ services:
     volumes:
       - ./apps/semantic/data:/app/data
     command: ["serve"]
+    env_file: "./.env"
     environment:
       - TZ=America/Sao_Paulo
 
