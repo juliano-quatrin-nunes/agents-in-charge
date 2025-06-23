@@ -39,7 +39,7 @@ public class TDBBuilder {
       // Criar/conectar ao modelo TDB
       Model model = dataset.getDefaultModel();
 
-      setPrefixes(model);
+      Vocabulary.build(model);
 
       List<Component> components = new ArrayList<>();
 

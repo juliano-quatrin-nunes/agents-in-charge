@@ -9,7 +9,7 @@ import br.ufsc.agents_in_charge.Htv;
 import br.ufsc.agents_in_charge.Td;
 
 public abstract class Component {
-  protected Resource resource;
+  public Resource resource;
 
   public Component() {
     // Default constructor
