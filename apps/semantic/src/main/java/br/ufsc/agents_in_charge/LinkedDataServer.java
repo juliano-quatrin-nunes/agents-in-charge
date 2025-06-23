@@ -31,141 +31,228 @@ import jakarta.servlet.http.HttpServletResponse;
  * Servidor HTTP que expõe os dados RDF com content negotiation
  */
 public class LinkedDataServer {
-    private final String tdbDirectory;
-    private final int port;
-    private final Pattern resourcePattern = Pattern.compile("/kg/(.+)");
-    
-    public LinkedDataServer(String tdbDirectory, int port) {
-        this.tdbDirectory = tdbDirectory;
-        this.port = port;
-    }
-    
-    /**
-     * Inicia o servidor HTTP
-     */
-    public void start() throws Exception {
-        System.out.println("Iniciando servidor na porta " + port);
-        
-        // Criar servidor Jetty
-        Server server = new Server(port);
-        
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setContextPath("/");
-        server.setHandler(context);
-        
-        // Adicionar servlet para atender as requisições
-        context.addServlet(new ServletHolder(new LinkedDataServlet()), "/*");
-        
-        // Iniciar o servidor
-        server.start();
-        System.out.println("Servidor iniciado com sucesso em http://localhost:" + port);
-        System.out.println("Exemplo de recurso: http://localhost:" + port + "/kg/HeightSensor");
-        System.out.println("Pressione Ctrl+C para encerrar o servidor");
-        server.join();
-    }
-    
-    /**
-     * Servlet para lidar com as requisições HTTP
-     */
-    private class LinkedDataServlet extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-                throws ServletException, IOException {
-            
-            String path = req.getRequestURI();
-            
-            // Verificar se é uma requisição para um recurso
-            Matcher matcher = resourcePattern.matcher(path);
-            if (!matcher.matches()) {
-                return;
-            }
-            
-            // Extrair o ID do recurso
-            String resourceId = matcher.group(1);
-            String resourceUri = Vocabulary.BASE_URI + resourceId;
-            
-            // Conectar ao dataset TDB
-            Dataset dataset = TDB2Factory.connectDataset(tdbDirectory);
-            
-            try {
-                dataset.begin(ReadWrite.READ);
-                
-                // Obter o modelo
-                Model model = dataset.getDefaultModel();
-                
-                // Verificar se o recurso existe
-                Resource resource = model.getResource(resourceUri);
-                
-                // Criar um submodelo contendo informações sobre este recurso
-                Model resourceModel = ModelFactory.createDefaultModel();
-                
-                // Extrair subgráfico completo para este recurso
-                extractSubgraph(model, resource, resourceModel, new HashSet<>());
-                
-                if (resourceModel.isEmpty()) {
-                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    resp.getWriter().println("Recurso não encontrado: " + resourceUri);
-                    return;
-                }
-                
-                // Copiar prefixos
-                resourceModel.setNsPrefixes(model.getNsPrefixMap());
-                
-                // Content negotiation
-                String acceptHeader = req.getHeader("Accept");
-                
-                // Determinar o formato de saída
-                Lang outputLang = Lang.TURTLE; // Padrão para Turtle
-                String contentType = "text/turtle";
+  private final String tdbDirectory;
+  private final int port;
+  private final Pattern resourcePattern = Pattern.compile("/kg/(.+)");
 
-                if (acceptHeader != null) {
-                    // Processar cabeçalho Accept
-                    if (acceptHeader.contains("application/ld+json")) {
-                        outputLang = Lang.JSONLD;
-                        contentType = "application/ld+json";
-                    } else if (acceptHeader.contains("application/rdf+xml")) {
-                        outputLang = Lang.RDFXML;
-                        contentType = "application/rdf+xml";
-                    }
-                }
-                
-                // Definir tipo de conteúdo e escrever dados RDF
-                resp.setContentType(contentType);
-                OutputStream out = resp.getOutputStream();
-                RDFDataMgr.write(out, resourceModel, outputLang);
-                
-            } finally {
-                if (dataset != null) {
-                    dataset.end();
-                    dataset.close();
-                }
-            }
+  public LinkedDataServer(String tdbDirectory, int port) {
+    this.tdbDirectory = tdbDirectory;
+    this.port = port;
+  }
+
+  /**
+   * Inicia o servidor HTTP
+   */
+  public void start() throws Exception {
+    System.out.println("Iniciando servidor na porta " + port);
+
+    // Criar servidor Jetty
+    Server server = new Server(port);
+
+    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+    context.setContextPath("/");
+    server.setHandler(context);
+
+    // Adicionar servlet para atender as requisições
+    context.addServlet(new ServletHolder(new LinkedDataServlet()), "/*");
+
+    // Iniciar o servidor
+    server.start();
+    System.out.println("Servidor iniciado com sucesso em http://localhost:" + port);
+    System.out.println("Exemplo de recurso: http://localhost:" + port + "/kg/HeightSensor");
+    System.out.println("Pressione Ctrl+C para encerrar o servidor");
+    server.join();
+  }
+
+  /**
+   * Servlet para lidar com as requisições HTTP
+   */
+  private class LinkedDataServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException, IOException {
+
+      String path = req.getRequestURI();
+
+      if (path.startsWith("/kg/vocabulary")) {
+        serveVocabularyGraph(req, resp);
+        return;
+      }
+
+      if (path.equals("/kg") || path.equals("/kg/")) {
+        serveFullGraph(req, resp);
+        return;
+      }
+
+      Matcher matcher = resourcePattern.matcher(path);
+      if (!matcher.matches()) {
+        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        resp.getWriter().println("Invalid resource path. Path must start with /kg/");
+        return;
+      }
+
+      String resourceId = matcher.group(1);
+      String resourceUri = Vocabulary.BASE_URI + resourceId;
+
+      Dataset dataset = TDB2Factory.connectDataset(tdbDirectory);
+      try {
+        dataset.begin(ReadWrite.READ);
+        Model model = dataset.getDefaultModel();
+        Resource resource = model.getResource(resourceUri);
+
+        if (!model.containsResource(resource)) {
+          resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+          resp.getWriter().println("Resource not found: " + resourceUri);
+          return;
         }
+
+        Model resourceModel = extractMeaningfulSubgraph(model, resource);
+
+        resourceModel.setNsPrefixes(model.getNsPrefixMap());
+        serveRdfResponse(req, resp, resourceModel);
+
+      } finally {
+        if (dataset != null) {
+          dataset.end();
+          dataset.close();
+        }
+      }
     }
 
     /**
-     * Extrai recursivamente o subgráfico ao redor de um recurso,
-     * incluindo nós em branco e recursos conectados
+     * Serves the vocabulary definitions (TBox) from the TDB dataset.
      */
-    private void extractSubgraph(Model sourceModel, RDFNode node, Model targetModel, Set<RDFNode> visited) {
-        // Evitar processamento infinito em ciclos
-        if (visited.contains(node)) {
-            return;
+    private void serveVocabularyGraph(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+      Dataset dataset = TDB2Factory.connectDataset(tdbDirectory);
+      try {
+        dataset.begin(ReadWrite.READ);
+        Model fullModel = dataset.getDefaultModel();
+
+        // --- Filtering Logic for Vocabulary ---
+        Model vocabModel = ModelFactory.createDefaultModel();
+        vocabModel.setNsPrefixes(fullModel.getNsPrefixMap());
+
+        StmtIterator iter = fullModel.listStatements();
+        while (iter.hasNext()) {
+          Statement stmt = iter.next();
+          Resource subject = stmt.getSubject();
+
+          // Check if the subject's namespace IS the vocabulary namespace
+          if (subject.getNameSpace() != null && subject.getNameSpace().equals(Vocabulary.VOCAB_URI)) {
+            vocabModel.add(stmt);
+          }
         }
-        visited.add(node);
-        
-        // Adicionar declarações onde o nó é o sujeito
-        StmtIterator subjIt = sourceModel.listStatements(node.asResource(), null, (RDFNode)null);
-        while (subjIt.hasNext()) {
-            Statement stmt = subjIt.next();
-            targetModel.add(stmt);
-            
-            // Se o objeto é um nó em branco, processar recursivamente
-            RDFNode obj = stmt.getObject();
-            if (obj.isAnon()) {
-                extractSubgraph(sourceModel, obj, targetModel, visited);
-            }
-            // Para recursos normais, não expandimos para evitar trazer o grafo inteiro
+        // --- End of Filtering Logic ---
+
+        serveRdfResponse(req, resp, vocabModel);
+
+      } finally {
+        if (dataset != null) {
+          dataset.end();
+          dataset.close();
         }
+      }
     }
+
+    /**
+     * Serves the entire default graph from the TDB dataset.
+     */
+    private void serveFullGraph(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+      Dataset dataset = TDB2Factory.connectDataset(tdbDirectory);
+      try {
+        dataset.begin(ReadWrite.READ);
+        Model model = dataset.getDefaultModel();
+        serveRdfResponse(req, resp, model);
+      } finally {
+        if (dataset != null) {
+          dataset.end();
+          dataset.close();
+        }
+      }
+    }
+
+    /**
+     * Handles content negotiation and writes the RDF model to the response.
+     */
+    private void serveRdfResponse(HttpServletRequest req, HttpServletResponse resp, Model model) throws IOException {
+      String acceptHeader = req.getHeader("Accept");
+      Lang outputLang = Lang.TURTLE; // Default to Turtle
+      String contentType = "text/turtle;charset=UTF-8";
+
+      if (acceptHeader != null) {
+        if (acceptHeader.contains("application/ld+json")) {
+          outputLang = Lang.JSONLD;
+          contentType = "application/ld+json;charset=UTF-8";
+        } else if (acceptHeader.contains("application/rdf+xml")) {
+          outputLang = Lang.RDFXML;
+          contentType = "application/rdf+xml;charset=UTF-8";
+        }
+        // Add more formats if needed (e.g., N-TRIPLES)
+      }
+
+      resp.setContentType(contentType);
+      resp.setCharacterEncoding("UTF-8"); // Important for special characters
+      OutputStream out = resp.getOutputStream();
+      RDFDataMgr.write(out, model, outputLang);
+    }
+  }
+
+  /**
+   * Extracts a meaningful, symmetric subgraph around a central resource.
+   * This includes:
+   * 1. All properties of the central resource.
+   * 2. All statements where the central resource is the object (backlinks).
+   * 3. The full description of any blank nodes connected to the central resource.
+   * 4. Basic descriptions (type and label) of other named resources connected to
+   * it.
+   *
+   * @param sourceModel The full knowledge graph.
+   * @param centerNode  The resource to describe.
+   * @return A new Model containing the subgraph.
+   */
+  private Model extractMeaningfulSubgraph(Model sourceModel, Resource centerNode) {
+    Model targetModel = ModelFactory.createDefaultModel();
+
+    // Use a Set to avoid processing the same node multiple times in a recursion
+    Set<Resource> visited = new HashSet<>();
+
+    // Start the recursive extraction
+    extractRecursive(sourceModel, centerNode, targetModel, visited, 2); // Start with a depth of 2
+
+    return targetModel;
+  }
+
+  private void extractRecursive(Model source, RDFNode node, Model target, Set<Resource> visited, int depth) {
+    if (!node.isResource() || visited.contains(node.asResource()) || depth < 0) {
+      return;
+    }
+
+    Resource resource = node.asResource();
+    visited.add(resource);
+
+    // 1. Add all statements where the resource is the SUBJECT
+    StmtIterator subjIter = source.listStatements(resource, null, (RDFNode) null);
+    while (subjIter.hasNext()) {
+      Statement stmt = subjIter.next();
+      target.add(stmt);
+      // Recursively describe the object if it's a blank node or if we have depth left
+      RDFNode object = stmt.getObject();
+      if (object.isAnon() || depth > 0) {
+        extractRecursive(source, object, target, visited, depth - 1);
+      }
+    }
+
+    // 2. Add all statements where the resource is the OBJECT (backlinks)
+    StmtIterator objIter = source.listStatements(null, null, resource);
+    while (objIter.hasNext()) {
+      Statement stmt = objIter.next();
+      target.add(stmt);
+      // Recursively describe the subject if it's a blank node or if we have depth
+      // left
+      Resource subject = stmt.getSubject();
+      if (subject.isAnon() || depth > 0) {
+        extractRecursive(source, subject, target, visited, depth - 1);
+      }
+    }
+  }
 }
