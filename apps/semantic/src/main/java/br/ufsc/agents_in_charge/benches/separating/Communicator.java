@@ -10,10 +10,10 @@ import br.ufsc.agents_in_charge.Td;
 import br.ufsc.agents_in_charge.Vocabulary;
 import br.ufsc.agents_in_charge.commom.Component;
 
-public class DiscardDiverter extends Component {
-  public static final String URI = Vocabulary.BASE_URI + "DiscardDiverter";
+public class Communicator extends Component {
+  public static final String URI = Vocabulary.BASE_URI + "Communicator";
 
-  public DiscardDiverter() {
+  public Communicator() {
     super();
   }
 
@@ -21,23 +21,27 @@ public class DiscardDiverter extends Component {
   public void build(Model model) {
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Sosa.Actuator);
-    resource.addProperty(RDFS.label, "Discard Diverter");
+    resource.addProperty(RDFS.label, "Communicator");
     resource.addProperty(RDFS.comment,
-        model.createLiteral("Desviador de peças para o descarte", "pt-BR"));
+        model.createLiteral("Comunicador de disponibilidade da bancada", "pt-BR"));
 
-    // Property affordance for reading discard diverter status
+    // Property affordance for reading bench status
     Resource propertyAffordance = model.createResource();
     propertyAffordance.addProperty(RDF.type, Td.PropertyAffordance);
-    propertyAffordance.addProperty(RDFS.label, "Discard diverter status");
-    propertyAffordance.addProperty(Td.hasForm, createPropertyForm(model, Vocabulary.SERVER_URI + "discardDiverter"));
+    propertyAffordance.addProperty(RDFS.label, "Communicator");
+    propertyAffordance.addProperty(RDFS.comment,
+        model.createLiteral("Status do comunicador", "pt-BR"));
+    propertyAffordance.addProperty(Td.hasForm, createPropertyForm(model, Vocabulary.SERVER_URI + "communicator"));
 
     resource.addProperty(Td.hasPropertyAffordance, propertyAffordance);
 
-    // Action affordance for activating discard diverter
+    // Action affordance for performing communication
     Resource actionAffordance = model.createResource();
     actionAffordance.addProperty(RDF.type, Td.ActionAffordance);
-    actionAffordance.addProperty(RDFS.label, "Discard diverter for part");
-    actionAffordance.addProperty(Td.hasForm, createActionForm(model, Vocabulary.SERVER_URI + "discardDiverter"));
+    actionAffordance.addProperty(RDFS.label, "Communicator");
+    actionAffordance.addProperty(RDFS.comment,
+        model.createLiteral("Comunica a disponibilidade da bancada", "pt-BR"));
+    actionAffordance.addProperty(Td.hasForm, createActionForm(model, Vocabulary.SERVER_URI + "communicator"));
 
     resource.addProperty(Td.hasActionAffordance, actionAffordance);
   }

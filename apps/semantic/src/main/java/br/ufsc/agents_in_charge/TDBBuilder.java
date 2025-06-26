@@ -8,11 +8,14 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.tdb2.TDB2Factory;
-import org.apache.jena.vocabulary.RDFS;
 
 import br.ufsc.agents_in_charge.benches.separating.ArrivalSensor;
+import br.ufsc.agents_in_charge.benches.separating.Communicator;
+import br.ufsc.agents_in_charge.benches.separating.DiscardConveyor;
 import br.ufsc.agents_in_charge.benches.separating.DiscardDiverter;
+import br.ufsc.agents_in_charge.benches.separating.DiscardPassPoint;
 import br.ufsc.agents_in_charge.benches.separating.DiscardPoint;
+import br.ufsc.agents_in_charge.benches.separating.DiscardSensor;
 import br.ufsc.agents_in_charge.benches.separating.EntryPoint;
 import br.ufsc.agents_in_charge.benches.separating.ExitPoint;
 import br.ufsc.agents_in_charge.benches.separating.ExitSensor;
@@ -20,6 +23,7 @@ import br.ufsc.agents_in_charge.benches.separating.HeightMeasurement;
 import br.ufsc.agents_in_charge.benches.separating.HeightSensor;
 import br.ufsc.agents_in_charge.benches.separating.Lock;
 import br.ufsc.agents_in_charge.benches.separating.MainConveyor;
+import br.ufsc.agents_in_charge.benches.separating.NextBenchStatus;
 import br.ufsc.agents_in_charge.benches.separating.QualityCheckPoint;
 import br.ufsc.agents_in_charge.benches.separating.StoppedSensor;
 import br.ufsc.agents_in_charge.commom.Component;
@@ -65,6 +69,11 @@ public class TDBBuilder {
       components.add(new ExitPoint());
       components.add(new QualityCheckPoint());
       components.add(new HeightMeasurement());
+      components.add(new DiscardConveyor());
+      components.add(new Communicator());
+      components.add(new NextBenchStatus());
+      components.add(new DiscardPassPoint());
+      components.add(new DiscardSensor());
 
       for (Component component : components) {
         component.build(model);
@@ -97,14 +106,5 @@ public class TDBBuilder {
       }
     }
     return directory.delete();
-  }
-
-  private void setPrefixes(Model model) {
-    model.setNsPrefix("vocab", Vocabulary.BASE_URI);
-    model.setNsPrefix("sosa", Sosa.NS);
-    model.setNsPrefix("td", Td.NS);
-    model.setNsPrefix("hctl", Hctl.NS);
-    model.setNsPrefix("htv", Htv.NS);
-    model.setNsPrefix("rdfs", RDFS.getURI());
   }
 }
