@@ -36,6 +36,7 @@ public class Vocabulary {
   public static final String C_POINT_OF_INTEREST_URI = VOCAB_URI + "PointOfInterest";
   public static final String P_IS_MONITORED_BY_URI = VOCAB_URI + "isMonitoredBy";
   public static final String P_IS_REALIZED_BY_URI = VOCAB_URI + "isRealizedBy";
+  public static final String P_IS_ACTUATED_BY_URI = VOCAB_URI + "isActuatedBy";
 
   public static void setPrefixes(Model model) {
     model.setNsPrefix(VOCAB_PREFIX, VOCAB_URI);
@@ -85,5 +86,14 @@ public class Vocabulary {
         model.createLiteral(
             "isRealizedBy é uma relação que indica que um ponto de interesse é realizado por um dispositivo (plataforma)",
             "pt-BR"));
+
+    Property isActuatedBy = model.createProperty(P_IS_ACTUATED_BY_URI);
+    isActuatedBy.addProperty(RDF.type, RDF.Property);
+    isActuatedBy.addProperty(RDFS.domain, pointOfInterest);
+    isActuatedBy.addProperty(RDFS.range, Sosa.Actuator);
+    isActuatedBy.addProperty(RDFS.label, model.createLiteral("isActuatedBy", "en-US"));
+    isActuatedBy.addProperty(RDFS.comment,
+        model.createLiteral(
+            "isActuatedBy é uma relação que indica que um ponto de interesse é atuado por um atuador", "pt-BR"));
   }
 }

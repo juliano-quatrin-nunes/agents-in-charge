@@ -14,7 +14,8 @@ import br.ufsc.agents_in_charge.commom.Component;
 public class MainConveyor extends Component {
   public static final String URI = Vocabulary.BASE_URI + "MainConveyor";
 
-  private final List<Component> components = Arrays.asList(new EntryPoint());
+  private final List<Component> components = Arrays.asList(new EntryPoint(), new HeightMeasurement(),
+      new DiscardPoint(), new ExitPoint());
 
   public MainConveyor() {
     super();

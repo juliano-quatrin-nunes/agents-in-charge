@@ -10,8 +10,18 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.tdb2.TDB2Factory;
 import org.apache.jena.vocabulary.RDFS;
 
+import br.ufsc.agents_in_charge.benches.separating.ArrivalSensor;
+import br.ufsc.agents_in_charge.benches.separating.DiscardDiverter;
+import br.ufsc.agents_in_charge.benches.separating.DiscardPoint;
+import br.ufsc.agents_in_charge.benches.separating.EntryPoint;
+import br.ufsc.agents_in_charge.benches.separating.ExitPoint;
+import br.ufsc.agents_in_charge.benches.separating.ExitSensor;
+import br.ufsc.agents_in_charge.benches.separating.HeightMeasurement;
 import br.ufsc.agents_in_charge.benches.separating.HeightSensor;
+import br.ufsc.agents_in_charge.benches.separating.Lock;
 import br.ufsc.agents_in_charge.benches.separating.MainConveyor;
+import br.ufsc.agents_in_charge.benches.separating.QualityCheckPoint;
+import br.ufsc.agents_in_charge.benches.separating.StoppedSensor;
 import br.ufsc.agents_in_charge.commom.Component;
 
 public class TDBBuilder {
@@ -43,8 +53,18 @@ public class TDBBuilder {
 
       List<Component> components = new ArrayList<>();
 
+      components.add(new ArrivalSensor());
       components.add(new MainConveyor());
       components.add(new HeightSensor());
+      components.add(new StoppedSensor());
+      components.add(new Lock());
+      components.add(new EntryPoint());
+      components.add(new ExitSensor());
+      components.add(new DiscardDiverter());
+      components.add(new DiscardPoint());
+      components.add(new ExitPoint());
+      components.add(new QualityCheckPoint());
+      components.add(new HeightMeasurement());
 
       for (Component component : components) {
         component.build(model);
