@@ -198,13 +198,11 @@ public class LinkedDataServer {
   }
 
   /**
-   * Extracts a meaningful, symmetric subgraph around a central resource.
+   * Extracts properties of the central resource and full descriptions of any
+   * blank nodes connected to it.
    * This includes:
    * 1. All properties of the central resource.
-   * 2. All statements where the central resource is the object (backlinks).
-   * 3. The full description of any blank nodes connected to the central resource.
-   * 4. Basic descriptions (type and label) of other named resources connected to
-   * it.
+   * 2. The full description of any blank nodes connected to the central resource.
    *
    * @param sourceModel The full knowledge graph.
    * @param centerNode  The resource to describe.
@@ -213,45 +211,45 @@ public class LinkedDataServer {
   private Model extractMeaningfulSubgraph(Model sourceModel, Resource centerNode) {
     Model targetModel = ModelFactory.createDefaultModel();
 
-    // Use a Set to avoid processing the same node multiple times in a recursion
     Set<Resource> visited = new HashSet<>();
 
-    // Start the recursive extraction
-    extractRecursive(sourceModel, centerNode, targetModel, visited, 2); // Start with a depth of 2
+    StmtIterator centerIter = sourceModel.listStatements(centerNode, null, (RDFNode) null);
+    while (centerIter.hasNext()) {
+      Statement stmt = centerIter.next();
+      targetModel.add(stmt);
+      RDFNode object = stmt.getObject();
+      if (object.isAnon()) {
+        extractRecursive(sourceModel, object, targetModel, visited);
+      }
+    }
 
     return targetModel;
   }
 
-  private void extractRecursive(Model source, RDFNode node, Model target, Set<Resource> visited, int depth) {
-    if (!node.isResource() || visited.contains(node.asResource()) || depth < 0) {
+  private void extractRecursive(Model source, RDFNode node, Model target, Set<Resource> visited) {
+    if (!node.isResource()) {
       return;
     }
 
     Resource resource = node.asResource();
+
+    if (!resource.isAnon()) {
+      return;
+    }
+
+    if (visited.contains(resource)) {
+      return;
+    }
+
     visited.add(resource);
 
-    // 1. Add all statements where the resource is the SUBJECT
     StmtIterator subjIter = source.listStatements(resource, null, (RDFNode) null);
     while (subjIter.hasNext()) {
       Statement stmt = subjIter.next();
       target.add(stmt);
-      // Recursively describe the object if it's a blank node or if we have depth left
       RDFNode object = stmt.getObject();
-      if (object.isAnon() || depth > 0) {
-        extractRecursive(source, object, target, visited, depth - 1);
-      }
-    }
-
-    // 2. Add all statements where the resource is the OBJECT (backlinks)
-    StmtIterator objIter = source.listStatements(null, null, resource);
-    while (objIter.hasNext()) {
-      Statement stmt = objIter.next();
-      target.add(stmt);
-      // Recursively describe the subject if it's a blank node or if we have depth
-      // left
-      Resource subject = stmt.getSubject();
-      if (subject.isAnon() || depth > 0) {
-        extractRecursive(source, subject, target, visited, depth - 1);
+      if (object.isAnon()) {
+        extractRecursive(source, object, target, visited);
       }
     }
   }
