@@ -27,6 +27,7 @@ public class DiscardConveyor extends Component {
   public void build(Model model) {
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Sosa.Platform);
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(RDF.type, model.getResource(Vocabulary.C_CONVEYOR_URI));
     resource.addProperty(RDFS.label, "Discard Conveyor");
     resource.addProperty(RDFS.comment, model.createLiteral("Esteira de descarte de peças", "pt-BR"));

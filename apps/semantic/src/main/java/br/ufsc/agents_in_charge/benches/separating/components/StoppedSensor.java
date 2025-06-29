@@ -30,6 +30,7 @@ public class StoppedSensor extends Component {
 
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Onto.PresenceSensor);
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(Sosa.observes, model.getResource(VerificationSystemPresence.URI));
     resource.addProperty(RDFS.label, "Stopped Sensor");
     resource.addProperty(RDFS.comment,

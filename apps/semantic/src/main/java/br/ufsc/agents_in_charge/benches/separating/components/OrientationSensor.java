@@ -29,6 +29,7 @@ public class OrientationSensor extends Component {
 
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Sosa.Sensor);
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(RDFS.label, "Height Sensor");
     resource.addProperty(Sosa.observes, model.getResource(MidpointHeightProperty.URI));
 

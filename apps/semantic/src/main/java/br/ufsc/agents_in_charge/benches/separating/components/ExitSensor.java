@@ -28,6 +28,7 @@ public class ExitSensor extends Component {
   public void build(Model model) {
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Onto.PresenceSensor);
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(Sosa.observes, model.getResource(ExitPointPresence.URI));
     resource.addProperty(RDFS.label, "Exit Sensor");
     resource.addProperty(RDFS.comment,

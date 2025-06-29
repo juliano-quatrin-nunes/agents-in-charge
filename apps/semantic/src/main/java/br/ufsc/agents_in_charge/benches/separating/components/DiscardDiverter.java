@@ -30,6 +30,7 @@ public class DiscardDiverter extends Component {
     ensureBuilt(model, DiscardFunction.class);
 
     this.resource = model.createResource(URI);
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(RDF.type, Sosa.Actuator);
     resource.addProperty(Saref.accomplishes, model.getResource(DiscardFunction.URI));
     resource.addProperty(RDFS.label, "Discard Diverter");

@@ -30,6 +30,7 @@ public class Lock extends Component {
 
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Sosa.Actuator);
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(RDFS.label, "Lock");
     resource.addProperty(RDFS.comment, model.createLiteral("Trava da peça para a medição de altura", "pt-BR"));
     resource.addProperty(Saref.accomplishes, model.getResource(LockingFunction.URI));

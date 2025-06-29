@@ -39,6 +39,7 @@ public class MainConveyor extends Component {
 
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, model.getResource(Vocabulary.C_CONVEYOR_URI));
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(RDFS.label, "Main Conveyor");
     resource.addProperty(Onto.inputArea, model.getResource(EntryPoint.URI));
     resource.addProperty(Onto.outputArea, model.getResource(ExitPoint.URI));
