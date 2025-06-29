@@ -31,7 +31,7 @@ public class DiscardDiverter extends Component {
 
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Sosa.Actuator);
-    resource.addProperty(Sosa.actsOnProperty, model.getResource(DiverterStatusProperty.URI));
+    resource.addProperty(Saref.accomplishes, model.getResource(DiscardFunction.URI));
     resource.addProperty(RDFS.label, "Discard Diverter");
     resource.addProperty(RDFS.comment,
         model.createLiteral("Desviador de peças para o descarte", "pt-BR"));

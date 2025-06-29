@@ -12,7 +12,7 @@ import br.ufsc.agents_in_charge.benches.separating.DiscardSystem;
 import br.ufsc.agents_in_charge.commom.Component;
 
 public class DiscardConveyor extends Component {
-  public static final String URI = DiscardSystem.URI + "DicardConveyor/";
+  public static final String URI = DiscardSystem.URI + "DiscardConveyor/";
 
   public DiscardConveyor() {
     super();

@@ -28,6 +28,12 @@ public class DiscardSystem extends Component {
 
   @Override
   public void build(Model model) {
+    ensureBuilt(model, DiscardDiverter.class);
+    ensureBuilt(model, DiscardSensor.class);
+    ensureBuilt(model, DiscardInputArea.class);
+    ensureBuilt(model, DiscardOutputArea.class);
+    ensureBuilt(model, DiscardConveyor.class);
+
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Sosa.Platform);
     resource.addProperty(RDFS.label, "Discard System");

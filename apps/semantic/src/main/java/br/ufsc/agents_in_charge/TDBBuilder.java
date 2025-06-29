@@ -9,7 +9,7 @@ import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.tdb2.TDB2Factory;
 
-import br.ufsc.agents_in_charge.benches.separating.SeparatingBench;
+import br.ufsc.agents_in_charge.benches.MPSFesto;
 import br.ufsc.agents_in_charge.commom.Component;
 
 public class TDBBuilder {
@@ -41,7 +41,7 @@ public class TDBBuilder {
 
       List<Component> components = new ArrayList<>();
 
-      components.add(new SeparatingBench());
+      components.add(new MPSFesto());
 
       for (Component component : components) {
         component.build(model);

@@ -24,6 +24,8 @@ public class MPSFesto extends Component {
 
   @Override
   public void build(Model model) {
+    ensureBuilt(model, SeparatingBench.class);
+
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Onto.ProductionLine);
     resource.addProperty(RDFS.label, "MPS Festo");

@@ -23,13 +23,13 @@ public class DiscardOutputArea extends Component {
 
   @Override
   public void build(Model model) {
-    ensureBuilt(model, DiscardSensor.class);
+    ensureBuilt(model, DiscardedPiecePresence.class);
 
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Onto.ProductManagementArea);
     resource.addProperty(RDFS.label, "Discard Output Area");
     resource.addProperty(RDFS.comment,
         model.createLiteral("Área de fim do sistema de descarte de peças, formada pelo sensor de descarte", "pt-BR"));
-    resource.addProperty(Ssn.hasProperty, model.getResource(DiscardSensor.URI));
+    resource.addProperty(Ssn.hasProperty, model.getResource(DiscardedPiecePresence.URI));
   }
 }

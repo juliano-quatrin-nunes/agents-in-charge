@@ -25,6 +25,7 @@ public class Vocabulary {
   public static final String KG_PREFIX = "";
   public static final String VOCAB_PREFIX = "vocab";
   public static final String SOSA_PREFIX = "sosa";
+  public static final String SSN_PREFIX = "ssn";
   public static final String TD_PREFIX = "td";
   public static final String HCTL_PREFIX = "hctl";
   public static final String HTV_PREFIX = "htv";
@@ -39,6 +40,7 @@ public class Vocabulary {
     model.setNsPrefix(VOCAB_PREFIX, VOCAB_URI);
     model.setNsPrefix(KG_PREFIX, BASE_URI);
     model.setNsPrefix(SOSA_PREFIX, Sosa.NS);
+    model.setNsPrefix(SSN_PREFIX, Ssn.NS);
     model.setNsPrefix(TD_PREFIX, Td.NS);
     model.setNsPrefix(HCTL_PREFIX, Hctl.NS);
     model.setNsPrefix(HTV_PREFIX, Htv.NS);
