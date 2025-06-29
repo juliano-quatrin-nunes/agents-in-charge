@@ -1,26 +1,36 @@
-package br.ufsc.agents_in_charge.benches.separating;
+package br.ufsc.agents_in_charge.benches.separating.components;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 
+import br.ufsc.agents_in_charge.Onto;
 import br.ufsc.agents_in_charge.Sosa;
 import br.ufsc.agents_in_charge.Td;
 import br.ufsc.agents_in_charge.Vocabulary;
+import br.ufsc.agents_in_charge.benches.separating.OrientationVerificationSystem;
 import br.ufsc.agents_in_charge.commom.Component;
 
 public class StoppedSensor extends Component {
-  public static final String URI = Vocabulary.BASE_URI + "StoppedSensor";
+  public static final String URI = OrientationVerificationSystem.URI + "StoppedSensor/";
 
   public StoppedSensor() {
     super();
   }
 
   @Override
+  public String getURI() {
+    return URI;
+  }
+
+  @Override
   public void build(Model model) {
+    ensureBuilt(model, VerificationSystemPresence.class);
+
     this.resource = model.createResource(URI);
-    resource.addProperty(RDF.type, Sosa.Sensor);
+    resource.addProperty(RDF.type, Onto.PresenceSensor);
+    resource.addProperty(Sosa.observes, model.getResource(VerificationSystemPresence.URI));
     resource.addProperty(RDFS.label, "Stopped Sensor");
     resource.addProperty(RDFS.comment,
         model.createLiteral("Sensor de detecção de peça na posição de medição de altura", "pt-BR"));

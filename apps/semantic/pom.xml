@@ -131,6 +131,10 @@
               <input>src/main/resources/vocabs/hctl.ttl</input>
               <ontology>true</ontology>
             </source>
+            <source>
+              <input>src/main/resources/vocabs/saref.ttl</input>
+              <ontology>true</ontology>
+            </source>
           </fileOptions>
         </configuration>
         <executions>

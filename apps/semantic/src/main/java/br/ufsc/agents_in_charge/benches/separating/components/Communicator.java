@@ -1,4 +1,4 @@
-package br.ufsc.agents_in_charge.benches.separating;
+package br.ufsc.agents_in_charge.benches.separating.components;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
@@ -15,6 +15,11 @@ public class Communicator extends Component {
 
   public Communicator() {
     super();
+  }
+
+  @Override
+  public String getURI() {
+    return URI;
   }
 
   @Override
