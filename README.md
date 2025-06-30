@@ -41,27 +41,28 @@ Este repositório contém um sistema de gerenciamento para a bancada **separatin
    ```bash
    cp .env.example .env
    # Edite o arquivo .env com suas configurações
+   # O conteúdo atual já é suficiente para rodar em desenvolvimento
    ```
 
 4. Execute o comando para inicializar o projeto:  
    ```bash  
-   sudo docker compose up
+   sudo docker compose --profile dev up
    ```
 
 Isso irá:
 
 * Instalar automaticamente todas as dependências necessárias.
-* Criar os containers Docker para todos os serviços.
+* Criar os containers Docker para todos os serviços, incluindo o simulador OPC-UA da bancada.
 * Configurar o ambiente para que o projeto rode em qualquer máquina.
 
 ## Serviços e Portas
 
-Após a execução, os seguintes serviços estarão disponíveis:
+A configuração do Nginx permite que todos os serviços sejam acessados através da port 80. Dessa forma, cada serviço possui seu próprio endpoint:
 
-- **WoT Server**: http://localhost:1880 - Interface de desenvolvimento de fluxos e API
-- **Dashboard**: http://localhost:3000 - Interface web principal
-- **Nginx**: http://localhost:80 - Servidor web e proxy
-- **Semantic App**: http://localhost:8080 - Aplicação semântica
+- **WoT Server**: http://localhost/api - REST API
+- **Node RED**: http://localhost/node-red - Acessa os fluxos do node-red
+- **Dashboard**: http://localhost/ - Interface web principal
+- **Semantic App**: http://localhost/kg - Aplicação semântica
 
 ## Desenvolvimento
 
@@ -77,10 +78,10 @@ opc_endpoint_separating=opc.tcp://opc-simulator:4840
 NODE_ENV=development
 ```
 
-Para desenvolvimento, você pode usar o arquivo de configuração específico:
+Para desenvolvimento, você pode usar o perfil dev do docker compose:
 
 ```bash
-sudo docker compose -f docker-compose-dev.yml up
+sudo docker compose --profile dev up -d
 ```
 
 ## Construção do Grafo Semântico
