@@ -26,6 +26,7 @@ public class NextBenchStatus extends Component {
   public void build(Model model) {
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Sosa.Sensor);
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(RDFS.label, "Next Bench Status");
     resource.addProperty(RDFS.comment,
         model.createLiteral("Sensor de status da próxima bancada", "pt-BR"));

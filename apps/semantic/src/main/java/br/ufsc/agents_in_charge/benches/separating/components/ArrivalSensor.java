@@ -30,6 +30,7 @@ public class ArrivalSensor extends Component {
 
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Onto.PresenceSensor);
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(Sosa.observes, model.getResource(EntryPointPresence.URI));
     resource.addProperty(RDFS.label, "Arrival Sensor");
     resource.addProperty(RDFS.comment, model.createLiteral("Sensor de chegada de peças", "pt-BR"));

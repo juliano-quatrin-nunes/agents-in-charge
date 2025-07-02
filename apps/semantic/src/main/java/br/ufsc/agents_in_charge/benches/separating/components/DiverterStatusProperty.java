@@ -28,6 +28,5 @@ public class DiverterStatusProperty extends Component {
     resource.addProperty(RDFS.label, "Diverter Status");
     resource.addProperty(RDFS.comment,
         model.createLiteral("Status do módulo desviador para descarte de peças", "pt-BR"));
-    resource.addProperty(Sosa.isActedOnBy, model.getResource(DiscardDiverter.URI));
   }
 }

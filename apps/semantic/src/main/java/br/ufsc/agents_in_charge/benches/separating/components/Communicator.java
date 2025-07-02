@@ -26,6 +26,7 @@ public class Communicator extends Component {
   public void build(Model model) {
     this.resource = model.createResource(URI);
     resource.addProperty(RDF.type, Sosa.Actuator);
+    resource.addProperty(RDF.type, Td.Thing);
     resource.addProperty(RDFS.label, "Communicator");
     resource.addProperty(RDFS.comment,
         model.createLiteral("Comunicador de disponibilidade da bancada", "pt-BR"));
