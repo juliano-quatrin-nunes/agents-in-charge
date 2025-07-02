@@ -716,7 +716,7 @@
         "type": "function",
         "z": "de6ca196357a3c7d",
         "name": "Compare token",
-        "func": "const authToken = msg.req.headers.authorization\n\nconst correctToken = env.get(\"API_AUTHORIZATION_TOKEN\")\n\nlet authorized = false\n\nif(authToken == correctToken){\n    authorized = true\n}\n\nreturn {...msg, authorized};",
+        "func": "const authToken = msg.req.headers.authorization\n\nconst correctToken = env.get(\"API_AUTHORIZATION_TOKEN\")\n\nlet authorized = false\n\nif(authToken == correctToken || !correctToken){\n    authorized = true\n}\n\nreturn {...msg, authorized};",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
