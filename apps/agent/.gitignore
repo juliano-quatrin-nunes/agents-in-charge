@@ -1,0 +1,12 @@
+.vscode
+node_red_data
+browser-config
+.cache
+.dbus
+.DS_Store
+.gradle
+bin
+build
+mas*.log
+*.lck
+gradle-cache

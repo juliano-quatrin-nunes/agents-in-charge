@@ -135,6 +135,7 @@
               <input>src/main/resources/vocabs/saref.ttl</input>
               <ontology>true</ontology>
             </source>
+            <!-- Outras ontologias -->
           </fileOptions>
         </configuration>
         <executions>

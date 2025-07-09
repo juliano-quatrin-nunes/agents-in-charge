@@ -59,3 +59,14 @@ services:
       - NODE_ENV=development
     profiles: ["dev"]
 
+  bob-agent: 
+    image: jomifred/jacamo:1.2
+    command: kg.jcm
+    ports:
+      - 3273:3272
+    volumes:
+      - ./apps/agent/gradle-cache:/root/.gradle
+      - ./apps/agent:/app
+    working_dir: /app
+    extra_hosts:
+      - "localhost:host-gateway"
