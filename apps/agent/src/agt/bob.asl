@@ -1,112 +1,259 @@
-!test .
+// ========================================
+// NAVEGAÇÃO POR ÁREAS - DESACOPLAMENTO
+// ========================================
 
-+!test <-
+!processWorkpiece .
+
+// Plano principal - inicia pela área de entrada
++!processWorkpiece <-
     ?entryPoint(URI) ;
-    !crawl(URI) ;
-    !listThings ;
-   // !listPropertyAffordances(separating) ;
-    //!listarLabelsAffordancesDe("http://localhost/kg/MPSFesto/Separating/MainConveyor/");
-
-   // !lerStatusEsteira("http://host.docker.internal:8080/kg/MPSFesto/Separating/MainConveyor/");
-
-    
-    .print("----------------------------------------------------------------------------------------------");
-    .print("Arrival");
-    !readProperty("http://localhost/kg/MPSFesto/Separating/MainConveyor/ArrivalSensor/", "https://ci.mines-stetienne.fr/kg/ontology#PresenceSensor", Presence) ;
-    .print("Valor = ", Presence) ;
-
-    if(Presence == true){
-        .print("Presença confirmada");
-
-        !invokeAction(
-            "http://localhost/kg/MPSFesto/Separating/MainConveyor/", "http://localhost/kg/vocabulary/Conveyor",
-            true
-        ) ;
-        .wait(1000);
-
-        !invokeAction(
-            "http://localhost/kg/MPSFesto/Separating/OrientationVerificationSystem/Lock/", "https://www.w3.org/2019/wot/td#Thing",
-            true
-        ) ;
-        .wait(1000);
-
-        !invokeAction(
-            "http://localhost/kg/MPSFesto/Separating/MainConveyor/", "http://localhost/kg/vocabulary/Conveyor",
-            false
-        ) ;
-
-        !readProperty("http://localhost/kg/MPSFesto/Separating/OrientationVerificationSystem/OrientationSensor/", "https://www.w3.org/2019/wot/td#Thing", Orientation) ;
-        .print("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII", Orientation);
-        if(Orientation == true){
-
-        .print("Peça alta");
-        .wait(1000);
-
-        !invokeAction(
-            "http://localhost/kg/MPSFesto/Separating/DiscardSystem/DiscardConveyor/", "http://www.w3.org/ns/sosa/Platform",
-            true
-        ) ;
-
-        } ;
-
-        .wait(2000);
-        .print("Continuar processo...");
-
-        !invokeAction(
-                "http://localhost/kg/MPSFesto/Separating/DiscardSystem/DiscardConveyor/", "http://www.w3.org/ns/sosa/Platform",
-                false
-            ) ;
-
-        !invokeAction(
-            "http://localhost/kg/MPSFesto/Separating/OrientationVerificationSystem/Lock/", "https://www.w3.org/2019/wot/td#Thing",
-            false
-        ) ;
-        .wait(1000);
-
-
-        !invokeAction(
-            "http://localhost/kg/MPSFesto/Separating/MainConveyor/", "http://localhost/kg/vocabulary/Conveyor",
-            true
-        ) ;
-
-        !verificaSaida;
-    }
-
-    .wait(3000);
-    !test .
-
-
-+!verificaSaida <-
-    .wait(1000);
-
-    !readProperty("http://localhost/kg/MPSFesto/Separating/MainConveyor/ExitSensor/", "https://ci.mines-stetienne.fr/kg/ontology#PresenceSensor", Saida) ;
-
-    if(Saida == true){
-        .wait(3000);
-
-            !invokeAction(
-            "http://localhost/kg/MPSFesto/Separating/MainConveyor/", "http://localhost/kg/vocabulary/Conveyor",
-            false
-        ) ;
-        !test;
-    }
-
-    !verificaSaida;
+    !crawl(URI);
+    .print("Iniciando processamento de peça...");
+    !findSystemByType("https://ci.mines-stetienne.fr/kg/ontology#ProductionLine", ProductionLine);
+    !findMainProcessingSystem(ProductionLine, MainSystem); // Encontra bancada Separating
+    !startProcessingFlow(MainSystem);
 .
-+!lerStatusEsteira(ThingURI)
-    : hasPropertyAffordance(ThingURI, Aff)
-    & hasForm(Aff, F)
-    & hasTarget(F, TargetURI)
-    <- 
-    .print("🔍 Lendo status de: ", ThingURI);
-    !prepareForm(Fp);
-    get(TargetURI, Fp);
-    ?(json(Val)[source(TargetURI)]);
-    .print("✅ Status da esteira: ", Val).
 
+// Encontra sistema por tipo RDF
++!findSystemByType(Type, System) <-
+    ?type(System, Type);
+    .print("Sistema encontrado: ", System);
+.
 
+// Encontra o sistema principal de processamento
++!findMainProcessingSystem(ProductionLine, MainSystem) <-
+    ?hasSubSystem(ProductionLine, MainSystem);
+    ?type(MainSystem, "http://www.w3.org/ns/sosa/Platform");
+    .print("Sistema principal: ", MainSystem);
+.
 
+// Inicia o fluxo de processamento navegando pelas áreas
++!startProcessingFlow(System) <-
+    .print("Iniciando fluxo de processamento...");
+    !findConveyorInSystem(System, MainConveyor);
+    ?inputArea(MainConveyor, InputArea);
+    !waitForWorkpieceArrival(InputArea);
+    !processWorkpieceInSystem(System, MainConveyor);
+    .print("Fluxo concluído!");
+    !startProcessingFlow(System);
+.
 
+// ========================================
+// OPERAÇÕES BASEADAS EM ÁREAS
+// ========================================
+
+// Aguarda chegada de peça na área de entrada
++!waitForWorkpieceArrival(InputArea) <-
+    .print("Aguardando peça na área: ", InputArea);
+    !findPresencePropertyInArea(InputArea, PresenceProperty);
+    !findSensorForProperty(PresenceProperty, Sensor);
+    !monitorPresence(Sensor, true);
+    .print("Peça detectada na entrada!");
+.
+
+// Aguarda saída de peça da área de saída
++!waitForWorkpieceExit(OutputArea) <-
+    .print("Aguardando saída da peça...");
+    !findPresencePropertyInArea(OutputArea, PresenceProperty);
+    !findSensorForProperty(PresenceProperty, Sensor);
+    !monitorPresence(Sensor, true);
+    .print("Peça detectada na saída!");
+    .wait(1000); // Aguarda peça sair completamente
+    !monitorPresence(Sensor, false);
+    .print("Peça saiu do sistema!");
+.
+
+// ========================================
+// DESCOBERTA DE SENSORES, ATUADORES E PROPRIEDADES
+// ========================================
+
+// Encontra propriedade de presença em uma área
++!findPresencePropertyInArea(Area, PresenceProperty) <-
+    ?hasProperty(Area, PresenceProperty);
+    ?type(PresenceProperty, "https://ci.mines-stetienne.fr/kg/ontology#PresenceProperty");
+    .print("Propriedade de presença: ", PresenceProperty);
+.
+
+// Encontra sensor que observa uma propriedade
++!findSensorForProperty(Property, Sensor) <-
+    ?isObservedBy(Property, Sensor);
+    ?sensor(Sensor);
+    .print("Sensor encontrado: ", Sensor);
+.
+
+// Encontra atuador que controla uma propriedade
++!findActuatorForProperty(Property, Actuator) <-
+    ?hasProperty(Property, Actuator);
+    ?actuator(Actuator);
+    .print("Atuador encontrado: ", Actuator);
+.
+
+// Monitora presença até atingir estado desejado
++!monitorPresence(Sensor, DesiredState) <-
+    !readProperty(Sensor, CurrentState);
+    .print("Estado atual: ", CurrentState, " | Desejado: ", DesiredState);
+    
+    if (CurrentState == DesiredState) {
+        .print("Estado desejado atingido!");
+    } else {
+        .wait(200);
+        !monitorPresence(Sensor, DesiredState);
+    }
+.
+
+// ========================================
+// PROCESSAMENTO NO SISTEMA
+// ========================================
+
+// Processa peça dentro do sistema
++!processWorkpieceInSystem(System, Conveyor) <-
+    .print("Processando peça no sistema: ", System);
+    !invokeAction(Conveyor, true);
+    
+    // Verifica se tem sistema de verificação de orientação
+    !findOrientationSystem(System, OrientationSystem);
+    !performOrientationCheck(OrientationSystem, Result); // Verifica se a peça está na posição correta
+    
+    // Executa ação de descarte, se necessário
+    if (Result == true) {
+        !discardWorkpiece(System, Result);
+    } else {
+        ?outputArea(Conveyor, OutputArea);
+        !waitForWorkpieceExit(OutputArea);
+    }
+    !invokeAction(Conveyor, false);
+.
+
++!discardWorkpiece(System, Result) <-
+    !findDiscardSystem(System, DiscardSystem);
+    ?inputArea(DiscardSystem, InputArea);
+    !findDiscardDiverter(InputArea, DiscardDiverter);
+
+    !invokeAction(DiscardDiverter, true);
+    .print("Diverter ativado!");
+
+    !findDiscardConveyor(DiscardSystem, DiscardConveyor);
+    !invokeAction(DiscardConveyor, true);
+    .print("Esteira de descarte ativada!");
+
+    ?outputArea(DiscardSystem, OutputArea);
+    !waitForWorkpieceExit(OutputArea);
+    .print("Peça descartada!");
+
+    !invokeAction(DiscardConveyor, false);
+    .print("Esteira de descarte desativada!");
+
+    !invokeAction(DiscardDiverter, false);
+    .print("Diverter desativado!");
+.
+
++!findDiscardDiverter(InputArea, DiscardDiverter) <-
+    ?hasProperty(InputArea, DiverterStatus)
+    & actsUpon(Command, DiverterStatus)
+    & hasCommand(DiscardFunction, Command) 
+    & accomplishes(DiscardDiverter, DiscardFunction) ;
+.
+
++!findDiscardConveyor(DiscardSystem, DiscardConveyor) <-
+    ?hasSubSystem(DiscardSystem, DiscardConveyor)
+    & conveyor(DiscardConveyor) ;
+    .print("Esteira de descarte: ", DiscardConveyor);
+.
+
+// Encontra esteira principal no sistema
++!findConveyorInSystem(System, Conveyor) <-
+    ?hasSubSystem(System, Conveyor) & conveyor(Conveyor);
+    .print("Esteira encontrada: ", Conveyor);
+.
+
+// Encontra sistema de verificação de orientação
++!findOrientationSystem(System, OrientationSystem) <-
+    ?hasSubSystem(System, OrientationSystem)  
+    & hosts(OrientationSystem, OrientationSensor)
+    & observes(OrientationSensor, OrientationProperty)
+    & midpointHeight(OrientationProperty) ; // Encontra o subsistema que possui um sensor que observa orientação
+    .print("Sistema de orientação: ", OrientationSystem);
+.
+
++!findDiscardSystem(System, DiscardSystem) <-
+    ?hasSubSystem(System, DiscardSystem) 
+    & hasSubSystem(DiscardSystem, DiscardConveyor)
+    & conveyor(DiscardConveyor) ;
+    .print("Sistema de descarte: ", DiscardSystem);
+.
+
++!performOrientationCheck(OrientationSystem, Result) <-
+    .print("Verificando orientação da peça...");
+    !findLock(OrientationSystem, Lock);
+    !invokeAction(Lock, true);
+    .print("Trava ativada!");
+
+    !findStoppedSensor(OrientationSystem, StoppedSensor);
+    !monitorPresence(StoppedSensor, true);
+    .print("Peça na posição de leitura.");
+
+    .wait(500);
+
+    !findOrientationSensor(OrientationSystem, OrientationSensor);
+    !readProperty(OrientationSensor, Result);
+    if (Result == true) {
+        .print("Peça é alta, não passou no teste.");
+    } else {
+        .print("Peça é da altura correta, passou no teste.");
+    }
+    !invokeAction(Lock, false);
+    .print("Trava desativada!");
+.
+
++!findLock(OrientationSystem, Lock) <-
+    ?hosts(OrientationSystem, Lock) 
+    & actuator(Lock)
+    & accomplishes(Lock, "http://localhost/kg/MPSFesto/Separating/OrientationVerificationSystem/LockingFunction/") ;
+    .print("Lock encontrado: ", Lock);
+.
+
++!findStoppedSensor(OrientationSystem, StoppedSensor) <-
+    ?hosts(OrientationSystem, StoppedSensor) 
+    & presenceSensor(StoppedSensor) ;
+    .print("Sensor de parada encontrado: ", StoppedSensor);
+. 
+
++!findOrientationSensor(OrientationSystem, OrientationSensor) <-
+    ?hosts(OrientationSystem, OrientationSensor) 
+    & sensor(OrientationSensor) 
+    & observes(OrientationSensor, OrientationProperty)
+    & midpointHeight(OrientationProperty) ;
+    .print("Sensor de orientação encontrado: ", OrientationSensor);
+.
+
+// ========================================
+// AFFORDANCES GENÉRICAS
+// ========================================
+
+// Lê valor de propriedade via affordance
++!readProperty(Thing, Value)
+    : thing(Thing)
+    & hasPropertyAffordance(Thing, PropertyAffordance)
+    & hasForm(PropertyAffordance, Form)
+    & hasTarget(Form, URI)
+    <-
+    HEADERS = [kv("Content-Type","application/json")];
+    get(URI, HEADERS);
+    ?(json(Payload)[source(URI)]) ;
+    .member(kv(value, Value), Payload) .
+
++!invokeAction(Thing, Value)
+    : thing(Thing)
+    & hasActionAffordance(Thing, ActionAffordance)
+    & hasForm(ActionAffordance, Form)
+    & hasTarget(Form, URI)
+    <-
+    VALOR = [kv("value", Value)];
+    HEADERS = [kv("Content-Type", "application/json")];
+
+    post(URI, [json(VALOR)], HEADERS) .
+
+// ========================================
 
 +!crawl(URI)
     <-
@@ -124,235 +271,77 @@
     .print("Couldn't crawl ", URI, ". Giving up.") ;
     +crawled(URI) .
 
-+!listThings <- .print("Things:") ; for (thing(T)) { .print("* ", T) } .
-
-
-
-
-    
-+!listarLabelsAffordancesDe(T) <-
-    .print("🔍 Affordances (labels) de: ", T);
-    for (hasPropertyAffordance(T, Af)) {
-        if (hasForm(Af, F)) {
-            .print("  • Label: ", F);
-            .print("  • Affordance: ", Af);
-            if(hasTarget(F, TargetURI)){
-            .print("  • F: ", F);
-            .print("  • Target: ", TargetURI);
-        };
-        } else {
-            .print("  • (sem 'label' definido) ↳ ", Af)
-        }
-    }.
-
-+!readProperty(T, OT, Valor)
-    : type(T, OT)
-    & hasPropertyAffordance(T, Af)
-    & hasForm(Af, F)
-    & hasTarget(F, URI)
-    <-
-    HEADERS = [kv("Content-Type","application/json")];
-    get(URI, HEADERS);
-    ?(json(Payload)[source(URI)]) ;
-    .member(kv(value, Val), Payload);
-    Valor = Val;
-    .
-
-/*
-+!readProperty(T)
-    : hasPropertyAffordance(T, Af)
-    & hasForm(Af, F)
-    & hasTarget(F, URI)
-    <-
-    .replace(URI, "localhost", "host.docker.internal", NewURI);
-    !prepareForm(Fp) ;
-    HEADERS = [kv("Content-Type","application/json")];
-    .print("➡️ GET em ", NewURI);
-    get(NewURI, HEADERS);
-    ?(json(Payload)[source(NewURI)]) ;
-    .member(kv(value, Val), Payload);
-    .print("Valor = ", Val) 
-    .
-*/
-+!writeProperty(TType, PType, Val)
-    : type(T, TType)
-    & hasPropertyAffordance(T, Af)
-    & type(Af, PType)
-    & hasForm(Af, F)
-    & hasTarget(F, URI)
-    <-
-    !prepareForm(Fp) ;
-    put(URI, [json(Val)], Fp) .
-
-+!invokeAction(T, In)
-    : hasActionAffordance(T, Af)
-    & hasForm(Af, F)
-    & hasTarget(F, URI)
-    <-
-
-    //!prepareForm(Pf);
-
-    VALOR = [kv("value", In)];
-    HEADERS = [kv("Content-Type", "application/json")];
-
-
-    post(URI, [json(VALOR)], HEADERS)
-     
-     
-     .
-
-
-+!invokeAction(T, OT, In)
-    : type(T, OT)
-    & hasActionAffordance(T, Af)
-    & hasForm(Af, F)
-    & hasTarget(F, URI)
-    <-
-
-    //!prepareForm(Pf);
-
-    VALOR = [kv("value", In)];
-    HEADERS = [kv("Content-Type", "application/json")];
-
-    post(URI, [json(VALOR)], HEADERS)
-     
-     
-     .
-
-
-+!prepareForm(F) : credentials(User, Pw)
-    <-
-    h.basic_auth_credentials(User, Pw, H) ;
-    F = [kv("urn:hypermedea:http:authorization", H)] .
-
-        //pode ter problema aqui (preciso testar com algo que retorna um valor ou um action)
-
-+!prepareForm(F) : not(credentials(_, _))
-    <- 
-    .print("⚠️  Nenhuma credencial definida, usando form vazio.");
-    F = [kv("Content-Type", "application/json")].
-
-
-type(Individual, Class)
-    :-
-    rdf(
-        Individual,
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-        Class
-    ) .
-
-system(Individual) :- type(Individual, "http://www.w3.org/ns/ssn/System") .
-thing(Individual) :- type(Individual, "https://www.w3.org/2019/wot/td#Thing") .
-
-automated_storage_and_retrieval_system(Individual)
-    :-
-    type(
-        Individual,
-        "http://www.productontology.org/id/Automated_storage_and_retrieval_system"
-    ) .
-
-type(Individual, automated_storage_and_retrieval_system)
-    :-
-    automated_storage_and_retrieval_system(Individual) .
-
-
-
-separating(Individual)
-    :-
-    type(
-        Individual,
-        "http://localhost/kg/MPSFesto/Separating/MainConveyor/"
-    ) .
-
-type(Individual, separating)
-    :-
-    separating(Individual) .
-
-    
-
-
-converyor(Individual)
-    :-
-    type(
-        Individual,
-        "http://localhost/kg/vocabulary/Conveyor"
-    ) .
-
-type(Individual, converyor)
-    :-
-    converyor(Individual) .
-
-
-
-conveyorSpeed(Individual)
-    :-
-    type(
-        Individual,
-        "https://ci.mines-stetienne.fr/kg/ontology#ConveyorSpeed"
-    ) .
-
-type(Individual, conveyorSpeed) :- conveyorSpeed(Individual) .
-
-moveFromToAction(Individual)
-    :-
-    type(
-        Individual,
-        "https://ci.mines-stetienne.fr/kg/ontology#MoveFromToAction"
-    ) .
-
-type(Individual, moveFromToAction) :- moveFromToAction(Individual) .
-
-hasSubSystem(Individual1, Individual2)
-    :-
-    rdf(Individual1, "http://www.w3.org/ns/ssn/hasSubSystem", Individual2) .
-
+// ========================================
+// CRENÇAS E REGRAS (mantidas do original)
+// ========================================
 
 type(Individual, Class) :-
-    rdf(Individual, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", Class) .
+    rdf(Individual, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", Class).
 
+system(Individual) :- 
+    type(Individual, "http://www.w3.org/ns/ssn/System").
 
-hasPropertyAffordance(Individual1, Individual2)
-    :-
-    rdf(
-        Individual1,
-        "https://www.w3.org/2019/wot/td#hasPropertyAffordance",
-        Individual2
-    ) .
+thing(Individual) :- 
+    type(Individual, "https://www.w3.org/2019/wot/td#Thing").
 
+actuator(Individual) :- 
+    type(Individual, "http://www.w3.org/ns/sosa/Actuator").
 
-hasHosts(Individual1, Individual2)
-    :-
-    rdf(
-        Individual1,
-        "https://www.w3.org/ns/sosa/hosts",
-        Individual2
-    ) .
+sensor(Individual) :- 
+    type(Individual, "http://www.w3.org/ns/sosa/Sensor").
 
-hasActionAffordance(Individual1, Individual2)
-    :-
-    rdf(
-        Individual1,
-        "https://www.w3.org/2019/wot/td#hasActionAffordance",
-        Individual2
-    ) .
+presenceSensor(Individual) :- 
+    type(Individual, "https://ci.mines-stetienne.fr/kg/ontology#PresenceSensor").
 
-//http://www.w3.org/2000/01/rdf-schema#label
+sensor(Individual) :- presenceSensor(Individual).
 
+conveyor(Individual) :- 
+    type(Individual, "http://localhost/kg/vocabulary/Conveyor").    
 
-name(Individual1, Individual2)
-    :-
-    rdf(Individual1, "https://www.w3.org/2019/wot/td#name", Individual2) .
-    
-hasForm(Individual1, Individual2)
-    :-
-    rdf(Individual1, "https://www.w3.org/2019/wot/td#hasForm", Individual2) .
+midpointHeight(Individual) :- 
+    type(Individual, "http://localhost/kg/vocabulary/MidpointHeight").
 
-hasTarget(Individual1, Individual2)
-    :-
-    rdf(
-        Individual1,
-        "https://www.w3.org/2019/wot/hypermedia#hasTarget",
-        Individual2
-    ) .
+hasSubSystem(Individual1, Individual2) :-
+    rdf(Individual1, "http://www.w3.org/ns/ssn/hasSubSystem", Individual2).
 
-{ include("$jacamoJar/templates/common-cartago.asl") }  
+hosts(Individual1, Individual2) :-
+    rdf(Individual1, "http://www.w3.org/ns/sosa/hosts", Individual2).
+
+hasPropertyAffordance(Individual1, Individual2) :-
+    rdf(Individual1, "https://www.w3.org/2019/wot/td#hasPropertyAffordance", Individual2).
+
+hasActionAffordance(Individual1, Individual2) :-
+    rdf(Individual1, "https://www.w3.org/2019/wot/td#hasActionAffordance", Individual2).
+
+hasForm(Individual1, Individual2) :-
+    rdf(Individual1, "https://www.w3.org/2019/wot/td#hasForm", Individual2).
+
+hasTarget(Individual1, Individual2) :-
+    rdf(Individual1, "https://www.w3.org/2019/wot/hypermedia#hasTarget", Individual2).
+
+// Crenças adicionais para navegação por áreas
+hasProperty(Individual1, Individual2) :-
+    rdf(Individual1, "http://www.w3.org/ns/ssn/hasProperty", Individual2).
+
+isObservedBy(Individual1, Individual2) :-
+    rdf(Individual1, "http://www.w3.org/ns/sosa/isObservedBy", Individual2).
+
+observes(Individual1, Individual2) :-
+    rdf(Individual1, "http://www.w3.org/ns/sosa/observes", Individual2).
+
+inputArea(Individual1, Individual2) :-
+    rdf(Individual1, "https://ci.mines-stetienne.fr/kg/ontology#inputArea", Individual2).
+
+outputArea(Individual1, Individual2) :-
+    rdf(Individual1, "https://ci.mines-stetienne.fr/kg/ontology#outputArea", Individual2).
+
+accomplishes(Individual1, Individual2) :-
+    rdf(Individual1, "https://saref.etsi.org/core/accomplishes", Individual2).
+
+actsUpon(Individual1, Individual2) :-
+    rdf(Individual1, "https://saref.etsi.org/core/actsUpon", Individual2).
+
+hasCommand(Individual1, Individual2) :-
+    rdf(Individual1, "https://saref.etsi.org/core/hasCommand", Individual2).
+
+{ include("$jacamoJar/templates/common-cartago.asl") }

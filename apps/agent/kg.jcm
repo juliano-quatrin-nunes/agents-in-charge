@@ -1,7 +1,7 @@
 mas agents_in_charge_mas {
 
     agent bob {
-        beliefs: entryPoint("http://localhost/kg")
+        beliefs: entryPoint("http://localhost/kg/")
         focus: agents_in_charge_workspace.h
     }
 
