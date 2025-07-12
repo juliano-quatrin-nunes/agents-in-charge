@@ -14,10 +14,12 @@ export default class Piece {
 
     this.size = 80; // Diameter in mm
 
-    if (type === "random") {
+    const normalizedType = type.toLowerCase();
+
+    if (normalizedType === "random") {
       this.isHigh = Math.random() < 0.4; // 40% chance of being high
     } else {
-      this.isHigh = type === "high";
+      this.isHigh = normalizedType === "high";
     }
   }
 }

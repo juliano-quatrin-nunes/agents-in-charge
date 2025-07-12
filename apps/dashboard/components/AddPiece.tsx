@@ -11,6 +11,9 @@ const addPiece = (height: "high" | "low" | "random") => {
     fetch(`${SIMULATOR_URI}/add-piece`, {
       method: "POST",
       body: JSON.stringify({ height }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   } catch (error) {
     console.error(error);

@@ -23,7 +23,7 @@ export function startHttpServer(simulation: Simulation) {
       simulation.stats.lowPieces++;
     }
 
-    const details = `(ID: ${piece.id}, High: ${piece.isHigh})`;
+    const details = `(ID: ${piece.id}, High: ${piece.isHigh}, Type: ${height})`;
     logEvent("System", "Piece Added", "NEW", details);
 
     res.status(200).json({
