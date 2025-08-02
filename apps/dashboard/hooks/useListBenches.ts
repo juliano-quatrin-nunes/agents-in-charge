@@ -1,16 +1,11 @@
-import { DEFAULT_HEADER, INITIAL_ENDPOINT } from "@/lib/utils";
+"use client";
 import { useQuery } from "@tanstack/react-query";
+import { listBenches } from "@/services/componentApiService";
 
-const useListBenches = () => {
-  console.log(process.env.API_AUTHORIZATION_TOKEN);
+export const useListBenches = () => {
+  console.log(process.env.NEXT_PUBLIC_API_AUTHORIZATION_TOKEN);
   return useQuery({
-    queryKey: ["allBenches"],
-    queryFn: () =>
-      fetch(INITIAL_ENDPOINT, {
-        method: "GET",
-        headers: DEFAULT_HEADER,
-      }).then((res) => res.json()),
+    queryKey: ["listBenches"],
+    queryFn: listBenches,
   });
 };
-
-export default useListBenches;

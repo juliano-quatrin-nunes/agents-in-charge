@@ -1,0 +1,396 @@
+@prefix schema: <http://schema.org/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix s4syst: <https://saref.etsi.org/saref4syst/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix pto:   <http://www.productontology.org/id/> .
+@prefix onto:  <https://ci.mines-stetienne.fr/kg/ontology#> .
+@prefix ssn:   <http://www.w3.org/ns/ssn> .
+@prefix sosa:  <http://www.w3.org/ns/sosa/> .
+
+onto:ValveStatus  a       owl:Class , rdfs:Class ;
+        rdfs:comment      "An observable property that indicates a boolean value which becomes true if and only if the valve is open"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "valve status"@en ;
+        rdfs:subClassOf   sosa:ActuatableProperty , sosa:ObservableProperty .
+
+onto:Base  a              owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "base"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:SetShoulder  a       owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "set shoulder"@en .
+
+onto:relativeTo  a        owl:ObjectProperty , rdf:Property ;
+        rdfs:comment      "The object or location of reference relative to which the coordinates are given"@en ;
+        rdfs:domain       onto:PointInSpace ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "relative to" .
+
+onto:JointName  a         owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "joint name"@en .
+
+onto:GripperJointValue
+        a                 owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "gripper joint value"@en .
+
+onto:WristRotationJointValue
+        a                 owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "wrist rotation joint value"@en .
+
+onto:StackLightStatus
+        a                 owl:Class , rdfs:Class ;
+        rdfs:comment      "An observable property that indicates the status of the stack light of a machine"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "stack light status"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:WristRotateJoint
+        a                 owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "wrist rotate joint"@en .
+
+onto:outputMachine  a       owl:ObjectProperty , rdf:Property ;
+        rdfs:comment        "A machine or subsystem that serves as the exit point of the product of a production line."@en ;
+        rdfs:domain         onto:ProductionLine ;
+        rdfs:isDefinedBy    <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label          "output machine"@en ;
+        rdfs:subPropertyOf  ssn:hasSubSystem .
+
+onto:BaseJointValue  a    owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "base joint value"@en .
+
+onto:outputArea  a          owl:ObjectProperty , rdf:Property ;
+        rdfs:comment        "The area at which place a device, machine, or process delivers its final output. For instance, the end of a conveyor belt, where what is moving on the belt either cannot go forward any more, or leave the belt."@en ;
+        rdfs:isDefinedBy    <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label          "output area"@en ;
+        rdfs:range          onto:ProductManagementArea , s4syst:ConnectionPoint ;
+        rdfs:subPropertyOf  s4syst:connectsAt .
+
+onto:hasThingDescription
+        a                 owl:ObjectProperty , rdf:Property ;
+        rdfs:comment      "A relation between a device or machine and the Thing Description according to the W3C TD standard"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "has thing description"@en .
+
+onto:inputMachine  a        owl:ObjectProperty , rdf:Property ;
+        rdfs:comment        "A machine or subsystem that serves as the starting point for a production process in a production line."@en ;
+        rdfs:domain         onto:ProductionLine ;
+        rdfs:isDefinedBy    <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label          "input machine"@en ;
+        rdfs:subPropertyOf  ssn:hasSubSystem .
+
+onto:locationOfInputMaterial
+        a                 owl:ObjectProperty , rdf:Property ;
+        rdfs:comment      "The precise location of where the input material must be placed for a machine or device to process it"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "location of input material"@en ;
+        rdfs:range        onto:PointInSpace .
+
+onto:PhantomX  a          owl:Class , rdfs:Class ;
+        rdfs:comment      "The class of all PhantomX robotic arms"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "PhantomX"@en ;
+        rdfs:subClassOf   pto:Robotic_arm .
+
+onto:SetElbow  a          owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "set elbow"@en .
+
+onto:OpticalSensorStatus
+        a                 owl:Class , rdfs:Class ;
+        rdfs:comment      "An observable property that indicates a boolean value which becomes true if and only if an item is detected"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "optical sensor status"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:Posture  a           owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "posture"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:WristAngleJoint  a   owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "wrist angle joint"@en .
+
+onto:LiquidVolume  a      owl:Class , rdfs:Class ;
+        rdfs:comment      "An observable property that indicates volume in L"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "liquid volume"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:WristAngle  a        owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "wrist angle"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:XCoordinate  a       owl:Class , rdfs:Class ;
+        rdfs:comment      "A property indicating the position in the x coordinate (according to a reference frame)"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "x coordinate"@en ;
+        rdfs:subClassOf   sosa:ActuatableProperty , sosa:ObservableProperty .
+
+onto:SetGripper  a        owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "set gripper"@en .
+
+onto:PointInSpace  a      owl:Class , rdfs:Class ;
+        rdfs:comment      "A point in a 3D environment, in a certain frame of reference. In the scenario of the summer school, the frame of reference will be unique and not specified."@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "point in space"@en .
+
+onto:WristAngleJointValue
+        a                 owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "wrist angle joint value"@en .
+
+onto:SetWristRotation
+        a                 owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "set wrist rotation"@en .
+
+onto:ZCoordinate  a       owl:Class , rdfs:Class ;
+        rdfs:comment      "A property indicating the position in the z coordinate (according to a reference frame)"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "z coordinate"@en ;
+        rdfs:subClassOf   sosa:ActuatableProperty , sosa:ObservableProperty .
+
+onto:Shoulder  a          owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "shoulder"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:ShoulderJointValue
+        a                 owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "shoulder joint value"@en .
+
+onto:GripperJoint  a      owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "gripper joint"@en .
+
+<https://ci.mines-stetienne.fr/kg/ontology>
+        a             owl:Ontology ;
+        rdfs:comment  "This is the ontology used for the summer school on AI technologies for trust, interoperability and autonomy in Industry 4.0"@en ;
+        rdfs:label    "AI for Industry 4.0 summer school ontology"@en .
+
+onto:Gripper  a           owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "gripper"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:relativeCoordinates
+        a                 owl:ObjectProperty , rdf:Property ;
+        rdfs:comment      "The coordinates of a reference point of an object or location, relative to a larger object, location, or frame. For instance, the coordinate of a room relative to a building, the coordinates of a machine relative to a room, the coordinates of a component in a machine relative to the machine."@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "relative coordinates" ;
+        rdfs:range        onto:PointInSpace .
+
+onto:Elbow  a             owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "elbow"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:YCoordinate  a       owl:Class , rdfs:Class ;
+        rdfs:comment      "A property indicating the position in the y coordinate (according to a reference frame)"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "y coordinate"@en ;
+        rdfs:subClassOf   sosa:ActuatableProperty , sosa:ObservableProperty .
+
+onto:Motor  a             owl:Class , rdfs:Class ;
+        rdfs:comment      "The class of motors"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "motor"@en ;
+        rdfs:subClassOf   sosa:Actuator .
+
+onto:PotFillingMachine
+        a                 owl:Class , rdfs:Class ;
+        rdfs:comment      "The class of all machines that can fill pots"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "pot filling machine"@en ;
+        rdfs:subClassOf   <http://www.productontology.org/id/Filler_(packaging)> .
+
+onto:Count  a             owl:Class , rdfs:Class ;
+        rdfs:comment      "An observable property that indicates a number of times something has been done (such as, a number of pots being filled"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "count"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:ConveyorSpeed  a     owl:Class , rdfs:Class ;
+        rdfs:comment      "An observable property that indicates the speed of a conveyor in m/s"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "conveyor speed"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:coordZ  a            owl:DatatypeProperty , rdf:Property ;
+        rdfs:comment      "The z coordinate of a spatial location"@en ;
+        rdfs:domain       onto:PointInSpace ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "z" ;
+        rdfs:range        xsd:decimal .
+
+onto:maximumReach  a      owl:DatatypeProperty , rdf:Property ;
+        rdfs:comment      "The maximum distance to which a robotic arm or other such object can go and take or activate something."@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "maximum reach"@en ;
+        rdfs:range        xsd:decimal .
+
+onto:DosaxeDX10  a        owl:Class , rdfs:Class ;
+        rdfs:comment      "The class of all Dosaxe DX10 filling machine"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "Dosaxe DX10"@en ;
+        rdfs:subClassOf   onto:PotFillingMachine .
+
+onto:MaximumCount  a      owl:Class , rdfs:Class ;
+        rdfs:comment      ""@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "maximum count"@en ;
+        rdfs:subClassOf   onto:Count .
+
+onto:PresenceSensor  a    owl:Class , rdfs:Class ;
+        rdfs:comment      "The class of all presence sensors"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "presence sensor"@en ;
+        rdfs:subClassOf   sosa:Sensor .
+
+onto:GraspAction  a       owl:Class , rdfs:Class ;
+        rdfs:comment      "An action that allows a device such as a robotic hand or pincer to grasp an item, such that it can move it around"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "grasp action"@en ;
+        rdfs:subClassOf   schema:ActivateAction .
+
+onto:ShoulderJoint  a     owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "shoulder joint"@en .
+
+onto:ProductManagementArea
+        a                 owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "product management area"@en ;
+        rdfs:subClassOf   sosa:FeatureOfInterest .
+
+onto:inputArea  a           owl:ObjectProperty , rdf:Property ;
+        rdfs:comment        "The area where a machine, device, or process accesses its input. For instance, the top of a funnel, or the extremity of a conveyor belt where the matter start moving forward over the belt."@en ;
+        rdfs:isDefinedBy    <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label          "input area"@en ;
+        rdfs:range          onto:ProductManagementArea , s4syst:ConnectionPoint ;
+        rdfs:subPropertyOf  s4syst:connectsAt .
+
+onto:locationOfOutputProduct
+        a                 owl:ObjectProperty , rdf:Property ;
+        rdfs:comment      "The precise location of where the output product arrives after a machine or device has processed it"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "location of output product"@en ;
+        rdfs:range        onto:PointInSpace .
+
+onto:SetWristAngle  a     owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "set wrist angle"@en .
+
+onto:ActivityStatus  a    owl:Class , rdfs:Class ;
+        rdfs:comment      "An observable property that indicates whether a thing is in action (occupied/busy) or not"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "activity status"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:Reset  a             owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "reset"@en .
+
+onto:coordY  a            owl:DatatypeProperty , rdf:Property ;
+        rdfs:comment      "The y coordinate of a spatial location"@en ;
+        rdfs:domain       onto:PointInSpace ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "y" ;
+        rdfs:range        xsd:decimal .
+
+onto:ReleaseAction  a     owl:Class , rdfs:Class ;
+        rdfs:comment      "An action that allows a device such as a robotic hand or pincer to release whatever item it is holding, such that the item is left in place where the hand is at this time"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "release action"@en ;
+        rdfs:subClassOf   schema:DeactivateAction .
+
+onto:ElbowJointValue  a   owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "elbow joint value"@en .
+
+onto:Bosch-APAS  a        owl:Class , rdfs:Class ;
+        rdfs:comment      "The class of all APAS robotic arms, from the Bosch company"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "Bosch APAS"@en ;
+        rdfs:subClassOf   pto:Robotic_arm .
+
+onto:PresenceProperty
+        a                 owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "presence property"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:ElbowJoint  a        owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "elbow joint"@en .
+
+onto:StopInEmergencyAction
+        a                 owl:Class , rdfs:Class ;
+        rdfs:comment      "An action that's used to stop and reinitialise a machine"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "stop in emergency action"@en ;
+        rdfs:subClassOf   schema:DeactivateAction .
+
+onto:JointValue  a        owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "joint value"@en .
+
+onto:hasOriginCoordinates
+        a                   owl:ObjectProperty , rdf:Property ;
+        rdfs:comment        "The coordinates, within a larger frame, that serve as the origin point of relative coordinates of a machine or object"@en ;
+        rdfs:isDefinedBy    <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label          "has origin coordinates"@en ;
+        rdfs:range          onto:PointInSpace ;
+        rdfs:subPropertyOf  onto:relativeCoordinates .
+
+onto:YogurtProductionLine
+        a                 owl:Class , rdfs:Class ;
+        rdfs:comment      "A production line producing yogurt."@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "yogurt production line"@en ;
+        rdfs:subClassOf   onto:ProductionLine .
+
+onto:SetBase  a           owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "set base"@en .
+
+onto:coordX  a            owl:DatatypeProperty , rdf:Property ;
+        rdfs:comment      "The x coordinate of a spatial location"@en ;
+        rdfs:domain       onto:PointInSpace ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "x" ;
+        rdfs:range        xsd:decimal .
+
+onto:WristRotation  a     owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "wrist rotation"@en ;
+        rdfs:subClassOf   sosa:ObservableProperty .
+
+onto:MoveFromToAction
+        a                 owl:Class , rdfs:Class ;
+        rdfs:comment      "An action that allows a thing to move from a starting location to a final location"@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "move from to action"@en ;
+        rdfs:subClassOf   schema:MoveAction .
+
+onto:BaseJoint  a         owl:Class , rdfs:Class ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "base joint"@en .
+
+onto:ProductionLine  a    owl:Class , rdfs:Class ;
+        rdfs:comment      "A production line, that is a system of machines that takes material and transforms it, assembles it, in order to make some new product."@en ;
+        rdfs:isDefinedBy  <https://ci.mines-stetienne.fr/kg/ontology> ;
+        rdfs:label        "production line"@en .

@@ -1,0 +1,12 @@
+mas agents_in_charge_mas {
+
+    agent bob {
+        beliefs: entryPoint("http://localhost/kg/")
+        focus: agents_in_charge_workspace.h
+    }
+
+    workspace agents_in_charge_workspace  {
+        artifact h: org.hypermedea.HypermedeaArtifact()
+    }
+
+}

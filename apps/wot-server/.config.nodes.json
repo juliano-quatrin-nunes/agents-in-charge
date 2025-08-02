@@ -1,7 +1,7 @@
 {
     "node-red": {
         "name": "node-red",
-        "version": "4.0.5",
+        "version": "4.0.9",
         "local": false,
         "user": false,
         "nodes": {
@@ -427,9 +427,47 @@
             }
         }
     },
+    "node-red-contrib-ip": {
+        "name": "node-red-contrib-ip",
+        "version": "1.0.2",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "ip": {
+                "name": "ip",
+                "types": [
+                    "ip"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-ip",
+                "file": "/data/node_modules/node-red-contrib-ip/ip.js"
+            }
+        }
+    },
+    "node-red-contrib-localtunnel": {
+        "name": "node-red-contrib-localtunnel",
+        "version": "1.0.0-2",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "localtunnel": {
+                "name": "localtunnel",
+                "types": [
+                    "localtunnel"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-localtunnel",
+                "file": "/data/node_modules/node-red-contrib-localtunnel/localtunnel.js"
+            }
+        }
+    },
     "node-red-contrib-opcua": {
         "name": "node-red-contrib-opcua",
-        "version": "0.2.337",
+        "version": "0.2.339",
         "local": true,
         "user": true,
         "nodes": {
@@ -531,44 +569,6 @@
                 "user": false,
                 "module": "node-red-contrib-opcua",
                 "file": "/data/node_modules/node-red-contrib-opcua/opcua/109-opcuadiscovery.js"
-            }
-        }
-    },
-    "node-red-contrib-localtunnel": {
-        "name": "node-red-contrib-localtunnel",
-        "version": "1.0.0-2",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "localtunnel": {
-                "name": "localtunnel",
-                "types": [
-                    "localtunnel"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-localtunnel",
-                "file": "/data/node_modules/node-red-contrib-localtunnel/localtunnel.js"
-            }
-        }
-    },
-    "node-red-contrib-ip": {
-        "name": "node-red-contrib-ip",
-        "version": "1.0.2",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "ip": {
-                "name": "ip",
-                "types": [
-                    "ip"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-ip",
-                "file": "/data/node_modules/node-red-contrib-ip/ip.js"
             }
         }
     }

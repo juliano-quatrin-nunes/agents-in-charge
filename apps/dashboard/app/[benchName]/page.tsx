@@ -1,3 +1,6 @@
+"use client";
+
+import { AddPiece } from "@/components/AddPiece";
 import { BenchDashboard } from "@/components/BenchDashboard";
 import { use } from "react";
 
@@ -8,7 +11,13 @@ interface PageProps {
 const Page = (props: PageProps) => {
   const { benchName } = use(props.params);
 
-  return <BenchDashboard benchEndpoint={benchName} />;
+  const isDev = process.env.NEXT_PUBLIC_ENVIRONMENT !== "production";
+  return (
+    <div>
+      <BenchDashboard benchEndpoint={benchName} />
+      {isDev && <AddPiece />}
+    </div>
+  );
 };
 
 export default Page;

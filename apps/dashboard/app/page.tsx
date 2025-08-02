@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "@/components/Card";
-import useListBenches from "@/hooks/useListBenches";
+import { useListBenches } from "@/hooks/useListBenches";
 
 export default function Home() {
   const { data, isLoading, isSuccess } = useListBenches();

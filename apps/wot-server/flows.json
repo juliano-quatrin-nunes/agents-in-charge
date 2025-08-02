@@ -8,8 +8,8 @@
         "env": [
             {
                 "name": "opc_endpoint",
-                "value": "opc.tcp://150.162.14.27:4840",
-                "type": "str"
+                "value": "opc_endpoint_separating",
+                "type": "env"
             },
             {
                 "name": "http",
@@ -266,45 +266,7 @@
     {
         "id": "14e0290e2bea4e8c",
         "type": "OpcUa-Endpoint",
-        "endpoint": "opc.tcp://150.162.14.27:4840",
-        "secpol": "None",
-        "secmode": "None",
-        "none": true,
-        "login": false,
-        "usercert": false,
-        "usercertificate": "",
-        "userprivatekey": ""
-    },
-    {
-        "id": "c2fd6ea3cc083b70",
-        "type": "OpcUa-Endpoint",
-        "z": "1f735b7c1ec2a540",
-        "endpoint": "${opc_endpoint}",
-        "secpol": "None",
-        "secmode": "None",
-        "none": true,
-        "login": false,
-        "usercert": false,
-        "usercertificate": "",
-        "userprivatekey": ""
-    },
-    {
-        "id": "cc5c531b1a3180a0",
-        "type": "OpcUa-Endpoint",
-        "z": "c7b5baace1041e43",
-        "endpoint": "${opc_endpoint}",
-        "secpol": "None",
-        "secmode": "None",
-        "none": true,
-        "login": false,
-        "usercert": false,
-        "usercertificate": "",
-        "userprivatekey": ""
-    },
-    {
-        "id": "ba1646fb305b7868",
-        "type": "OpcUa-Endpoint",
-        "endpoint": "${opc_endpoint}",
+        "endpoint": "${opc_endpoint_separating}",
         "secpol": "None",
         "secmode": "None",
         "none": true,
@@ -623,6 +585,8 @@
         "maxMessageSize": 8192,
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
         "name": "Client Read",
         "x": 670,
         "y": 80,
@@ -752,7 +716,7 @@
         "type": "function",
         "z": "de6ca196357a3c7d",
         "name": "Compare token",
-        "func": "const authToken = msg.req.headers.authorization\n\nconst correctToken = env.get(\"API_AUTHORIZATION_TOKEN\")\n\nlet authorized = false\n\nif(authToken == correctToken){\n    authorized = true\n}\n\nreturn {...msg, authorized};",
+        "func": "const authToken = msg.req.headers.authorization\n\nconst correctToken = env.get(\"API_AUTHORIZATION_TOKEN\")\n\nlet authorized = false\n\nif(authToken == correctToken || !correctToken){\n    authorized = true\n}\n\nreturn {...msg, authorized};",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -885,6 +849,8 @@
         "maxMessageSize": 8192,
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
         "name": "Client Read",
         "x": 990,
         "y": 880,
@@ -951,6 +917,8 @@
         "maxMessageSize": 8192,
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
         "name": "Client Read",
         "x": 1750,
         "y": 880,
@@ -982,6 +950,8 @@
         "maxMessageSize": 8192,
         "receiveBufferSize": 8192,
         "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
         "name": "Client Write",
         "x": 1590,
         "y": 880,
@@ -1416,7 +1386,7 @@
         "type": "function",
         "z": "0008fcf0ac8e3fc4",
         "name": "Complete href URL",
-        "func": "const td = JSON.parse(msg.td)\n\nconst host = env.get(\"HOST\") || (\"http://\" + msg.payload.internalIPv4)\n\nconst properties = Object.entries(td.properties).forEach(([key, value]) => {\n    if(value.forms && value.forms.length)\n        value.forms[0].href = host + value.forms[0].href\n    return value\n})\n\nconst actions = Object.entries(td.actions).forEach(([key, value]) => {\n    if (value.forms && value.forms.length)\n        value.forms[0].href = host + value.forms[0].href\n    return value\n})\n\nmsg.payload = { properties, actions, ...td }\n\nreturn msg;",
+        "func": "const td = JSON.parse(msg.td)\n\nconst node_env = env.get(\"NODE_ENV\")\n\nlet server\nif(node_env == \"development\"){\n    server = \"localhost\"\n} else {\n    server = msg.payload.internalIPv4\n}\n\nconst host = env.get(\"HOST\") || (\"http://\" + server)\n\nconst properties = Object.entries(td.properties).forEach(([key, value]) => {\n    if(value.forms && value.forms.length)\n        value.forms[0].href = host + value.forms[0].href\n    return value\n})\n\nconst actions = Object.entries(td.actions).forEach(([key, value]) => {\n    if (value.forms && value.forms.length)\n        value.forms[0].href = host + value.forms[0].href\n    return value\n})\n\nmsg.payload = { properties, actions, ...td }\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1627,6 +1597,100 @@
         "wires": [
             [
                 "0b959b5188eabbef"
+            ]
+        ]
+    },
+    {
+        "id": "139a7aaeebc71d9f",
+        "type": "OpcUa-Client",
+        "z": "0008fcf0ac8e3fc4",
+        "endpoint": "14e0290e2bea4e8c",
+        "action": "method",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
+        "name": "Client Read",
+        "x": 810,
+        "y": 1220,
+        "wires": [
+            [
+                "ccaa219b146308da"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7a26d85ff36d0b72",
+        "type": "subflow:1f735b7c1ec2a540",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "env": [
+            {
+                "name": "node_id",
+                "value": "ns=4;s=addPiece",
+                "type": "str"
+            },
+            {
+                "name": "http_endpoint",
+                "value": "/api/separating/addPiece",
+                "type": "str"
+            }
+        ],
+        "x": 610,
+        "y": 1220,
+        "wires": [
+            [
+                "139a7aaeebc71d9f"
+            ]
+        ]
+    },
+    {
+        "id": "6b4538231cf31d7e",
+        "type": "subflow:e5b98768751d086a",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "x": 1200,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "ccaa219b146308da",
+        "type": "change",
+        "z": "0008fcf0ac8e3fc4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 1220,
+        "wires": [
+            [
+                "6b4538231cf31d7e"
             ]
         ]
     },

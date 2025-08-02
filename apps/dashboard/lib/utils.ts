@@ -23,7 +23,7 @@ export const benchEndpointToUrl = (benchEndpoint: string) => {
 export const INITIAL_ENDPOINT = "/api/listAllBenches";
 
 export const DEFAULT_HEADER = {
-  Authorization: `${process.env.API_AUTHORIZATION_TOKEN}`,
+  Authorization: `${process.env.NEXT_PUBLIC_API_AUTHORIZATION_TOKEN}`,
   "ngrok-skip-browser-warning": "69420",
 };
 

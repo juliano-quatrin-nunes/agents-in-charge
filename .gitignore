@@ -1,7 +1,5 @@
 *.backup
 **/node_modules
-**/package-lock.json
-**/yarn.lock
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
@@ -24,6 +22,7 @@
 
 # production
 **/build
+**/dist
 
 # misc
 .DS_Store
@@ -43,3 +42,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Java/Maven specific ignores for semantic project
+apps/semantic/target/
+apps/semantic/.classpath
+apps/semantic/.project
+apps/semantic/.settings/
+apps/semantic/*.iml
+apps/semantic/.idea/
+apps/semantic/logs/
+apps/semantic/*.log
+
+# Jena TDB database files
+apps/semantic/data/tdb/
+**/tdb-*/
