@@ -20,6 +20,9 @@ Este repositório contém um sistema de gerenciamento para a bancada **separatin
 - **`apps/nginx/`**  
   Contém a configuração do servidor web Nginx para proxy reverso.
 
+- **`apps/agent/`**
+  Contém a programação do agente de software que controla a planta, utilizando a plataforma JaCaMo.
+
 ## Requisitos  
 
 - **Docker**: Certifique-se de que o Docker está instalado e configurado em sua máquina.  
